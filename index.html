@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library of Morr</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="nav" class="">
+        <button onclick="viewScreen('library')">Library</button>
+        <button onclick="viewScreen('market')">Market</button>
+        <button onclick="viewScreen('contract')">Contract</button>
+        <div id="coins">Coins:23</div>
+    </div>
+
+    
+    <div id="wrapper">
+        <div id="cover" class="hide page">
+            <h1>Library of morr</h1>
+            <p>A science based web game where you collect cards to complete science related puzzles.</p>
+            <button onclick="viewScreen('library'); toggleNav()">Play</button>
+        </div>
+    
+        <!-- Library -->
+        <div id="library" class=" page">
+            <p>Library</p>
+
+            <div class="card-container-grid">
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
+    
+                    <div class="card" id="carda" draggable="true" ondragstart="drag(event, this)">
+                            <img draggable="false" src="./img/items/shield.svg" />
+                            <h2>Title B</h2>
+                            <p>Description</p>
+                    </div>
+    
+                </div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
+    
+                    <div class="card" id="cardb" draggable="true" ondragstart="drag(event)">
+                        <img draggable="false" src="./img/items/acid vial.svg" />
+                        <h2>Title A</h2>
+                        <p>Description</p>
+                    </div>
+    
+                </div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div>            
+
+        </div>
+    
+        <!-- Market -->
+        <div id="market" class="hide page">
+            <p>Market</p>
+
+            <div class="card">
+                <img src="./img/items/acid vial.svg"/>
+                <h2>Title</h2>
+                <p>Description</p>
+            </div>
+
+            
+
+        </div>
+    
+        <!-- Contract -->
+        <div id="contract" class="hide page">
+            <p>Contract</p>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="utility.js"></script>
+<script src="main.js"></script>
+<script>
+    function runGame(){
+
+    }
+    
+    //Manage pages
+    function viewScreen(page){
+        let pages = document.getElementById('wrapper').querySelectorAll('.page')
+
+        pages.forEach(page => {
+            page.classList.add('hide')
+        })
+
+        el(page).classList.remove('hide')
+    }
+
+    //Show NAv
+    function toggleNav(){
+        el('nav').classList.toggle('hide')
+    }
+
+    let cards = [
+        {
+            "id": "physics",
+            "tags": []    
+        },
+        {
+            "id": "electricity",
+            "tags": []    
+        },
+        {
+            "id": "electricity",
+            "tags": []    
+        }
+    ]
+
+    let playerObj = {
+        "money": 12,
+        "ownedCards": []
+    }
+</script>

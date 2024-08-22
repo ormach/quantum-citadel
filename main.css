@@ -1,0 +1,96 @@
+:root{
+    --b20: rgba(0,0,0,0.2);
+    --b05: rgba(0,0,0,0.05);
+    --card-width: 160px;
+    --card-height: 220px;
+    --bg: rgb(133, 141, 155);
+    --card-bg: white;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.hide {
+    display: none !important;
+}
+
+/* * * {
+    outline: 1px solid red;
+} */
+
+body{
+    height: 100vh;
+    background-color: var(--bg);
+}
+button{
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+}
+#nav {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    justify-content: center;
+}
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    gap: 16px;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    min-height: var(--card-height);
+    min-width: var(--card-width);
+
+    border: 1px solid var(--b20);
+    border-radius: 4px;
+    cursor: grab;
+    background-color: var(--card-bg);
+
+    z-index: 2;
+}
+
+[draggable]:active {
+    cursor: grabbing;
+}
+
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    align-items: flex-start;
+    background-color: var(--b05);
+
+    height: var(--card-height);
+    width: var(--card-width);
+
+    position: relative;
+}
+
+.card-container > :nth-child(2) {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+}
+
+.card-container-grid{
+    display: flex;
+    gap: 4px;
+    width: calc(--card-width * 2 + 8px);
+}
