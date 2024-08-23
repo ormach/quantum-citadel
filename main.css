@@ -42,9 +42,11 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     flex-direction: column;
     gap: 16px;
+
+    padding-bottom: var(--card-height);
 }
 .card{
     display: flex;
@@ -53,15 +55,20 @@ button{
     align-items: center;
     gap: 12px;
 
-    min-height: var(--card-height);
-    min-width: var(--card-width);
+    height: var(--card-height);
+    width: var(--card-width);
 
-    border: 1px solid var(--b20);
+    outline: 1px solid var(--b20);
     border-radius: 4px;
     cursor: grab;
     background-color: var(--card-bg);
 
     z-index: 2;
+}
+
+.card:hover{
+    box-shadow: 0px 5px 10px var(--b20);
+    outline: 1px solid white;
 }
 
 [draggable]:active {
@@ -92,5 +99,42 @@ button{
 .card-container-grid{
     display: flex;
     gap: 4px;
-    width: calc(--card-width * 2 + 8px);
+    width: calc((var(--card-width) + 4px) * 2);
+    flex-wrap: wrap;
+}
+
+.card img {
+    width: 48px;
+    height: 48px;
+}
+
+#deck {
+    position: fixed;
+    bottom: -48px;
+    min-height: calc(var(--card-height));
+    min-width: 100vw;
+
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+
+    padding: 4px;
+
+    background-color: var(--b20);
+    backdrop-filter: blur(2px);
+    z-index: 3;
+}
+
+#table{
+    outline: 1px dashed black;
+    margin: 12px;
+    padding: 12px;
+    width: calc(80% - (12px * 4));
+    min-height: 100vh;
+
+    border-radius: 12px;
+
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
 }

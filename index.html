@@ -8,8 +8,9 @@
 </head>
 <body>
     <div id="nav" class="">
-        <button onclick="viewScreen('library')">Library</button>
         <button onclick="viewScreen('market')">Market</button>
+        <button onclick="viewScreen('table-page')">Table</button>
+        <button onclick="viewScreen('collection')">Collection</button>
         <button onclick="viewScreen('contract')">Contract</button>
         <div id="coins">Coins:23</div>
     </div>
@@ -22,9 +23,18 @@
             <button onclick="viewScreen('library'); toggleNav()">Play</button>
         </div>
     
-        <!-- Library -->
-        <div id="library" class=" page">
-            <p>Library</p>
+        <!-- Table -->
+        <div id="table-page" class=" page">
+            <h1>Table</h1>
+
+            <div id="table" ondrop="drop(event)" ondragover="allowDrop(event)"> 
+            </div>            
+
+        </div>
+
+        <!-- Collection -->
+        <div id="collection" class=" page">
+            <h1>Library</h1>
 
             <div class="card-container-grid">
                 <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -45,6 +55,8 @@
                     </div>
     
                 </div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             </div>            
@@ -68,51 +80,38 @@
         <!-- Contract -->
         <div id="contract" class="hide page">
             <p>Contract</p>
+            <div class="card-container-grid">
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
+    
+                    <div class="card" id="cardc" draggable="true" ondragstart="drag(event, this)">
+                            <img draggable="false" src="./img/items/sword.svg" />
+                            <h2>Title D</h2>
+                            <p>Description</p>
+                    </div>
+    
+                </div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
+    
+                    <div class="card" id="cardd" draggable="true" ondragstart="drag(event)">
+                        <img draggable="false" src="./img/items/thorns crown.svg" />
+                        <h2>Title C</h2>
+                        <p>Description</p>
+                    </div>
+    
+                </div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div> 
         </div>
+    </div>
+
+    <div id="deck" ondrop="drop(event)" ondragover="allowDrop(event)">
+
     </div>
 </body>
 </html>
 
 <script src="utility.js"></script>
 <script src="main.js"></script>
-<script>
-    function runGame(){
-
-    }
-    
-    //Manage pages
-    function viewScreen(page){
-        let pages = document.getElementById('wrapper').querySelectorAll('.page')
-
-        pages.forEach(page => {
-            page.classList.add('hide')
-        })
-
-        el(page).classList.remove('hide')
-    }
-
-    //Show NAv
-    function toggleNav(){
-        el('nav').classList.toggle('hide')
-    }
-
-    let cards = [
-        {
-            "id": "physics",
-            "tags": []    
-        },
-        {
-            "id": "electricity",
-            "tags": []    
-        },
-        {
-            "id": "electricity",
-            "tags": []    
-        }
-    ]
-
-    let playerObj = {
-        "money": 12,
-        "ownedCards": []
-    }
-</script>

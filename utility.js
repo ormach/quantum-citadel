@@ -142,6 +142,12 @@ function countDuplicatesInArr(arr, type){
 
 }
 
+//12 char unique id
+function genId(prefix){
+    let id = prefix + Math.random().toString(12).slice(2)
+    return id
+}
+
 
 // Prevents the mobile browser behaviour that moves to the next or previous page
 // in your browser's history when you swipe in from the edge of the screen.
