@@ -52,6 +52,7 @@
 
 <body>
     <div id="nav" class="">
+        <!-- <img src="./img/bg/logo.svg" alt=""> -->
         <!-- <button onclick="viewScreen('market')">Market</button>
         <button onclick="viewScreen('table-page')">Table</button>
         <button onclick="viewScreen('collection')">Collection</button>
@@ -61,6 +62,9 @@
         <button onclick="el('table-page').scrollIntoView()">Table</button>
         <button onclick="el('collection-page').scrollIntoView()">Collection</button>
         <button onclick="el('contract').scrollIntoView()">Contract</button>
+        <button onclick="el('hand').classList.toggle('hand-shrink')">
+            <img src="./img/ico/slots.svg" alt="">
+        </button>
 
         <div id="" class="stat">
             <img src="./img/ico/coin.svg" alt="">
@@ -89,6 +93,10 @@
                     <button onclick="buy(1)">Buy a card</button>
                     <img src="./img/library/card.svg" alt="">
                 </div>
+                <div class="market-item">
+                    <button onclick="">Sell a card</button>
+                    <div id="sell-slot" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
             </div>
         </div>
 
@@ -96,12 +104,10 @@
         <div id="table-page" class=" page">
             <h1>Inspection table</h1>
             <div class="table-container">
-                <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"> 
-                </div>
+                <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     
                 <div id="inspector">
-                    
-                    <h1 id="name">Card name</h1>          
+                    <h1 id="name">45min remaining</h1>          
                     <p id="description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
                     <div id="year">1992</div>
                     <div id="tags">#Physics, #Gravity</div>
@@ -131,10 +137,10 @@
             <h1>Contract</h1>
             
             <div class="contract-container">
-                <button onclick="plObj.research.sellResearch()">Sell research paper</button>
                 <!-- <h1>Research title</h1> -->
                 <p>Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
                 <div id="research-paper" class="card-container-grid"></div> 
+                <button onclick="plObj.research.sellResearch()">Sell research paper</button>
             </div>
 
         </div>

@@ -53,6 +53,8 @@ button{
 button:hover{
     background-color: var(--b05);
 }
+
+/* NAVIGATION */
 #nav {
     position: fixed;
     bottom: 12px;
@@ -61,12 +63,14 @@ button:hover{
     width: calc(100% - 24px);
 
     display: flex;
+    /* flex-direction: column; */
     gap: 4px;
     padding: 4px;
     justify-content: center;
 
-    background-color: wheat;
+    background-color: rgb(135, 136, 139);
     border-radius: 12px;
+    border: 2px solid black;
 
     z-index: 5;
 }
@@ -74,25 +78,56 @@ button:hover{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: wheat;
     padding: 12px 18px 12px 12px;
 }
+#hand {
+    position: fixed;
+    bottom: 0px;
+    height: calc(var(--card-height) - 24px);
+    /* height: calc(var(--card-height) + 8px - 100px); */
+    width: calc(100% - 24px);
+
+    border-radius: 12px;
+
+    display: flex;
+    /* justify-content: center; */
+    gap: 4px;
+
+    padding: 4px;
+    margin: 12px;
+
+    background-color: black;
+    /* backdrop-filter: blur(2px); */
+    z-index: 3;
+
+    overflow-x: scroll;
+
+    transition: all 0.4s;
+}
+/* #hand:hover{
+    transition: all 0.2s;
+    height: calc(var(--card-height) + 8px );;
+} */
+.hand-shrink{
+    height: 104px !important;
+}
+
 
 #wrapper{
     display: flex;
+    flex-direction: column;
     align-content: flex-start;
     justify-content: flex-start;
-    /* gap: 48px; */
+    gap: 48px;
     /* padding: 0px 200px; */
+    padding: 96px 0 calc(var(--card-height) + 72px) 0;
+
 }
 .page {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 16px;
-
-    padding: 48px 48px var(--card-height) 48px;
-
     /* min-height: 100vh; */
     /* min-width: 600px; */
 }
@@ -178,35 +213,6 @@ button:hover{
 }
 
 
-#hand {
-    position: fixed;
-    bottom: 12px;
-    height: calc(var(--card-height) + 8px);
-    /* height: calc(var(--card-height) + 8px - 100px); */
-    width: calc(100% - 24px);
-
-    border-radius: 12px;
-
-    display: flex;
-    justify-content: center;
-    gap: 4px;
-
-    padding: 4px;
-    margin: 12px;
-
-    background-color: var(--b20);
-    backdrop-filter: blur(2px);
-    z-index: 3;
-
-    overflow-x: scroll;
-
-    transition: all 0.2s;
-}
-#hand:hover{
-    transition: all 0.2s;
-    height: calc(var(--card-height) + 8px );;
-}
-
 .contract-container{
     display: flex;
     flex-direction: column;
@@ -221,10 +227,11 @@ button:hover{
 
 }
 
+
 #market-container{
     display: flex;
     gap: 12px;
-    background-color: rgb(124, 129, 116);
+    background-color: rgb(180, 184, 172);
     padding: 56px;
 }
 .market-item{
@@ -234,6 +241,7 @@ button:hover{
     justify-content: space-between;
     height: 360px;
 }
+
 
 .table-container{
     display: flex;
@@ -258,6 +266,7 @@ button:hover{
     height: var(--card-height);
 }
 
+
 /* Collection */
 .collection-container{
     display: flex;
@@ -277,4 +286,5 @@ button:hover{
 }
 #collection{
     background-color: rgb(141, 141, 141);
+    box-shadow: 0px 1px 16px var(--b20);
 }
