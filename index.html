@@ -4,114 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library of Morr</title>
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <div id="nav" class="">
-        <button onclick="viewScreen('market')">Market</button>
+        <!-- <button onclick="viewScreen('market')">Market</button>
         <button onclick="viewScreen('table-page')">Table</button>
         <button onclick="viewScreen('collection')">Collection</button>
-        <button onclick="viewScreen('contract')">Contract</button>
-        <div id="coins">Coins:23</div>
+        <button onclick="viewScreen('contract')">Contract</button> -->
+
+        <button onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
+        <button onclick="el('table-page').scrollIntoView()">Table</button>
+        <button onclick="el('collection').scrollIntoView()">Collection</button>
+        <button onclick="el('contract').scrollIntoView()">Contract</button>
+
+        <div id="" class="stat">
+            <img src="./img/ico/coin.svg" alt="">
+            <span id="coin-indicator"></span>
+        </div>
     </div>
 
-    
+
     <div id="wrapper">
-        <div id="cover" class="hide page">
+        <!-- Start screen -->
+        <div id="cover" class="page hide">
             <h1>Library of morr</h1>
             <p>A science based web game where you collect cards to complete science related puzzles.</p>
             <button onclick="viewScreen('library'); toggleNav()">Play</button>
         </div>
     
+        <!-- Market -->
+        <div id="market" class=" page">
+            <h1>Market</h1>
+            <div id="market-container">
+                <div class="market-item">
+                    <button onclick="buy(3)">Buy pack (3)</button>
+                    <img src="./img/library/pack.svg" alt="">
+                </div>
+                <div class="market-item">
+                    <button onclick="buy(1)">Buy a card</button>
+                    <img src="./img/library/card.svg" alt="">
+                </div>
+            </div>
+        </div>
+
         <!-- Table -->
         <div id="table-page" class=" page">
-            <h1>Table</h1>
-
-            <div id="table" ondrop="drop(event)" ondragover="allowDrop(event)"> 
-            </div>            
-
+            <h1>Inspection table</h1>
+            <div class="table-container">
+                <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"> 
+                </div>
+    
+                <div id="inspector">
+                    Description:
+                    Name:
+                </div>
+            </div>
         </div>
+
 
         <!-- Collection -->
         <div id="collection" class=" page">
-            <h1>Library</h1>
-
-            <div class="card-container-grid">
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
-    
-                    <div class="card" id="carda" draggable="true" ondragstart="drag(event, this)">
-                            <img draggable="false" src="./img/items/shield.svg" />
-                            <h2>Title B</h2>
-                            <p>Description</p>
-                    </div>
-    
-                </div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
-    
-                    <div class="card" id="cardb" draggable="true" ondragstart="drag(event)">
-                        <img draggable="false" src="./img/items/acid vial.svg" />
-                        <h2>Title A</h2>
-                        <p>Description</p>
-                    </div>
-    
-                </div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            </div>            
-
-        </div>
-    
-        <!-- Market -->
-        <div id="market" class="hide page">
-            <p>Market</p>
-
-            <div class="card">
-                <img src="./img/items/acid vial.svg"/>
-                <h2>Title</h2>
-                <p>Description</p>
+            <h1>Collection</h1>
+            <div class="tab-group">
+                <button>Page 1</button>
+                <button>Page 2</button>
+                <button>Page 3</button>
             </div>
-
-            
-
+            <div id="album" class="card-container-grid"></div>            
         </div>
     
         <!-- Contract -->
-        <div id="contract" class="hide page">
-            <p>Contract</p>
-            <div class="card-container-grid">
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
-    
-                    <div class="card" id="cardc" draggable="true" ondragstart="drag(event, this)">
-                            <img draggable="false" src="./img/items/sword.svg" />
-                            <h2>Title D</h2>
-                            <p>Description</p>
-                    </div>
-    
-                </div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)">
-    
-                    <div class="card" id="cardd" draggable="true" ondragstart="drag(event)">
-                        <img draggable="false" src="./img/items/thorns crown.svg" />
-                        <h2>Title C</h2>
-                        <p>Description</p>
-                    </div>
-    
-                </div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                <div class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            </div> 
+        <div id="contract" class=" page">
+            <h1>Contract</h1>
+            <button onclick="plObj.research.sellResearch()">Sell research paper</button>
+
+            <div class="contract-container">
+                <!-- <h1>Research title</h1> -->
+                <p>Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
+                <div id="research-paper" class="card-container-grid"></div> 
+            </div>
+
         </div>
     </div>
 
-    <div id="deck" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-    </div>
+    <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 </body>
 </html>
 
 <script src="utility.js"></script>
+<script src="data.js"></script>
 <script src="main.js"></script>

@@ -1,5 +1,6 @@
 :root{
     --b20: rgba(0,0,0,0.2);
+    --w0: rgba(0,0,0,0.0);
     --b05: rgba(0,0,0,0.05);
     --card-width: 160px;
     --card-height: 220px;
@@ -11,8 +12,19 @@
     padding: 0;
     margin: 0;
 
-    font-family: sans-serif;
+    font-family: sans-serif !important;
     font-size: 16px;
+
+    scroll-behavior: smooth;
+
+    /* Prevents flexbox resizing */
+    /* align-self: start;  */
+    flex-grow: 0;
+    flex-shrink: 0; 
+}
+h1{
+    font-size: 32px;
+    font-weight: 600;
 }
 
 .hide {
@@ -28,26 +40,50 @@ body{
     background-color: var(--bg);
 }
 button{
-    padding: 8px 12px;
-    border: none;
+    padding: 16px 16px;
+    border: 2px solid var(--b20);
     cursor: pointer;
+    border-radius: 12px;
+    background-color: var(--w0);
+}
+button:hover{
+    background-color: var(--b05);
 }
 #nav {
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+
+    width: calc(100% - 24px);
+
     display: flex;
     gap: 4px;
     padding: 4px;
     justify-content: center;
+
+    background-color: wheat;
+    border-radius: 12px;
+
+    z-index: 5;
 }
+.tab-group{
+    display: flex;
+    gap: 4px;
+
+}
+
 .page {
     display: flex;
-    justify-content: center;
     align-items: center;
     /* min-height: 100vh; */
     flex-direction: column;
     gap: 16px;
 
-    padding-bottom: var(--card-height);
+    padding: 96px 0 var(--card-height) 0;
+
+    min-width: 600px;
 }
+
 .card{
     display: flex;
     flex-direction: column;
@@ -65,17 +101,18 @@ button{
 
     z-index: 2;
 }
-
 .card:hover{
-    box-shadow: 0px 5px 10px var(--b20);
+    box-shadow: 0px 0px 36px var(--b20);
     outline: 1px solid white;
-}
 
+	z-index: 3;
+
+	transform: translateY(-1px);
+	transition: all 150ms;
+}
 [draggable]:active {
     cursor: grabbing;
 }
-
-
 .card-container {
     display: flex;
     flex-direction: row;
@@ -89,52 +126,93 @@ button{
 
     position: relative;
 }
-
 .card-container > :nth-child(2) {
     position: absolute;
     left: 12px;
     top: 12px;
 }
-
 .card-container-grid{
     display: flex;
     gap: 4px;
     width: calc((var(--card-width) + 4px) * 2);
     flex-wrap: wrap;
 }
-
 .card img {
     width: 48px;
     height: 48px;
 }
 
-#deck {
+#hand {
     position: fixed;
-    bottom: -48px;
+    bottom: 0px;
     min-height: calc(var(--card-height));
-    min-width: 100vw;
+    width: calc(100% - 24px);
+    border-radius: 12px;
 
     display: flex;
     justify-content: center;
     gap: 4px;
 
     padding: 4px;
+    margin: 12px;
 
     background-color: var(--b20);
     backdrop-filter: blur(2px);
     z-index: 3;
+
+    overflow-x: scroll;
 }
 
-#table{
-    outline: 1px dashed black;
-    margin: 12px;
-    padding: 12px;
-    width: calc(80% - (12px * 4));
-    min-height: 100vh;
-
-    border-radius: 12px;
-
+#wrapper{
     display: flex;
-    gap: 2px;
-    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    gap: 96px;
+    padding: 0px 200px;
+}
+
+#contract{
+}
+.contract-container{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    padding: 56px;
+
+    width: 560px;
+
+    background-color: white;
+    box-shadow: 0px 0px 36px var(--b20);
+
+}
+
+#market-container{
+    display: flex;
+    gap: 12px;
+    border: 1px solid black;
+    padding: 56px;
+}
+.market-item{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: space-between;
+    height: 360px;
+}
+
+.table-container{
+    display: flex;
+    gap: 12px;
+
+    border: 1px solid black;
+    padding: 56px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: wheat;
+    padding: 12px 18px 12px 12px;
 }
