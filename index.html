@@ -4,9 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library of Morr</title>
+    
+    <!-- Share link preview -->
+    <meta property="og:title" content="Library Of Morr" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.gatesofmorr.com" />
+    <meta property="og:image:url" content="https://www.gatesofmorr.com/img/share-image.png" />
+    <meta property="og:image:type" content="image/png" >
+    <meta property="og:image:width" content="1200" >
+    <meta property="og:image:height" content="1200" >
+
+    <!-- Descriptions -->
+    <meta property="og:description" content="A free web rougelike with unique dice based combat system, many interesting items and map events." />
+    <meta name="description" content="A free web rougelike with unique dice based combat system, many interesting items and map events.">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="main.css">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Mono -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet"> -->
+
+    <!-- Grenze -->
+    <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- "UnifrakturMaguntia" 'UnifrakturCook' -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet"> -->
+
+    <!-- Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon"      sizes="180x180"    href="./favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32"      href="./favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16"      href="./favicon/favicon-16x16.png">
+    <link rel="manifest"                                 href="./favicon/site.webmanifest">
+    <link rel="mask-icon"                                href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 </head>
+
 <body>
     <div id="nav" class="">
         <!-- <button onclick="viewScreen('market')">Market</button>
@@ -16,7 +59,7 @@
 
         <button onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
         <button onclick="el('table-page').scrollIntoView()">Table</button>
-        <button onclick="el('collection').scrollIntoView()">Collection</button>
+        <button onclick="el('collection-page').scrollIntoView()">Collection</button>
         <button onclick="el('contract').scrollIntoView()">Contract</button>
 
         <div id="" class="stat">
@@ -57,30 +100,38 @@
                 </div>
     
                 <div id="inspector">
-                    Description:
-                    Name:
+                    
+                    <h1 id="name">Card name</h1>          
+                    <p id="description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
+                    <div id="year">1992</div>
+                    <div id="tags">#Physics, #Gravity</div>
+                    <div id="people">Robert Parker (discovery)</div>
+                    <div id="rarity">Rare</div>
                 </div>
             </div>
         </div>
 
 
         <!-- Collection -->
-        <div id="collection" class=" page">
+        <div id="collection-page" class=" page">
             <h1>Collection</h1>
-            <div class="tab-group">
-                <button>Page 1</button>
-                <button>Page 2</button>
-                <button>Page 3</button>
+            <div class="collection-container">
+                <div class=" tab-group">
+                    <button>Page 1</button>
+                    <button>Page 2</button>
+                    <button>Page 3</button>
+                    <button>+</button>
+                </div>
+                <div id="collection" class="card-container-grid"></div>            
             </div>
-            <div id="album" class="card-container-grid"></div>            
         </div>
     
         <!-- Contract -->
         <div id="contract" class=" page">
             <h1>Contract</h1>
-            <button onclick="plObj.research.sellResearch()">Sell research paper</button>
-
+            
             <div class="contract-container">
+                <button onclick="plObj.research.sellResearch()">Sell research paper</button>
                 <!-- <h1>Research title</h1> -->
                 <p>Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
                 <div id="research-paper" class="card-container-grid"></div> 
@@ -94,5 +145,6 @@
 </html>
 
 <script src="utility.js"></script>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="main.js"></script>

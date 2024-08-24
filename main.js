@@ -82,16 +82,26 @@
             card.setAttribute('draggable','true')
             card.setAttribute('ondragstart','drag(event)')
 
+            let cardImg = this.name
+            // cardImg = 'placeholder'
+
             card.innerHTML = `
-                <img draggable="false" src="./img/ph-icons/${this.name}.svg" />
-                <h2>${this.name}</h2>
-                <p>Description</p>        
+                <div class ="card-frame">
+                    <div class="card-data">
+                        <img src="./img/card/marker/rare.svg"/>
+                        <h2>${upp(this.name)}</h2>
+                    </div>
+                <div/>
             `
+            card.setAttribute('style',`background-image: url("./img/card/${cardImg}.svg")`)
+            
+
+            // <p>Description</p>        
 
             //On right click event
             card.addEventListener("contextmenu", (event) => {
-                event.preventDefault();
-                moveCard(card)
+                // event.preventDefault();
+                // moveCard(card)
             });
 
             return card
@@ -107,6 +117,7 @@
     function buy(quant){
         if(plObj.coins > 5){
             plObj.changeCoins(-5 * quant)
+
             plObj.genCard(quant)
         }
     }
@@ -114,15 +125,20 @@
     //PLAYER
     class PlayerObj{
         constructor(){
-            this.coins = 27
+            this.coins = config.gold
         }
         changeCoins(value){
             this.coins += value
             updateUI()
         }
-        genCard(number){
+        genCard(number, name){
             for(let i = 0; i < number; i++){
                 let card = new Card(rarr(cardsRef).id)
+
+                if(name != undefined){
+                    card = new Card(name)
+                }
+
                 let cardElem = card.genHtml()
                 el('hand').append(cardElem)
             }
@@ -133,7 +149,7 @@
     class Album{
         constructor(){
             this.width = 4
-            this.height = 4
+            this.height = 2
         }
 
         genSlots(){
@@ -145,11 +161,19 @@
                 slot.setAttribute('ondrop','drop(event)')
                 slot.setAttribute('ondragover', 'allowDrop(event)')
 
-                el('album').append(slot)
+                el('collection').append(slot)
             }
 
-            //Set album width
-            el('album').setAttribute('style',`width: calc((var(--card-width) + 4px) * ${this.width})`)
+            //Set collection width
+            let gap = 4
+            let padding = 24
+
+            el('collection').setAttribute('style',
+                `
+                    width: calc(((var(--card-width) + ${gap}px) * ${this.width}) + (2 * ${padding}px));
+                    padding:${padding}px;
+                ` 
+            )
         }
     }
     
@@ -175,7 +199,7 @@
                 el('research-paper').append(slot)
             }
 
-            //Set album width
+            //Set collection width
             el('research-paper').setAttribute(
                 'style',
                 `width: calc(
@@ -200,13 +224,18 @@
         plObj = new PlayerObj();
         updateUI()
 
-        //new album
-        plObj.album = new Album()
-        plObj.album.genSlots();
+        //new collection
+        plObj.collection = new Album()
+        plObj.collection.genSlots();
 
         //gen init contract
         plObj.research = new Research
         plObj.research.new()
+
+        //Gen test card
+        let card = new Card('gravity')
+        el('table').append(card.genHtml())
+
     }
     
 //Fetch csv file, parse to JSON, assing it to reg obj
