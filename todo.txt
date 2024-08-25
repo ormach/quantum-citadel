@@ -1,0 +1,7 @@
++ card rarity symbols
+- contract puzzle using rarity symbols
+- inspector showing meta data
+- timers
+   - reocurring card rewards (every n min)
+- collection pages
+- LS storing game state

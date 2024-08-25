@@ -68,11 +68,41 @@
     }
 
 
-//GAME ELEMS
+//GAME
+    class Game {
+        constructor(){
+            //Storge per game section, place in LS and build board state from this obj.
+            this.plObj = new PlayerObj()
+            this.market = []
+            this.inspector = []
+            this.collection = []
+            this.contract = []
+        }
+    }
+
+//CARD
     class Card {
         constructor(cardName){
             this.cardId = genId('cr')
             this.name = cardName
+
+            //Pick card rarity
+            let roll = rng(100)
+            if(roll > 99){
+                this.rarity = 'set'
+            }
+            else if (roll > 98){
+                this.rarity = 'legendary'
+            }
+            else if (roll > 90){
+                this.rarity = 'epic'
+            }
+            else if (roll > 70){
+                this.rarity = 'rare'
+            }
+            else {
+                this.rarity = 'common'
+            }
         }
 
         genHtml(){
@@ -88,7 +118,7 @@
             card.innerHTML = `
                 <div class ="card-frame">
                     <div class="card-data">
-                        <img src="./img/card/marker/rare.svg"/>
+                        <img src="./img/card/rarity/${this.rarity}.svg"/>
                         <h2>${upp(this.name)}</h2>
                     </div>
                 <div/>
@@ -110,7 +140,9 @@
     
     //Move to Card class somehow
     function moveCard(cardElem){
-        el('hand').appendChild(cardElem)
+        // el('hand').appendChild(cardElem)
+        el('hand').insertBefore(cardElem, el('hand').firstChild)
+    
     }
 
     //SHOP
@@ -126,6 +158,7 @@
     class PlayerObj{
         constructor(){
             this.coins = config.gold
+            this.collection = new Collection
         }
         changeCoins(value){
             this.coins += value
@@ -140,16 +173,25 @@
                 }
 
                 let cardElem = card.genHtml()
-                el('hand').append(cardElem)
+                // el('hand').append(cardElem)
+                el('hand').insertBefore(cardElem, el('hand').firstChild)
+
             }
         }
     }
 
-    //ALBUM
-    class Album{
+//COLLECTION
+    class Collection{
         constructor(){
             this.width = 4
             this.height = 2
+            this.pages = [
+                {"page 1": [
+                    //card obj
+                ]},
+                {"page 2": []},
+                {"page 3": []}
+            ]
         }
 
         genSlots(){
@@ -175,20 +217,31 @@
                 ` 
             )
         }
+
+        //Change page
+        //Clears all slots
+        //Adds cards from another page to slots
     }
     
-    //CONTRACT
+//CONTRACT
     class Research{
         constructor(){
             this.researchId = genId('re')
-            this.width = 2
+            this.width = rng(4)
             this.height = 1
+            this.raritySequence = []
+
+            //Gemnerate rarity puzzle
+            for(let i=0;i< this.width * this.height; i++){
+                this.raritySequence.push(rarr(cardRarityRef))
+            }
         }
 
         new(){
             let slotQuantity = this.width * this.height;
             el('research-paper').innerHTML = ''
 
+        
             //Move slots to a separate function
             for(let i = 0; i < slotQuantity; i++){
                 let slot = document.createElement('div')
@@ -206,10 +259,21 @@
                     (var(--card-width) + 4px) * ${this.width}
                 )`
             )
+
+            this.raritySequence.forEach(node => {
+                let img = document.createElement('img')
+                img.setAttribute('src', `./img/card/rarity/${node}.svg`)
+
+                el('research-paper').append(img)
+            })
         }
 
         sellResearch(){
+            //Compare card in slots with rarity sequence
+
+
             plObj.changeCoins(10)
+            plObj.research = new Research()
             plObj.research.new()
         }
     }
@@ -221,11 +285,10 @@
     function startGame(){
 
         //gen player
-        plObj = new PlayerObj();
+        let g = new Game
         updateUI()
 
         //new collection
-        plObj.collection = new Album()
         plObj.collection.genSlots();
 
         //gen init contract
@@ -239,7 +302,7 @@
     }
     
 //Fetch csv file, parse to JSON, assing it to reg obj
-    fetch('./data.csv')
+    fetch('./Library game cards [2024] - Sheet1.csv')
         .then(response => response.text())
         .then(csvText  => {cardsRef = JSON.parse(csvJSON(csvText))})
         .then(startGame())

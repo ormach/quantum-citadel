@@ -83,7 +83,7 @@ button:hover{
 #hand {
     position: fixed;
     bottom: 0px;
-    height: calc(var(--card-height) - 24px);
+    height: 104px;
     /* height: calc(var(--card-height) + 8px - 100px); */
     width: calc(100% - 24px);
 
@@ -109,7 +109,7 @@ button:hover{
     height: calc(var(--card-height) + 8px );;
 } */
 .hand-shrink{
-    height: 104px !important;
+    height: calc(var(--card-height) - 24px) !important;
 }
 
 
@@ -173,7 +173,7 @@ button:hover{
 }
 .card-data img{
     position: absolute;
-    top: 6px;
+    top: 3px;
 }
 /* .card-frame{
     position: absolute;
@@ -220,7 +220,7 @@ button:hover{
 
     padding: 56px;
 
-    width: 560px;
+    /* width: 560px; */
 
     background-color: rgb(214, 214, 206);
     box-shadow: 0px 0px 36px var(--b20);

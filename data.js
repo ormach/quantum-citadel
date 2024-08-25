@@ -45,3 +45,5 @@ let cardsRef = [
         name: "spacetime"
     }
 ]
+
+let cardRarityRef = ['common', 'rare', 'epic', 'legendary', 'set']
