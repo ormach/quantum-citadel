@@ -25,6 +25,7 @@ body{
     height: 100vh;
     background-color: var(--bg);
     font-family: sans-serif;
+    line-height: 150%;
 }
 
 h1{
@@ -33,7 +34,7 @@ h1{
     font-family: 'Grenze', sans-serif;
 }
 h2{
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 400;
     font-family: 'Grenze', sans-serif;
 }
@@ -68,8 +69,8 @@ button:hover{
     padding: 4px;
     justify-content: center;
 
-    background-color: rgb(135, 136, 139);
-    border-radius: 12px;
+    background-color: rgb(176, 176, 176);
+    border-radius: 11px;
     border: 2px solid black;
 
     z-index: 5;
@@ -83,11 +84,11 @@ button:hover{
 #hand {
     position: fixed;
     bottom: 0px;
-    height: 104px;
+    height: 112px;
     /* height: calc(var(--card-height) + 8px - 100px); */
     width: calc(100% - 24px);
 
-    border-radius: 12px;
+    border-radius: 6px 6px 12px 12px;
 
     display: flex;
     /* justify-content: center; */
@@ -142,8 +143,10 @@ button:hover{
     width: var(--card-width);
 
     background-color: var(--card-bg);
+    box-shadow: 0px 1px 0px var(--b20);
+
     /* outline: 2px solid white; */
-    border-radius: 12px;
+    border-radius: 2px;
 
     overflow: hidden;
     cursor: grab;
@@ -163,17 +166,17 @@ button:hover{
     position: absolute;
 }
 .card-data{
-    background-color: white;
+    /* background-color: white; */
     display: flex;
     justify-content: center;
     padding: 4px;
     color: rgb(0, 0, 0);
 
-    outline: 2px solid black;
+    /* outline: 2px solid black; */
 }
 .card-data img{
     position: absolute;
-    top: 3px;
+    top: 4px;
 }
 /* .card-frame{
     position: absolute;
@@ -242,8 +245,11 @@ button:hover{
     height: 360px;
 }
 
-
+/* TABLE */
 .table-container{
+    /* height: 400px; */
+    /* width: 800px; */
+
     display: flex;
     gap: 48px;
 
@@ -254,6 +260,7 @@ button:hover{
     width: calc(var(--card-width) + 24px);
     height: calc(var(--card-height) + 24px);
     padding: 12px;
+    margin-bottom: 12px;
 
     outline: 2px dashed rgba(0, 0, 0, 0.211);
 }
@@ -262,8 +269,8 @@ button:hover{
     flex-direction: column;
     justify-content: center;
     gap: 16px;
-    width: 320px;
-    height: var(--card-height);
+    width: 440px;
+    /* height: var(--card-height); */
 }
 
 
@@ -284,7 +291,7 @@ button:hover{
     border-radius: 0;
     background-color: rgb(246, 237, 185);
 }
-#collection{
+.collection{
     background-color: rgb(141, 141, 141);
     box-shadow: 0px 1px 16px var(--b20);
 }

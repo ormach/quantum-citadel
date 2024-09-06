@@ -51,6 +51,7 @@
 </head>
 
 <body>
+<!-- Navigation -->
     <div id="nav" class="">
         <!-- <img src="./img/bg/logo.svg" alt=""> -->
         <!-- <button onclick="viewScreen('market')">Market</button>
@@ -66,22 +67,29 @@
             <img src="./img/ico/slots.svg" alt="">
         </button>
 
-        <div id="" class="stat">
+        <!-- Stats -->
+        <div id="coins" class="stat">
             <img src="./img/ico/coin.svg" alt="">
             <span id="coin-indicator"></span>
         </div>
+
+        <div id="exp" class="stat">
+            <img src="./img/ico/time.svg" alt="">
+            <span id="exp-indicator">Level:1 (1/14 exp)</span>
+        </div>
     </div>
 
-
+<!-- Pages -->
     <div id="wrapper">
-        <!-- Start screen -->
+
+<!-- Start screen -->
         <div id="cover" class="page hide">
             <h1>Library of morr</h1>
             <p>A science based web game where you collect cards to complete science related puzzles.</p>
             <button onclick="viewScreen('library'); toggleNav()">Play</button>
         </div>
     
-        <!-- Market -->
+<!-- Market -->
         <div id="market" class=" page">
             <h1>Market</h1>
             <div id="market-container">
@@ -100,47 +108,43 @@
             </div>
         </div>
 
-        <!-- Table -->
+<!-- Inspection table -->
         <div id="table-page" class=" page">
             <h1>Inspection table</h1>
             <div class="table-container">
-                <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div>
+                    <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <button id="inspectButton" onclick="g.plObj.pay(config.inspectionCost, 'inspect')">Inspect (50$)</button>
+                </div>
     
                 <div id="inspector">
-                    <h1 id="name">45min remaining</h1>          
-                    <p id="description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
-                    <div id="year">1992</div>
-                    <div id="tags">#Physics, #Gravity</div>
-                    <div id="people">Robert Parker (discovery)</div>
-                    <div id="rarity">Rare</div>
+                    <p>Add card into the slot, then press Inspect to identify it.</p>          
                 </div>
             </div>
         </div>
 
-
-        <!-- Collection -->
+<!-- Collection -->
         <div id="collection-page" class=" page">
             <h1>Collection</h1>
             <div class="collection-container">
                 <div class=" tab-group">
-                    <button>Page 1</button>
-                    <button>Page 2</button>
-                    <button>Page 3</button>
+                    <button onclick="g.collection.loadPage('page1')">Page 1</button>
+                    <button onclick="g.collection.loadPage('page2')">Page 2</button>
+                    <button onclick="g.collection.loadPage('page3')">Page 3</button>
                     <button>+</button>
                 </div>
-                <div id="collection" class="card-container-grid"></div>            
+                <div id="collection" class="card-container-grid collection"></div>            
             </div>
         </div>
     
-        <!-- Contract -->
+<!-- Contract -->
         <div id="contract" class=" page">
-            <h1>Contract</h1>
             
             <div class="contract-container">
-                <!-- <h1>Research title</h1> -->
-                <p>Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
+                <h1>Contract</h1>
+                <p id="contract-description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
                 <div id="research-paper" class="card-container-grid"></div> 
-                <button onclick="plObj.research.sellResearch()">Sell research paper</button>
+                <button onclick="g.plObj.research.sellResearch()">Sell research paper</button>
             </div>
 
         </div>

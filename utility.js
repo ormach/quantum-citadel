@@ -55,7 +55,7 @@ function removeFromArr(data, elem){ //Removes elem from array
         }
 }
 
-function el(id, mod){//Returns gtml elem by id
+function el(id, mod){//Returns html elem by id
     if(mod === 'all' && id.startsWith('.')){
         return document.querySelectorAll(id)
     }
@@ -79,14 +79,25 @@ function upp(string){//Sets 1st letter to uppercase
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-function findByProperty(dataArr, propertyName, propertyValue){ //Used to find items by id in array
+//Used to find items by id in array
+function findByProperty(dataArr, propertyName, propertyValue, mode){
     let foundItem
-    dataArr.forEach(item => {
-        if(item[propertyName] === propertyValue){
-            // log(item)
-            foundItem = item
-        }
-    })
+
+    //Returns array of items
+    if(mode === 'includes'){
+        foundItem = dataArr.filter(        
+            (item) => item[propertyName].includes(propertyValue)
+        )
+    }
+    //Returns one item
+    else{
+        dataArr.forEach(item => {
+            if(item[propertyName] === propertyValue){
+                // log(item)
+                foundItem = item
+            }
+        })
+    }
 
     return foundItem
 }
@@ -155,13 +166,15 @@ function csvJSON(csv){
 
     var result = [];
 
+    // console.table(lines);
+    
     // NOTE: If your columns contain commas in their values, you'll need
     // to deal with those before doing the next step 
     // (you might convert them to &&& or something, then covert them back later)
-    // jsfiddle showing the issue https://jsfiddle.net/
     var headers=lines[0].split(",");
 
-    for(var i=1;i<lines.length;i++){
+    //i=2 to skip two 1st rows
+    for(var i=2;i<lines.length;i++){
 
         var obj = {};
         var currentline=lines[i].split(",");
@@ -171,12 +184,25 @@ function csvJSON(csv){
         }
 
         result.push(obj);
-
-    }
+    } 
+    
+    //Replaces chars because fucking google sheet cant export with custom dilimiter
+    let resultFix = findReplace(result, "|", ",")
+    // console.table(resultFix);
 
     //return result; //JavaScript object
-    return JSON.stringify(result); //JSON
-    }
+    return JSON.stringify(resultFix); //JSON
+}
+
+// Find all key-value pairs and replace a character in each value
+function findReplace(obj, oldVal, newVal){
+
+    result = JSON.parse(
+        JSON.stringify(obj).replaceAll(oldVal, newVal)
+    );
+
+    return result
+}
 
 
 // Prevents the mobile browser behaviour that moves to the next or previous page

@@ -1,3 +1,7 @@
 let config = {
-    gold: 9999
+
+    gold: 155,
+    cardCost: 10,
+    inspectionCost: 20,
+
 }
