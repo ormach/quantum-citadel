@@ -79,6 +79,10 @@ function upp(string){//Sets 1st letter to uppercase
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
+function clearLs(){
+    localStorage.clear();
+}
+
 //Used to find items by id in array
 function findByProperty(dataArr, propertyName, propertyValue, mode){
     let foundItem

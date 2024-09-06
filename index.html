@@ -91,14 +91,14 @@
     
 <!-- Market -->
         <div id="market" class=" page">
-            <h1>Market</h1>
             <div id="market-container">
+                <h1>Market</h1>
                 <div class="market-item">
-                    <button onclick="buy(3)">Buy pack (3)</button>
+                    <button onclick="g.plObj.pay(config.cardCost, 'buy', 3)">Buy pack (3)</button>
                     <img src="./img/library/pack.svg" alt="">
                 </div>
                 <div class="market-item">
-                    <button onclick="buy(1)">Buy a card</button>
+                    <button onclick="g.plObj.pay(config.cardCost, 'buy')">Buy a card</button>
                     <img src="./img/library/card.svg" alt="">
                 </div>
                 <!-- <div class="market-item">
@@ -110,8 +110,8 @@
 
 <!-- Inspection table -->
         <div id="table-page" class=" page">
-            <h1>Inspection table</h1>
             <div class="table-container">
+                <h1>Inspection table</h1>
                 <div>
                     <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                     <button id="inspectButton" onclick="g.plObj.pay(config.inspectionCost, 'inspect')">Inspect (50$)</button>
@@ -125,7 +125,6 @@
 
 <!-- Collection -->
         <div id="collection-page" class=" page">
-            <h1>Collection</h1>
             <div class="collection-container">
                 <div class=" tab-group">
                     <button onclick="g.collection.loadPage('page1')">Page 1</button>
@@ -144,7 +143,7 @@
                 <h1>Contract</h1>
                 <p id="contract-description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
                 <div id="research-paper" class="card-container-grid"></div> 
-                <button onclick="g.plObj.research.sellResearch()">Sell research paper</button>
+                <button onclick="g.research.sellResearch()">Sell research paper</button>
             </div>
 
         </div>

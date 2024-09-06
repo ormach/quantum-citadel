@@ -48,6 +48,9 @@
         //Update card location
         findByProperty(g.cards, 'cardId', draggedCard.id).location = targetContainer.id
 
+        //Save game on card movement
+        g.saveGame()
+
         // console.log(
         //     findByProperty(g.cards, 'cardId', draggedCard.id)
         // );   
@@ -71,10 +74,6 @@
         el('nav').classList.toggle('hide')
     }
 
-    function updateUI(){
-        el('coin-indicator').innerHTML = `${g.plObj.coins}`
-    }
-
 
 //GAME
     class Game {
@@ -86,24 +85,64 @@
             this.collection = new Collection
         }
 
+        saveGame(){
+            localStorage.setItem('gameData', JSON.stringify(g))
+        }
+
+        //Check if game state available and override stuff
+        loadGame(){
+            let data = localStorage.getItem('gameData')
+    
+            if(typeof data === 'string'){
+                console.log('Game: Game loaded.');
+    
+                //Store loaded data
+                g.ref = JSON.parse(data)
+    
+                //Override game values?
+            }
+            else{
+                console.log('Game: No saved game found.');
+                return false
+            }
+        }
+
+        //Regen html based on game state
+        updateUI(){
+            el('coin-indicator').innerHTML = `${g.plObj.coins}`
+    
+            //Allocate cards
+            g.cards.forEach(card => {
+                let cardElem = card.genHtml()
+                console.log(cardElem);
+                
+            })
+        }
+
         //Creates card elements
         genCard(number, locationId, name){
             for(let i = 0; i < number; i++){
                 let card
 
+                //Generate card object
+                //Generate by name
                 if(name != undefined){
-                    card = new Card(name)                    
+                    card = new Card(name) 
+
+                //If no name generate random               
                 } else {
-                    card = new Card(rarr(cardsRef).id)
+                    card = new Card(rarr(cardsRef).name)
                 }
 
+                //Generate html element                
                 let cardElem = card.genHtml()
-                // el('hand').append(cardElem)
                 card.location = locationId
 
+                //If you add to hand, add to the start of the row
                 if(locationId === 'hand'){
                     el(locationId).insertBefore(cardElem, el(locationId).firstChild)
                 }
+                //Else add to slot
                 else{
                     el(locationId).append(cardElem)
                 }                
@@ -128,16 +167,20 @@
                 //Add to container
             }
         }
+
     }
+
 
 //CARD
     class Card {
-        constructor(cardName){
-                        
-            let cardRefObj = findByProperty(cardsRef, 'id', cardName)            
+        constructor(cardName, mode){
+
+            let cardRefObj = findByProperty(cardsRef, 'name', cardName)            
+            // console.log(cardRefObj);
+            
 
             this.cardId = genId('cr')
-            this.name = cardName
+            this.name = cardRefObj.name
             this.location = '' //stores id of location elem
             this.description = cardRefObj.description
             this.tags = cardRefObj.tags
@@ -160,7 +203,7 @@
             else {
                 this.rarity = 'common'
             }
-
+                     
             g.cards.push(this)            
         }
 
@@ -173,20 +216,14 @@
             card.setAttribute('ondragstart','drag(event)')
 
             let cardImg = this.name
-            // cardImg = 'placeholder'
 
-            // <div class ="card-frame">
-            // <div/>
             card.innerHTML = `
                     <div class="card-data">
                         <img src="./img/card/rarity/${this.rarity}.svg"/>
                         <h2>${upp(this.name)}</h2>
                     </div>
             `
-            card.setAttribute('style',`background-image: url("./img/card/${cardImg}.svg")`)
-            
-
-            // <p>Description</p>        
+            card.setAttribute('style',`background-image: url("./img/card/${cardImg}.svg")`)    
 
             //On right click event
             card.addEventListener("contextmenu", (event) => {
@@ -206,12 +243,7 @@
     }
 
     //SHOP
-    function buy(quant){
-        if(g.plObj.pay(config.cardPrice * quant)
-        ){
-            g.genCard(quant, 'hand')
-        }
-    }
+    //In plObj
     
     //PLAYER
     class PlayerObj{
@@ -222,18 +254,23 @@
         //Modify coin value
         changeCoins(value){
             this.coins += value
-            updateUI()
+            g.updateUI()
         }
 
         //Pay for something
-        pay(value, operation, operationValue){
-            if(this.coins >= value){
-                this.changeCoins(-Math.abs(value)) 
+        pay(cost, operation, operationValue){
+            
+            if(operationValue === undefined){           
+                operationValue = 1
+            }
+
+            if(this.coins >= cost * operationValue){
+                this.changeCoins(-Math.abs(cost * operationValue)) 
                 if(typeof operation === 'string' && operation === 'inspect'){
                     g.inspectionTable.inspect()
                 }
                 else if (operation === 'buy'){
-                    buy(operationValue)
+                    g.genCard(operationValue, 'hand')
                 }
                 //Use this for generic cases
                 //Wrap pay() in if statement
@@ -241,10 +278,13 @@
                     return true      
                 }
             }
+
             //Can't pay
             else{
                 console.log(`Can't pay`);
             }
+
+            g.saveGame()
         }
     }
 
@@ -309,22 +349,26 @@
         }
 
         loadPage(pageId){
+
+            //Update page id of html elem and in game opbject
             el(this.page).id = pageId
             this.page = pageId
+
+            //Regen slots
             this.genSlots()
 
+            //Regen cards
             g.cards.forEach(card => {
-                console.log(card.location.includes(pageId));
-                //If card location contains page id
-                //Add card to page
+                if(card.location.includes(pageId)){
+                    el(card.location).append(card.genHtml())
+                }      
             })
-            console.log(`Collection: ${pageId} page loaded`);
-            
+
+            console.log(`Collection: ${pageId} page loaded`); 
         }
 
-        //Change page
-        //Clears all slots
-        //Adds cards from another page to slots
+        //Convert page to pages, generate tabs from pages values.
+        //Add option to add new pages
     }
     
 //CONTRACT
@@ -339,18 +383,17 @@
             //Generate rarity puzzle
             for(let i=0;i< this.width * this.height; i++){
                 this.raritySequence.push(rarr(cardRarityRef))
-            }
-
-            //Generate description quest
-            //Pick a card from album
-            //Get all cards from album                
-            this.contractCard = rarr(g.cards)
-            console.log(this.contractCard);
-            
+            }  
         }
 
         //Creates html elem
         new(){
+            if(g.cards.length <1){
+                return
+            }
+
+            this.contractCard = rarr(g.cards)
+
             el('research-paper').innerHTML = ''
 
             let slotQuantity = this.width * this.height;
@@ -377,6 +420,10 @@
         }
 
         sellResearch(){
+            if(g.cards.length <1){
+                return
+            }
+
             //Check placed cards 
             let addedCards = findByProperty(g.cards, 'location', 'research', 'includes')
             console.log(addedCards);
@@ -384,47 +431,55 @@
             //Win if card matches
             if(addedCards != undefined && findByProperty(addedCards, 'name', this.contractCard.name) != undefined){
                 console.log('you win');
-                
-                g.plObj.changeCoins(500)
+                g.plObj.changeCoins(config.researchReward)
             //Loose
             } else{
                 console.log('you loose');
-                g.plObj.changeCoins(-500)
+                g.plObj.changeCoins(-config.researchReward)
  
             }
 
-            g.plObj.research = new Research()
-            g.plObj.research.new()
+            g.research = new Research()
+            g.research.new()
+
+            //Remove cards from g.cards after completing the research
+            addedCards.forEach(card => {
+                removeFromArr(g.cards, card)
+            })
         }
     }
 
 
 //START GAME
     let g //global game variable
-    let cardsRef
+    let cardsRef //required due to fetch
+
     function startGame(){
 
         g = new Game
-        updateUI()
 
-        //new collection
+        //Load/generate game
+        g.loadGame()
+        g.updateUI()
+
+        //New collection
         g.collection.genSlots();
 
-        //assign card reft
+        //Assign card ref
         g.cardsRef = cardsRef
-        
+
+        //Gen init contract
+        g.research = new Research
+        g.research.new()
+    }
+
+    function forTesting(){
         //Gen test card
         g.genCard(1, `${g.collection.page}-slot0`, 'statics')
         g.genCard(1, `${g.collection.page}-slot1`, 'impulse')
         g.genCard(1, `${g.collection.page}-slot2`, 'mass')
         g.genCard(1, `${g.collection.page}-slot3`, 'acceleration')
         g.genCard(1, `${g.collection.page}-slot4`, 'light')
-
-        //gen init contract
-        g.plObj.research = new Research
-        g.plObj.research.new()
-
-        // el('table').append(card.genHtml())
     }
     
 //Fetch csv file, parse to JSON, assing it to reg obj
