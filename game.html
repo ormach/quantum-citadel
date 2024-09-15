@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phyrary Cards</title>
+    
+    <!-- Share link preview -->
+    <meta property="og:title" content="Library Of Morr" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.gatesofmorr.com" />
+    <meta property="og:image:url" content="https://www.gatesofmorr.com/img/share-image.png" />
+    <meta property="og:image:type" content="image/png" >
+    <meta property="og:image:width" content="1200" >
+    <meta property="og:image:height" content="1200" >
+
+    <!-- Descriptions -->
+    <meta property="og:description" content="A free web rougelike with unique dice based combat system, many interesting items and map events." />
+    <meta name="description" content="A free web rougelike with unique dice based combat system, many interesting items and map events.">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="main.css">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Mono -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet"> -->
+
+    <!-- Grenze -->
+    <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- "UnifrakturMaguntia" 'UnifrakturCook' -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet"> -->
+
+    <!-- Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon"      sizes="180x180"    href="./favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32"      href="./favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16"      href="./favicon/favicon-16x16.png">
+    <link rel="manifest"                                 href="./favicon/site.webmanifest">
+    <link rel="mask-icon"                                href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+<!-- Navigation -->
+    <div id="nav" class="">
+        <button onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
+        <button onclick="el('table-page').scrollIntoView()">Table</button>
+        <button onclick="el('collection-page').scrollIntoView()">Collection</button>
+        <button onclick="el('contract').scrollIntoView()">Contract</button>
+        <button onclick="el('hand').classList.toggle('hand-shrink')">
+            <img src="./img/ico/slots.svg" alt="">
+        </button>
+        <button onclick="clearLs(), location.reload()">RL</button>
+
+
+        <!-- Stats -->
+        <!-- <div id="exp" class="stat">
+            <img src="./img/ico/time.svg" alt="">
+            <span id="exp-indicator">1 (1/14 exp)</span>
+        </div> -->
+
+        <div id="coins" class="stat">
+            <img src="./img/ico/coin.svg" alt="">
+            <span id="coin-indicator"></span>
+        </div>
+    </div>
+    <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+
+<!-- Pages -->
+    <div id="wrapper">
+
+<!-- Start screen -->
+        <div id="cover" class="page hide">
+            <h1>Library of morr</h1>
+            <p>A science based web game where you collect cards to complete science related puzzles.</p>
+            <button onclick="viewScreen('library'); toggleNav()">Play</button>
+        </div>
+    
+<!-- Market -->
+        <div id="market" class=" page">
+            <div id="market-container">
+                <h1>Market</h1>
+
+                <div class="row">
+                    <div class="market-item">
+                        <img src="./img/library/pack.svg" alt="">
+                        <button id="market-pack-3" onclick="g.plObj.pay(config.cardCost, 'buy', 3)">Buy pack (3)</button>
+                    </div>
+
+                    <div class="market-item">
+                        <img src="./img/library/pack-electrostatics.svg" alt="">
+                    </div>
+
+                    <div class="market-item">
+                        <img src="./img/library/pack-energy.svg" alt="">
+                    </div>
+
+                    <div class="market-item">
+                        <img src="./img/library/pack-nuclear-physics.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Contract -->
+        <div id="contract" class=" page">
+            
+            <div class="contract-container">
+                <h1 id="contract-heading">Contract</h1>
+                <p id="contract-description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
+                <div id="contract-content" class="card-container-grid"></div>
+                <div class="row">
+                    <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
+                    <button id="contract-button-skip" onclick="g.plObj.pay(config.researchSkip, 'skip research')"></button>
+                </div> 
+            </div>
+
+        </div>
+
+<!-- Collection -->
+        <div id="collection-page" class=" page">
+            <div class="collection-container">
+                <div class=" tab-group">
+                    <button onclick="g.collection.loadPage('page1')">Page 1</button>
+                    <button onclick="g.collection.loadPage('page2')">Page 2</button>
+                    <button onclick="g.collection.loadPage('page3')">Page 3</button>
+                    <button>+</button>
+                </div>
+                <div id="collection" class="card-container-grid collection"></div>            
+            </div>
+        </div>
+
+<!-- Inspection table -->
+        <div id="table-page" class=" page">
+            <div class="table-container">
+                <h1>Inspection table</h1>
+
+                <div class="row">
+                    <div>
+                        <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <button id="inspectButton" onclick="g.plObj.pay(config.inspectionCost, 'inspect')"></button>
+                    </div>
+
+                    <div id="inspector">
+                        <p>Add card into the slot, then press Inspect to identify it.</p>          
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+<!-- Notification -->
+<!-- ALERT -->
+    <div id="alert" class="hide" onclick="this.classList.add('hide')">
+        <p id="alert-note">Message.</p>
+        <img src="./img/ico/item-x.svg" alt="">
+    </div>
+
+</body>
+</html>
+
+<script src="utility.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+<script src="main.js"></script>
