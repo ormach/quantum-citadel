@@ -208,6 +208,16 @@ function findReplace(obj, oldVal, newVal){
     return result
 }
 
+//Alert/Notification
+let alertTimer
+function showAlert(note){
+    el('alert-note').innerHTML = note
+    el('alert').classList.remove('hide')
+
+    clearTimeout(alertTimer)
+    alertTimer = setTimeout(() => {el('alert').classList.add('hide')}, 5000)
+}
+
 
 // Prevents the mobile browser behaviour that moves to the next or previous page
 // in your browser's history when you swipe in from the edge of the screen.

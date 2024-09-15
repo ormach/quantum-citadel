@@ -53,12 +53,6 @@
 <body>
 <!-- Navigation -->
     <div id="nav" class="">
-        <!-- <img src="./img/bg/logo.svg" alt=""> -->
-        <!-- <button onclick="viewScreen('market')">Market</button>
-        <button onclick="viewScreen('table-page')">Table</button>
-        <button onclick="viewScreen('collection')">Collection</button>
-        <button onclick="viewScreen('contract')">Contract</button> -->
-
         <button onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
         <button onclick="el('table-page').scrollIntoView()">Table</button>
         <button onclick="el('collection-page').scrollIntoView()">Collection</button>
@@ -66,18 +60,22 @@
         <button onclick="el('hand').classList.toggle('hand-shrink')">
             <img src="./img/ico/slots.svg" alt="">
         </button>
+        <button onclick="clearLs(), location.reload()">RL</button>
+
 
         <!-- Stats -->
+        <!-- <div id="exp" class="stat">
+            <img src="./img/ico/time.svg" alt="">
+            <span id="exp-indicator">1 (1/14 exp)</span>
+        </div> -->
+
         <div id="coins" class="stat">
             <img src="./img/ico/coin.svg" alt="">
             <span id="coin-indicator"></span>
         </div>
-
-        <div id="exp" class="stat">
-            <img src="./img/ico/time.svg" alt="">
-            <span id="exp-indicator">Level:1 (1/14 exp)</span>
-        </div>
     </div>
+    <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
 
 <!-- Pages -->
     <div id="wrapper">
@@ -93,34 +91,41 @@
         <div id="market" class=" page">
             <div id="market-container">
                 <h1>Market</h1>
-                <div class="market-item">
-                    <button onclick="g.plObj.pay(config.cardCost, 'buy', 3)">Buy pack (3)</button>
-                    <img src="./img/library/pack.svg" alt="">
+
+                <div class="row">
+                    <div class="market-item">
+                        <img src="./img/library/pack.svg" alt="">
+                        <button id="market-pack-3" onclick="g.plObj.pay(config.cardCost, 'buy', 3)">Buy pack (3)</button>
+                    </div>
+
+                    <div class="market-item">
+                        <img src="./img/library/pack-electrostatics.svg" alt="">
+                    </div>
+
+                    <div class="market-item">
+                        <img src="./img/library/pack-energy.svg" alt="">
+                    </div>
+
+                    <div class="market-item">
+                        <img src="./img/library/pack-nuclear-physics.svg" alt="">
+                    </div>
                 </div>
-                <div class="market-item">
-                    <button onclick="g.plObj.pay(config.cardCost, 'buy')">Buy a card</button>
-                    <img src="./img/library/card.svg" alt="">
-                </div>
-                <!-- <div class="market-item">
-                    <button onclick="">Sell a card</button>
-                    <div id="sell-slot" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                </div> -->
             </div>
         </div>
 
-<!-- Inspection table -->
-        <div id="table-page" class=" page">
-            <div class="table-container">
-                <h1>Inspection table</h1>
-                <div>
-                    <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                    <button id="inspectButton" onclick="g.plObj.pay(config.inspectionCost, 'inspect')">Inspect (50$)</button>
-                </div>
-    
-                <div id="inspector">
-                    <p>Add card into the slot, then press Inspect to identify it.</p>          
-                </div>
+<!-- Contract -->
+        <div id="contract" class=" page">
+            
+            <div class="contract-container">
+                <h1 id="contract-heading">Contract</h1>
+                <p id="contract-description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
+                <div id="contract-content" class="card-container-grid"></div>
+                <div class="row">
+                    <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
+                    <button id="contract-button-skip" onclick="g.plObj.pay(config.researchSkip, 'skip research')"></button>
+                </div> 
             </div>
+
         </div>
 
 <!-- Collection -->
@@ -135,21 +140,35 @@
                 <div id="collection" class="card-container-grid collection"></div>            
             </div>
         </div>
-    
-<!-- Contract -->
-        <div id="contract" class=" page">
-            
-            <div class="contract-container">
-                <h1>Contract</h1>
-                <p id="contract-description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
-                <div id="research-paper" class="card-container-grid"></div> 
-                <button onclick="g.research.sellResearch()">Sell research paper</button>
-            </div>
 
+<!-- Inspection table -->
+        <div id="table-page" class=" page">
+            <div class="table-container">
+                <h1>Inspection table</h1>
+
+                <div class="row">
+                    <div>
+                        <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <button id="inspectButton" onclick="g.plObj.pay(config.inspectionCost, 'inspect')"></button>
+                    </div>
+
+                    <div id="inspector">
+                        <p>Add card into the slot, then press Inspect to identify it.</p>          
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
-    <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<!-- Notification -->
+<!-- ALERT -->
+    <div id="alert" class="hide" onclick="this.classList.add('hide')">
+        <p id="alert-note">Message.</p>
+        <img src="./img/ico/item-x.svg" alt="">
+    </div>
+
 </body>
 </html>
 

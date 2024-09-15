@@ -1,8 +1,0 @@
-- inspector showing meta data
-- timers
-   - reocurring card rewards (every n min)
-- collection pages
-- LS storing game state
-
-Bugs
-- Grab cursor doesn't work in FF.

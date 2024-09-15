@@ -1,7 +1,16 @@
 let config = {
 
-    gold: 155,
-    cardCost: 10,
-    inspectionCost: 20,
-    researchReward: 20,
+    gold: 1000,
+    
+    cardCost:       20,
+    inspectionCost: 5,
+    researchReward: 40,
+    researchSkip: 10,
+    
+    coinInc: 1,
+    coinIncTime: 30000,
+    
+    cardsToStart: 3,
+
+    albumRows: 5,
 }
