@@ -53,26 +53,29 @@
 <body>
 <!-- Navigation -->
     <div id="nav" class="">
-        <button onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
-        <button onclick="el('table-page').scrollIntoView()">Table</button>
-        <button onclick="el('collection-page').scrollIntoView()">Collection</button>
-        <button onclick="el('contract').scrollIntoView()">Contract</button>
-        <button onclick="el('hand').classList.toggle('hand-shrink')">
-            <img src="./img/ico/slots.svg" alt="">
-        </button>
-        <button onclick="clearLs(), location.reload()">RL</button>
+        <img id="logo" src="./img/logo-nobg.svg" alt="">
 
+        <div class="btn-group">
+            <button onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
+            <button onclick="el('contract').scrollIntoView()">Contract</button>
+            <button onclick="el('collection-page').scrollIntoView()">Album</button>
+            <button onclick="el('table-page').scrollIntoView()">Inspection</button>
+            <button onclick="el('hand').classList.toggle('hand-shrink')">
+                <img src="./img/ico/slots.svg" alt="">
+            </button> 
+        </div>
 
+        <div id="coins" class="stat">
+            <img src="./img/ico/coin.svg" alt="">
+            <span id="coin-indicator"></span>
+        </div>
+        
         <!-- Stats -->
         <!-- <div id="exp" class="stat">
             <img src="./img/ico/time.svg" alt="">
             <span id="exp-indicator">1 (1/14 exp)</span>
         </div> -->
 
-        <div id="coins" class="stat">
-            <img src="./img/ico/coin.svg" alt="">
-            <span id="coin-indicator"></span>
-        </div>
     </div>
     <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 

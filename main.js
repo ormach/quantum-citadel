@@ -81,6 +81,7 @@
             //Storge per game section, place in LS and build board state from this obj.
             this.plObj = new PlayerObj()
             this.cards = [] //Stores all card objects
+            this.cardsRef = []
             this.inspectionTable = new InspectionTable()
             this.collection = new Collection
         }
@@ -92,7 +93,11 @@
         //Check if game state available and override stuff
         loadGame(){
             let data = localStorage.getItem('gameData')
-    
+            let loadDate = Date.now()
+
+            this.saveGame()
+
+            //Load game
             if(typeof data === 'string'){
                 console.log('Game: Game loaded.');
     
@@ -103,11 +108,34 @@
                 g.ref.cards.forEach(card => {                    
                     new Card(card, card.location, 'regen')
                 })
+
+                //Override coins
+                g.plObj.coins = g.ref.plObj.coins
+
+                //Calculate gained gold
+                //Compare date of previous event with new date.
+
+                if(loadDate - g.ref.date > config.rewardInterval){
+                    console.log('Get reward');
+                    g.date = Date.now()
+                    this.plObj.changeCoins(config.rewardsValue)
+                }
+                
+                else{
+                    g.date = g.ref.date
+                    console.log(`No reward yer, ${(loadDate - g.ref.date) / 1000}/${config.rewardInterval/1000}s remaining.`);
+                }
             }
+            //New game
             else{
                 console.log('Game: No saved game found.');
-                return false
+                
+                //Save log in date-time
+                this.date = Date.now()
             }
+
+            console.log(loadDate, g.date);
+            this.saveGame()
         }
 
         //Regen html based on game state
@@ -128,9 +156,9 @@
             el('contract-button-skip').innerHTML = `Skip for ${config.researchSkip + coinIco}`
     
             //Allocate cards
-            g.cards.forEach(card => {
-                // console.log(cardElem);       
-            })
+            // g.cards.forEach(card => {
+            //     // console.log(cardElem);       
+            // })
         }
 
         //Creates card elements
@@ -175,6 +203,7 @@
         constructor(cardRef, location, mode){
 
             let cardRefObj
+
             if(mode === 'regen'){
                 cardRefObj = cardRef 
                 // console.log(cardRefObj);
@@ -226,7 +255,7 @@
             }    
             
             //Check if quest has to be regenerated
-            if(g.cards.length === config.cardsToStart){
+            if(g.cards.length === config.cardsToStartQuest){
                 g.research = new Research
             }
         }
@@ -289,7 +318,8 @@
 //PLAYER & SHOP
     class PlayerObj{
         constructor(){
-            this.coins = config.gold 
+            this.coins = config.coins 
+            this.coinsCap = config.coinsCap
         }
 
         //Modify coin value
@@ -428,8 +458,8 @@
 
 
             //Generate get N cards contract
-            if(g.cards.length < config.cardsToStart){ 
-                el('contract-description').innerHTML = `Get ${config.cardsToStart} cards, to unlock research contracts.`
+            if(g.cards.length < config.cardsToStartQuest){ 
+                el('contract-description').innerHTML = `Get ${config.cardsToStartQuest} cards, to unlock research contracts.`
                 el('contract-button').classList.add('hide')
             }
     
@@ -504,9 +534,13 @@
         //New collection
         g.collection.genSlots()
         
-        //Assign card ref
-        g.cardsRef = cardsRef
-        
+        //Remove draft cards from the pool & add cards to game obj
+        cardsRef.forEach(card =>{
+            if(card.export === "y"){
+                g.cardsRef.push(card)
+            }
+        })
+        cardsRef = g.cardsRef
         
         //Load/generate game
         g.loadGame()
@@ -514,12 +548,16 @@
         
         //Gen init contract
         g.research = new Research
+        
+        //Interval sync
+        // setInterval(intervalSync, config.coinIncTime)
+    }
 
-        //Add coins per time period
-        setInterval(function () {
-            g.plObj.coins += config.coinInc
-            el('coin-indicator').innerHTML = g.plObj.coins
-        }, config.coinIncTime)
+
+    //INTERVAL SYNC
+    function intervalSync(){
+        g.plObj.coins += config.coinInc
+        g.updateUI() 
     }
 
 
@@ -530,6 +568,12 @@
         g.genCard(1, `${g.collection.page}-slot2`, 'mass')
         g.genCard(1, `${g.collection.page}-slot3`, 'acceleration')
         g.genCard(1, `${g.collection.page}-slot4`, 'light')
+    }
+
+    function allCards(){
+        g.cardsRef.forEach(card => {
+            g.genCard(1, 'hand', card.name)
+        })
     }
     
 //Fetch csv file, parse to JSON, assing it to reg obj
