@@ -56,13 +56,11 @@
         <img id="logo" src="./img/logo-nobg.svg" alt="">
 
         <div class="btn-group">
-            <button onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
-            <button onclick="el('contract').scrollIntoView()">Contract</button>
-            <button onclick="el('collection-page').scrollIntoView()">Album</button>
-            <button onclick="el('table-page').scrollIntoView()">Inspection</button>
-            <button onclick="el('hand').classList.toggle('hand-shrink')">
-                <img src="./img/ico/slots.svg" alt="">
-            </button> 
+            <button class="light" onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
+            <button class="light" onclick="el('contract').scrollIntoView()">Contract</button>
+            <button class="light" onclick="el('collection-page').scrollIntoView()">Album</button>
+            <button class="light" onclick="el('table-page').scrollIntoView()">Inspection</button>
+            <button class="light" onclick="el('hand').classList.toggle('hand-shrink')"><img src="./img/ico/slots.svg" alt=""></button> 
         </div>
 
         <div id="coins" class="stat">
@@ -97,21 +95,21 @@
 
                 <div class="row">
                     <div class="market-item">
-                        <img src="./img/library/pack.svg" alt="">
-                        <button id="market-pack-3" onclick="g.plObj.pay(config.cardCost, 'buy', 3)">Buy pack (3)</button>
+                        <img src="./img/library/pack=motion.png" alt="">
+                        <button id="market-pack-1" class="light" onclick="g.plObj.pay(config.cardCost, 'buy', 3)"></button>
                     </div>
 
                     <div class="market-item">
-                        <img src="./img/library/pack-electrostatics.svg" alt="">
+                        <img src="./img/library/pack=charge.png" alt="">
+                        <button id="market-pack-2" class="light" onclick="g.plObj.pay(config.cardCost, 'buy', 3)"></button>
                     </div>
 
                     <div class="market-item">
-                        <img src="./img/library/pack-energy.svg" alt="">
+                        <img src="./img/library/pack=gravity.png" alt="">
+                        <button id="market-pack-3" class="light" onclick="g.plObj.pay(config.cardCost, 'buy', 3)"></button>
                     </div>
 
-                    <div class="market-item">
-                        <img src="./img/library/pack-nuclear-physics.svg" alt="">
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -135,12 +133,19 @@
         <div id="collection-page" class=" page">
             <div class="collection-container">
                 <div class=" tab-group">
-                    <button onclick="g.collection.loadPage('page1')">Page 1</button>
-                    <button onclick="g.collection.loadPage('page2')">Page 2</button>
-                    <button onclick="g.collection.loadPage('page3')">Page 3</button>
-                    <button>+</button>
+                    <button id="page-1_tab" class="collection-tab" onclick="g.collection.loadPage('page-1')">Page 1</button>
+                    <button id="page-2_tab" class="collection-tab" onclick="g.collection.loadPage('page-2')">Page 2</button>
+                    <button id="page-3_tab" class="collection-tab" onclick="g.collection.loadPage('page-3')">Page 3</button>
                 </div>
-                <div id="collection" class="card-container-grid collection"></div>            
+                <div class="row">
+                    <button onclick="g.collection.loadPage('previous')">
+                        <img src="./img/ico/id=arrow-l.svg" alt="">
+                    </button>
+                    <div id="collection" class="card-container-grid collection"></div>            
+                    <button onclick="g.collection.loadPage('next')">
+                        <img src="./img/ico/id=arrow-r.svg" alt="">
+                    </button>
+                </div>
             </div>
         </div>
 

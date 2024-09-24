@@ -25,14 +25,18 @@
         // var data = ev.dataTransfer.getData("text/plain");
 
         //Record target elem
-        
-        //If card
+        //If target elem is card, change target to cards container
         if(ev.target.classList.contains('card')){
             overlappingCard = ev.target
             targetContainer = ev.target.parentNode
             // ev.target.parentNode.insertBefore(document.getElementById(data), ev.target);
         }
-        //If elem in card
+        // Duplicates per container in card
+        else if (ev.target.parentNode.parentNode.classList.contains('card')){
+            overlappingCard = ev.target.parentNode.parentNode
+            targetContainer = ev.target.parentNode.parentNode.parentNode
+        }
+        // If elem in card
         else if (ev.target.parentNode.classList.contains('card')){
             overlappingCard = ev.target.parentNode
             targetContainer = ev.target.parentNode.parentNode
@@ -116,9 +120,10 @@
                 //Compare date of previous event with new date.
 
                 if(loadDate - g.ref.date > config.rewardInterval){
-                    console.log('Get reward');
+                    // console.log('Get reward');
                     g.date = Date.now()
                     this.plObj.changeCoins(config.rewardsValue)
+                    showAlert(`Daily reward! You get ${config.rewardsValue} coins.`)
                 }
                 
                 else{
@@ -146,7 +151,10 @@
             el('coin-indicator').innerHTML = `${g.plObj.coins}`
             
             //Market
-            el('market-pack-3').innerHTML = `Buy a 3 card pack ${config.cardCost * 3 + coinIco}`
+            let packs = 3
+            for(let i = 1; i <= packs; i++){
+                el(`market-pack-${i}`).innerHTML = `Buy for ${config.cardCost * 3} ${coinIco}`
+            }
             
             //Inspection
             el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
@@ -182,7 +190,7 @@
             for(let i = 0; i < slotQuantity; i++){
                 let slot = document.createElement('div')
 
-                slot.id = locationId + '-slot' + i
+                slot.id = locationId + '_slot-' + i
                 
                 slot.classList = 'card-container'
                 slot.setAttribute('ondrop','drop(event)')
@@ -274,15 +282,18 @@
 
             card.innerHTML = `
                     <div class="card-data">
-                        <img src="./img/rarity/${this.rarity}.svg"/>
+                        <img draggable="false" src="./img/rarity/${this.rarity}.svg"/>
                         <h2>${upp(this.name)}</h2>
                     </div>
             `
 
             //On right click event
             card.addEventListener("contextmenu", (event) => {
-                // event.preventDefault();
-                // moveCard(card)
+                if(config.rClickEvent == true){
+                    event.preventDefault();
+                    this.moveCard(card, 'hand')
+                    g.saveGame()
+                }
             });
 
             return card
@@ -300,8 +311,7 @@
             }
 
             //Else add to slot
-            else{
-                
+            else{                
                 el(locationId).append(cardHtmlElem)
             }     
 
@@ -319,7 +329,7 @@
     class PlayerObj{
         constructor(){
             this.coins = config.coins 
-            this.coinsCap = config.coinsCap
+            // this.coinsCap = config.coinsCap
         }
 
         //Modify coin value
@@ -396,10 +406,14 @@
         constructor(){
             this.width = 5
             this.height = config.albumRows
+            this.pageIdArr = ['page-1', 'page-2', 'page-3']
 
             //Update id to default page
-            this.page = 'page1'         
+            this.page = this.pageIdArr[0]        
             el('collection').id = this.page
+
+            //Preselect default page
+            el(`${this.page}_tab`).classList.add('active')
         }
         
         genSlots(){
@@ -411,7 +425,6 @@
             //Set collection width
             let gap = 4
             let padding = 24
-
             el(this.page).setAttribute('style',
                 `
                     width: calc(((var(--card-width) + ${gap}px) * ${this.width}) + (2 * ${padding}px));
@@ -419,11 +432,33 @@
                 ` 
             )
 
-            // console.log(`Collection: Slots generated.`);
-            
+            // console.log(`Collection: Slots generated.`);   
         }
 
         loadPage(pageId){
+            //Next previous buttons
+            if(pageId == 'previous'){
+                let index = this.pageIdArr.indexOf(this.page)
+                index--
+                pageId = this.pageIdArr[index]
+
+                if(pageId === undefined){
+                    pageId = this.pageIdArr[this.pageIdArr.length - 1]
+                }
+                
+                // console.log(pageId);
+            } 
+            else if(pageId == 'next'){
+                let index = this.pageIdArr.indexOf(this.page)
+                index++
+                pageId = this.pageIdArr[index]
+
+                if(pageId === undefined){
+                    pageId = this.pageIdArr[0]
+                }
+
+                // console.log(pageId);
+            }
 
             //Update page id of html elem and in game opbject
             el(this.page).id = pageId
@@ -438,10 +473,23 @@
                     el(card.location).append(card.genHtml())
                 }      
             })
-
             // console.log(`Collection: ${pageId} page loaded`); 
-        }
 
+            //Update tab selection
+                //Select all tabs
+                let tabs = el('.collection-tab', 'all')
+                tabs.forEach(tab =>{
+                    //Remove selection
+                    tab.classList.remove("active")
+                    
+                    //Add selection to active tab
+                    if(tab.id.split('_')[0] == this.page){
+                        tab.classList.add("active")
+                    }
+                })
+                // console.log(tabs);
+            
+        }
         //Convert page to pages, generate tabs from pages values.
         //Add option to add new pages
     }
@@ -555,6 +603,7 @@
 
 
     //INTERVAL SYNC
+    //g per sec
     function intervalSync(){
         g.plObj.coins += config.coinInc
         g.updateUI() 
