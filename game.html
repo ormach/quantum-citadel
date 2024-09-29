@@ -63,6 +63,7 @@
             <button class="light" onclick="el('hand').classList.toggle('hand-shrink')"><img src="./img/ico/slots.svg" alt=""></button> 
         </div>
 
+        <div id="exp" class="stat"></div>
         <div id="coins" class="stat">
             <img src="./img/ico/coin.svg" alt="">
             <span id="coin-indicator"></span>
@@ -95,18 +96,18 @@
 
                 <div class="row">
                     <div class="market-item">
-                        <img src="./img/library/pack=motion.png" alt="">
-                        <button id="market-pack-1" class="light" onclick="g.plObj.pay(config.cardCost, 'buy', 3)"></button>
+                        <img src="./img/library/pack=objects.png" alt="">
+                        <button id="market-pack-1" class="light" onclick="g.plObj.pay('buy', 'objects')"></button>
                     </div>
 
                     <div class="market-item">
-                        <img src="./img/library/pack=charge.png" alt="">
-                        <button id="market-pack-2" class="light" onclick="g.plObj.pay(config.cardCost, 'buy', 3)"></button>
+                        <img src="./img/library/pack=motion.png" alt="">
+                        <button id="market-pack-2" class="light" onclick="g.plObj.pay('buy', 'motion')"></button>
                     </div>
 
                     <div class="market-item">
                         <img src="./img/library/pack=gravity.png" alt="">
-                        <button id="market-pack-3" class="light" onclick="g.plObj.pay(config.cardCost, 'buy', 3)"></button>
+                        <button id="market-pack-3" class="light" onclick="g.plObj.pay('buy', 'gravitation')"></button>
                     </div>
 
 
@@ -123,7 +124,7 @@
                 <div id="contract-content" class="card-container-grid"></div>
                 <div class="row">
                     <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
-                    <button id="contract-button-skip" onclick="g.plObj.pay(config.researchSkip, 'skip research')"></button>
+                    <button id="contract-button-skip" onclick="g.plObj.pay('skip research')"></button>
                 </div> 
             </div>
 
@@ -157,7 +158,7 @@
                 <div class="row">
                     <div>
                         <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <button id="inspectButton" onclick="g.plObj.pay(config.inspectionCost, 'inspect')"></button>
+                        <button id="inspectButton" onclick="g.plObj.pay('inspect')"></button>
                     </div>
 
                     <div id="inspector">

@@ -1,14 +1,17 @@
 - Change log
-   - Added coin rewards per reriod of time that will slow down the game by capping the amounth of resources the player can spend per session 
+   - Added coin rewards per period of time to slow down the game.
+   - Added a way to navigate between collection pages.
+   - Fixed a bug where rarity icons can be moved out of the card.
+   - Added 26 initial cards.
+   - Added new logo and card pack designs to the game.
+   - Added alternative definitions to researc tasks.
 
 - Collection pages
    - Add pages button (for N coins)
-   - Add button to quickly go back/forward in album.
    - Add number of cards per page.
 
 - UI
    - Cost for album pages
-   - Allow to stack more than 2 cards per slot CSS.
 
 - Market
    - Add option to buy one 'daily' card.
@@ -36,3 +39,5 @@
    - Uses exp as currency. Exp gained for research completion.
    - Exp can be spent to affect the daily rewar or available packs.
    - Save research in LS to avoid resetting on refresh.
+   - Sell album ui upgrades.
+   - Add secondary descriptions for cards.

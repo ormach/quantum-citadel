@@ -283,15 +283,20 @@ h2{
     .contract-container{
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: 16px;
 
-        padding: 56px;
+        padding: 32px;
 
         width: var(--section-width);
+        height: 520px;
 
         background-color: rgb(214, 214, 206);
         box-shadow: 0px 0px 36px var(--b20);
 
+    }
+    .contract-description{
+        height: auto;
+        flex-grow: 1;
     }
     .row{
         display: flex;
@@ -372,7 +377,7 @@ h2{
         justify-content: center;    
     }
     .collection-container .tab-group .active {
-        background-color: rgb(140, 169, 191);
+        background-color: rgb(141, 141, 141);
     }
     .collection-container .row {
         gap: 0px;
@@ -385,11 +390,10 @@ h2{
     .collection-container .tab-group button{
         border: none;
         border-radius: 0;
-        background-color: rgb(246, 237, 185);
+        background-color: rgb(79, 79, 79);
     }
     .collection{
         background-color: rgb(141, 141, 141);
-        box-shadow: 0px 1px 16px var(--b20);
     }
 
 

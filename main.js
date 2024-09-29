@@ -113,22 +113,22 @@
                     new Card(card, card.location, 'regen')
                 })
 
-                //Override coins
+                //Override values of new objects
                 g.plObj.coins = g.ref.plObj.coins
+                g.plObj.exp = g.ref.plObj.exp
 
                 //Calculate gained gold
                 //Compare date of previous event with new date.
-
                 if(loadDate - g.ref.date > config.rewardInterval){
                     // console.log('Get reward');
                     g.date = Date.now()
                     this.plObj.changeCoins(config.rewardsValue)
                     showAlert(`Daily reward! You get ${config.rewardsValue} coins.`)
                 }
-                
+                //No reward
                 else{
                     g.date = g.ref.date
-                    console.log(`No reward yer, ${(loadDate - g.ref.date) / 1000}/${config.rewardInterval/1000}s remaining.`);
+                    console.log(`No reward yet, ${(loadDate - g.ref.date) / 1000}/${config.rewardInterval/1000}s remaining.`);
                 }
             }
             //New game
@@ -149,6 +149,7 @@
 
             //Nav
             el('coin-indicator').innerHTML = `${g.plObj.coins}`
+            el('exp').innerHTML = `Lvl: ${g.plObj.lvl} (Exp: ${g.plObj.exp}/${g.plObj.lvlUpExp})`
             
             //Market
             let packs = 3
@@ -247,7 +248,8 @@
             }
 
             this.name = cardRefObj.name
-            this.description = cardRefObj.description
+            this.description_1 = cardRefObj.description_1
+            this.description_2 = cardRefObj.description_2
             this.tags = cardRefObj.tags
             this.source = cardRefObj.source  
                      
@@ -329,6 +331,9 @@
     class PlayerObj{
         constructor(){
             this.coins = config.coins 
+            this.exp = 0
+            this.lvl = 1
+            this.lvlUpExp = Math.ceil(config.expBase * (this.lvl * config.expMult) ** config.expExpo)
             // this.coinsCap = config.coinsCap
         }
 
@@ -339,19 +344,33 @@
         }
 
         //Pay for something
-        pay(cost, operation, operationValue){
+        pay(operation, operationValue, cost){
             
-            if(operationValue === undefined){           
+            if(operation === 'buy'){           
+                operationValue = config.cardsInPack
+                cost = config.cardCost
+            }
+            else if (operation === 'skip research'){
+                cost = config.researchSkip
                 operationValue = 1
+
+            }
+            else if (operation === 'inspect'){
+                cost = config.inspectionCost
+                operationValue = 1
+
             }
 
+            //Check if enough coins
             if(this.coins >= cost * operationValue){
+
                 this.changeCoins(-Math.abs(cost * operationValue)) 
-                if(typeof operation === 'string' && operation === 'inspect'){
-                    g.inspectionTable.inspect()
-                }
-                else if (operation === 'buy'){
+
+                if (operation === 'buy'){
                     g.genCard(operationValue, 'hand')
+                }
+                else if(operation === 'inspect'){
+                    g.inspectionTable.inspect()
                 }
                 else if (operation === 'skip research'){
                     g.research = new Research
@@ -370,6 +389,33 @@
             }
 
             g.saveGame()
+        }
+
+        gainExp(val){
+
+            this.exp += val
+
+            //Lvl up
+            if(this.exp >= this.lvlUpExp){
+                this.levelUp()
+            }
+
+            g.saveGame()
+            g.updateUI()
+        }
+
+        levelUp(){
+
+            this.lvl++
+        
+            //Reduce exp by elp required to lvl up
+            this.exp = this.exp - this.lvlUpExp
+        
+            //Calculate exp required for the next level
+            this.lvlUpExp = Math.ceil(config.expBase * (this.lvl * config.expMult) ** config.expExpo)
+        
+            //Check exp to see if more than 1 level was gained
+            this.gainExp(0)
         }
     }
 
@@ -505,13 +551,13 @@
             el('contract-content').innerHTML = ''
 
 
-            //Generate get N cards contract
+            //Generate "get N cards" contract
             if(g.cards.length < config.cardsToStartQuest){ 
                 el('contract-description').innerHTML = `Get ${config.cardsToStartQuest} cards, to unlock research contracts.`
                 el('contract-button').classList.add('hide')
             }
     
-            //Generate place correct card contract
+            //Generate "Find correct card" contract
             else{
                 this.contractCard = rarr(g.cards)
     
@@ -520,7 +566,9 @@
                 g.genCardSlot('contract-content', slotQuantity)
     
                 //Set descriotion
-                el('contract-description').innerHTML = this.contractCard.description
+                // let desc = `description_${rng(2)}`
+                // console.log(desc);
+                el('contract-description').innerHTML = this.contractCard[`description_${rng(2)}`]
 
                 //Make button visible if reset from get N cards
                 el('contract-button').classList.remove('hide')
@@ -538,22 +586,22 @@
 
             //     el('contract-content').append(img)
             // })
+
+            // console.log(1);     
         }
 
         sellResearch(){
 
             //Check placed cards 
-            let addedCards = findByProperty(g.cards, 'location', 'contract-content-slot0', 'includes')
-            // console.log(addedCards);
-            
-            //Win
+            let addedCards = findByProperty(g.cards, 'location', 'contract-content_slot-0', 'includes')
             // console.log(addedCards);
             // console.log(findByProperty(addedCards, 'name', this.contractCard.name));
             
-            
+            //Win
             if(addedCards != undefined && findByProperty(addedCards, 'name', this.contractCard.name) != undefined){
-                showAlert(`You win ${config.researchReward} coins.`)
+                showAlert(`You win ${config.researchReward} coins, and gain ${config.expPerResearch} exp.`)
                 g.plObj.changeCoins(config.researchReward)
+                g.plObj.gainExp(config.expPerResearch)
 
             //Loose
             } else{
