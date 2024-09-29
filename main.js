@@ -110,7 +110,11 @@
     
                 //Override game values?
                 g.ref.cards.forEach(card => {                    
-                    new Card(card, card.location, 'regen')
+                    new Card({
+                        "name": card, 
+                        "location": card.location, 
+                        "mode": "regen",
+                    })
                 })
 
                 //Override values of new objects
@@ -171,18 +175,9 @@
         }
 
         //Creates card elements
-        genCard(number, location, name){
-            for(let i = 0; i < number; i++){
-
-                //Generate by name
-                if(name != undefined){
-                    new Card(name, location) 
-                } 
-                
-                //Random               
-                else {
-                    new Card(rarr(cardsRef).name, location)
-                }             
+        genCard(args){
+            for(let i = 0; i < args.number; i++){
+                new Card(args)           
             }
         }
 
@@ -209,12 +204,13 @@
 
 //CARD
     class Card {
-        constructor(cardRef, location, mode){
+        //constructor(cardRef, location, mode)
+        constructor(args){
 
             let cardRefObj
 
-            if(mode === 'regen'){
-                cardRefObj = cardRef 
+            if(args.mode === 'regen'){
+                cardRefObj = args.name 
                 // console.log(cardRefObj);
 
                 this.cardId = cardRefObj.cardId
@@ -222,29 +218,35 @@
                 this.location = cardRefObj.location  
             }
             else{
-                cardRefObj = findByProperty(cardsRef, 'name', cardRef)            
+                //Choose random card if no name provided
+                if(args.name == undefined){
+                    if(args.setName == undefined){
+                        args.name = rarr(cardsRef).name
+                    }
+                    else {
+                       let set = cardsRef.filter((card) => card.set === args.setName);
+                       console.log(cardsRef, args.setName);
+                       console.log(set)
+                       args.name = rarr(set).name
+                       
+                    }
+                }
+
+                //Find card reference in ref object
+                cardRefObj = findByProperty(cardsRef, 'name', args.name)            
                 // console.log(cardRefObj);
                 
+                //Set props
                 this.cardId = genId('cr')
-                this.location = location //stores id of location elem
+                this.location = args.location //stores id of location elem
     
                 //Pick card rarity
                 let roll = rng(100)
-                if(roll > 99){
-                    this.rarity = 'set'
-                }
-                else if (roll > 98){
-                    this.rarity = 'legendary'
-                }
-                else if (roll > 90){
-                    this.rarity = 'epic'
-                }
-                else if (roll > 70){
-                    this.rarity = 'rare'
-                }
-                else {
-                    this.rarity = 'common'
-                }
+                if      (roll > 99){this.rarity = 'set'}
+                else if (roll > 98){this.rarity = 'legendary'}
+                else if (roll > 90){this.rarity = 'epic'}
+                else if (roll > 70){this.rarity = 'rare'}
+                else               {this.rarity = 'common'}
             }
 
             this.name = cardRefObj.name
@@ -260,8 +262,8 @@
             
             //Append html element to location  
             // console.log(el(location));
-            if(el(location) !== null){
-                this.moveCard(card, location)
+            if(el(args.location) !== null){
+                this.moveCard(card, args.location)
             }    
             
             //Check if quest has to be regenerated
@@ -343,52 +345,53 @@
             g.updateUI()
         }
 
+        
         //Pay for something
-        pay(operation, operationValue, cost){
-            
-            if(operation === 'buy'){           
-                operationValue = config.cardsInPack
-                cost = config.cardCost
-            }
-            else if (operation === 'skip research'){
-                cost = config.researchSkip
-                operationValue = 1
-
-            }
-            else if (operation === 'inspect'){
-                cost = config.inspectionCost
-                operationValue = 1
-
-            }
-
-            //Check if enough coins
-            if(this.coins >= cost * operationValue){
-
-                this.changeCoins(-Math.abs(cost * operationValue)) 
-
-                if (operation === 'buy'){
-                    g.genCard(operationValue, 'hand')
+        pay(operation, type){
+            //Pack
+            if (operation === 'pack'){
+                let totalCost = config.cardCost * config.cardsInPack
+                
+                if(this.checkIfEounghCoins(totalCost)){
+                    this.changeCoins(-Math.abs(totalCost))
+                    g.genCard({
+                        "number": config.cardsInPack,
+                        "location": "hand",
+                        "setName": type,
+                    })
                 }
-                else if(operation === 'inspect'){
+            }
+            //Inspect
+            else if(operation === 'inspect'){
+
+                let totalCost = config.inspectionCost
+
+                if(this.checkIfEounghCoins(totalCost)){
+                    this.changeCoins(-Math.abs(totalCost))
                     g.inspectionTable.inspect()
                 }
-                else if (operation === 'skip research'){
+            }
+            //Skip
+            else if (operation === 'skip research'){
+
+                let totalCost = config.researchSkip
+
+                if(this.checkIfEounghCoins(totalCost)){
+                    this.changeCoins(-Math.abs(totalCost))
                     g.research = new Research
                 }
-
-                //Use this for generic cases
-                //Wrap pay() in if statement
-                else{
-                    return true      
-                }
-            }
-
-            //Can't pay
-            else{
-                console.log(`Can't pay`);
             }
 
             g.saveGame()
+        }
+
+        checkIfEounghCoins(cost){
+            if(this.coins >= cost){
+                return true
+            }
+            else{
+                console.log(`Can't pay`);
+            }
         }
 
         gainExp(val){
@@ -657,19 +660,15 @@
         g.updateUI() 
     }
 
-
-    function forTesting(){
-        //Gen test card
-        g.genCard(1, `${g.collection.page}-slot0`, 'statics')
-        g.genCard(1, `${g.collection.page}-slot1`, 'impulse')
-        g.genCard(1, `${g.collection.page}-slot2`, 'mass')
-        g.genCard(1, `${g.collection.page}-slot3`, 'acceleration')
-        g.genCard(1, `${g.collection.page}-slot4`, 'light')
-    }
-
     function allCards(){
         g.cardsRef.forEach(card => {
-            g.genCard(1, 'hand', card.name)
+            g.genCard(
+                {
+                    "number": 1,
+                    "location": "hand",
+                    "name": card.name
+                }
+            )
         })
     }
     
