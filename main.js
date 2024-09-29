@@ -111,9 +111,9 @@
                 //Override game values?
                 g.ref.cards.forEach(card => {                    
                     new Card({
-                        "name": card, 
                         "location": card.location, 
                         "mode": "regen",
+                        "cardObj": card,
                     })
                 })
 
@@ -206,11 +206,13 @@
     class Card {
         //constructor(cardRef, location, mode)
         constructor(args){
-
+            // console.log(args);
+            
             let cardRefObj
+            let newCardName = args.name
 
-            if(args.mode === 'regen'){
-                cardRefObj = args.name 
+            if(args.mode === 'regen'){            
+                cardRefObj = args.cardObj
                 // console.log(cardRefObj);
 
                 this.cardId = cardRefObj.cardId
@@ -225,15 +227,13 @@
                     }
                     else {
                        let set = cardsRef.filter((card) => card.set === args.setName);
-                       console.log(cardsRef, args.setName);
-                       console.log(set)
-                       args.name = rarr(set).name
-                       
+                    //    console.log(cardsRef, args.setName);
+                        newCardName = rarr(set).name                       
                     }
                 }
 
                 //Find card reference in ref object
-                cardRefObj = findByProperty(cardsRef, 'name', args.name)            
+                cardRefObj = findByProperty(cardsRef, 'name', newCardName)            
                 // console.log(cardRefObj);
                 
                 //Set props

@@ -1,7 +1,7 @@
 let config = {
 
     //Starting coins
-        coins: 200,
+        coins: 2000,
 
     //Progression exp lvl
         expPerResearch: 1,
