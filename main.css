@@ -92,6 +92,10 @@ h2{
         color: var(--font-color-light) !important;
         border: 2px solid var(--w20);
     }
+    button:disabled{
+        pointer-events: none;
+        opacity: 40%;
+    }
 
 
 /* NAVIGATION */

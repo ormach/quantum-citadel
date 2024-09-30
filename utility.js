@@ -71,6 +71,10 @@ function cloneArr(arr){//Make a detached copy of an array
     return JSON.parse(JSON.stringify(arr));
 }
 
+function removeDuplicatesArr(arr){
+    return [...new Set(arr)];
+}
+
 function objContainsByPropValue(object, propery, value){// See if obj contains element with a particular value of a particular property.
     return Object.values(object).some(obj => obj[propery] === value)
 }
@@ -81,6 +85,7 @@ function upp(string){//Sets 1st letter to uppercase
 
 function clearLs(){
     localStorage.clear();
+    location.reload();
 }
 
 //Used to find items by id in array

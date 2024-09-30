@@ -4,6 +4,7 @@ let config = {
         coins: 2000,
 
     //Progression exp lvl
+        playerLvl: 1,
         expPerResearch: 1,
         expBase: 2,
         expMult: 1,
@@ -24,7 +25,7 @@ let config = {
         rewardInterval: 5000,
         rewardsValue: 100,
     
-        cardsToStartQuest: 6,
+        cardsToStartQuest: 4,
 
         albumRows: 2,
 

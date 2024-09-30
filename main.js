@@ -62,7 +62,7 @@
     
 
 //UI
-//Manage pages
+    //Manage pages
     function viewScreen(page){
       let pages = document.getElementById('wrapper').querySelectorAll('.page')
 
@@ -157,8 +157,15 @@
             
             //Market
             let packs = 3
-            for(let i = 1; i <= packs; i++){
-                el(`market-pack-${i}`).innerHTML = `Buy for ${config.cardCost * 3} ${coinIco}`
+            for(let i = 0; i < packs; i++){
+                if(g.plObj.lvl >= i * 2){
+                    el(`market-pack-${i}`).innerHTML = `Buy for ${config.cardCost * 3} ${coinIco}`
+                    el(`market-pack-${i}`).disabled = false
+                }
+                else{
+                    el(`market-pack-${i}`).innerHTML = `Requers LVL ${i * 2}`
+                    el(`market-pack-${i}`).disabled = true
+                }
             }
             
             //Inspection
@@ -206,18 +213,16 @@
     class Card {
         //constructor(cardRef, location, mode)
         constructor(args){
-            // console.log(args);
-            
-            let cardRefObj
+            // console.log(args);            
             let newCardName = args.name
 
             if(args.mode === 'regen'){            
-                cardRefObj = args.cardObj
-                // console.log(cardRefObj);
+                this.cardRefObj = args.cardObj
+                // console.log(this.cardRefObj);
 
-                this.cardId = cardRefObj.cardId
-                this.rarity = cardRefObj.rarity
-                this.location = cardRefObj.location  
+                this.cardId = this.cardRefObj.cardId
+                this.rarity = this.cardRefObj.rarity
+                this.location = this.cardRefObj.location  
             }
             else{
                 //Choose random card if no name provided
@@ -233,8 +238,8 @@
                 }
 
                 //Find card reference in ref object
-                cardRefObj = findByProperty(cardsRef, 'name', newCardName)            
-                // console.log(cardRefObj);
+                this.cardRefObj = findByProperty(cardsRef, 'name', newCardName)            
+                // console.log(this.cardRefObj);
                 
                 //Set props
                 this.cardId = genId('cr')
@@ -249,11 +254,11 @@
                 else               {this.rarity = 'common'}
             }
 
-            this.name = cardRefObj.name
-            this.description_1 = cardRefObj.description_1
-            this.description_2 = cardRefObj.description_2
-            this.tags = cardRefObj.tags
-            this.source = cardRefObj.source  
+            this.name = this.cardRefObj.name
+            this.description_1 = this.cardRefObj.description_1
+            this.description_2 = this.cardRefObj.description_2
+            this.tags = this.cardRefObj.tags
+            this.source = this.cardRefObj.source  
                      
             g.cards.push(this)        
             
@@ -282,7 +287,13 @@
             card.classList = 'card'
             card.setAttribute('draggable','true')
             card.setAttribute('ondragstart','drag(event)')
-            card.setAttribute('style',`background-image: url("./img/card/id=${cardImg}.png")`)    
+            
+            if(this.cardRefObj.img === "y"){                
+                card.setAttribute('style',`background-image: url("./img/card/id=${cardImg}.png")`) 
+            }
+            else {
+                card.setAttribute('style',`background-image: url("./img/card/id=template.png")`) 
+            }
 
             card.innerHTML = `
                     <div class="card-data">
@@ -294,8 +305,13 @@
             //On right click event
             card.addEventListener("contextmenu", (event) => {
                 if(config.rClickEvent == true){
+                    if(this.location === "hand"){
+                        this.location = "contract-content_slot-0"
+                    } else {
+                        this.location = "hand"
+                    }
                     event.preventDefault();
-                    this.moveCard(card, 'hand')
+                    this.moveCard(card, this.location)
                     g.saveGame()
                 }
             });
@@ -325,8 +341,7 @@
     //Move into Card class somehow
     function moveCard(cardElem){
         // el('hand').appendChild(cardElem)
-        el('hand').insertBefore(cardElem, el('hand').firstChild)
-    
+        el('hand').insertBefore(cardElem, el('hand').firstChild)    
     }
     
 //PLAYER & SHOP
@@ -334,7 +349,7 @@
         constructor(){
             this.coins = config.coins 
             this.exp = 0
-            this.lvl = 1
+            this.lvl = config.playerLvl
             this.lvlUpExp = Math.ceil(config.expBase * (this.lvl * config.expMult) ** config.expExpo)
             // this.coinsCap = config.coinsCap
         }
@@ -562,7 +577,33 @@
     
             //Generate "Find correct card" contract
             else{
-                this.contractCard = rarr(g.cards)
+                //Define research pool based on level.
+                let researchCardPool = []
+
+                //Add cards that player owns
+                g.cards.forEach(card => {
+                    researchCardPool.push(findByProperty(g.cardsRef, "name", card.name))
+                })
+                // researchCardPool.push(...g.cards)
+
+                //Add cards from each pack is level requirement is met
+                packsRef.forEach(pack => {
+                    if(pack.lvlUnlockResearch <= g.plObj.lvl){
+                        g.cardsRef.forEach(card => {
+                            if(card.set === pack.name){
+                                researchCardPool.push(card)
+                            }
+                        })
+                    }
+                })
+
+                //Remove duplicates
+
+
+                console.table(researchCardPool, ['set']);
+                
+
+                this.contractCard = rarr(researchCardPool)
     
                 //Generate new slots
                 let slotQuantity = this.width * this.height;
@@ -589,8 +630,6 @@
 
             //     el('contract-content').append(img)
             // })
-
-            // console.log(1);     
         }
 
         sellResearch(){
