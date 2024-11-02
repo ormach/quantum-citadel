@@ -217,12 +217,14 @@
             let newCardName = args.name
 
             if(args.mode === 'regen'){            
-                this.cardRefObj = args.cardObj
+                // this.cardRefObj = args.cardObj
                 // console.log(this.cardRefObj);
+                this.cardRefObj = findByProperty(cardsRef, 'name', args.cardObj.name)            
 
-                this.cardId = this.cardRefObj.cardId
-                this.rarity = this.cardRefObj.rarity
-                this.location = this.cardRefObj.location  
+
+                this.cardId = args.cardObj.cardId
+                this.rarity = args.cardObj.rarity
+                this.location = args.cardObj.location  
             }
             else{
                 //Choose random card if no name provided
@@ -246,11 +248,11 @@
                 this.location = args.location //stores id of location elem
     
                 //Pick card rarity
-                let roll = rng(100)
-                if      (roll > 99){this.rarity = 'set'}
-                else if (roll > 98){this.rarity = 'legendary'}
-                else if (roll > 90){this.rarity = 'epic'}
-                else if (roll > 70){this.rarity = 'rare'}
+                let roll = rng(1000)
+                if      (roll > 995){this.rarity = 'set'}
+                else if (roll > 980){this.rarity = 'legendary'}
+                else if (roll > 900){this.rarity = 'epic'}
+                else if (roll > 700){this.rarity = 'rare'}
                 else               {this.rarity = 'common'}
             }
 
@@ -287,6 +289,8 @@
             card.classList = 'card'
             card.setAttribute('draggable','true')
             card.setAttribute('ondragstart','drag(event)')
+            
+            // console.log(this.cardRefObj);
             
             if(this.cardRefObj.img === "y"){                
                 card.setAttribute('style',`background-image: url("./img/card/id=${cardImg}.png")`) 
@@ -453,7 +457,7 @@
                 //Override metadata fields
                 el('inspector').innerHTML = `
                     <h1 id="name">${upp(cardRef.name)}</h1>          
-                        <p id="description">${cardRef.description}</p>
+                        <p id="description">${cardRef.description_1}</p>
                         <div id="year">Year: ${cardRef.year}</div>
                         <div id="tags">Tags: ${cardRef.tags}</div>
                         <div id="rarity">Rarity: <img src="./img/rarity/${cardRef.rarity}.svg"> ${upp(cardRef.rarity)}</div>
