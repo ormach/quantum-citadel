@@ -113,7 +113,7 @@
                     new Card({
                         "location": card.location, 
                         "mode": "regen",
-                        "cardObj": card,
+                        "cardObj": card
                     })
                 })
 
@@ -143,7 +143,7 @@
                 this.date = Date.now()
             }
 
-            console.log(loadDate, g.date);
+            // console.log(loadDate, g.date);
             this.saveGame()
         }
 
@@ -290,12 +290,12 @@
             card.setAttribute('draggable','true')
             card.setAttribute('ondragstart','drag(event)')
             
-            // console.log(this.cardRefObj);
+            // console.log(this.cardRefObj);          
             
-            if(this.cardRefObj.img === "y"){                
+            if(this.cardRefObj.img === "y"){   
                 card.setAttribute('style',`background-image: url("./img/card/id=${cardImg}.png")`) 
             }
-            else {
+            else {            
                 card.setAttribute('style',`background-image: url("./img/card/id=template.png")`) 
             }
 
@@ -449,7 +449,7 @@
         
         inspect(){
             if(el('table').childNodes.length > 0){            
-                console.log(el('table').childNodes[0]);
+                // console.log(el('table').childNodes[0]);
                 
                 //Find card reference by element id
                 let cardRef = findByProperty(g.cards, 'location', 'table')
@@ -604,7 +604,7 @@
                 //Remove duplicates
 
 
-                console.table(researchCardPool, ['set']);
+                // console.table(researchCardPool, ['set']);
                 
 
                 this.contractCard = rarr(researchCardPool)

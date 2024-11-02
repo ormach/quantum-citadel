@@ -30,5 +30,5 @@ let config = {
         albumRows: 2,
 
     //Testing
-        rClickEvent: true,
+        rClickEvent: false,
 }
