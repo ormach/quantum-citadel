@@ -1,7 +1,7 @@
 let config = {
 
     //Starting coins
-        coins: 2000,
+        coins: 200,
 
     //Progression exp lvl
         playerLvl: 1,
@@ -22,7 +22,7 @@ let config = {
         coinIncTime: 1000,
 
     //Coin reward per time
-        rewardInterval: 5000,
+        rewardInterval: 60000 * 10, //1min x N
         rewardsValue: 100,
     
         cardsToStartQuest: 4,
@@ -30,5 +30,5 @@ let config = {
         albumRows: 2,
 
     //Testing
-        rClickEvent: false,
+        rClickEvent: true,
 }

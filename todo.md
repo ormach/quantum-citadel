@@ -1,10 +1,4 @@
 - Change log
-   - Added coin rewards per period of time to slow down the game.
-   - Added a way to navigate between collection pages.
-   - Fixed a bug where rarity icons can be moved out of the card.
-   - Added 26 initial cards.
-   - Added new logo and card pack designs to the game.
-   - Added alternative definitions to researc tasks.
 
 - Collection pages
    - Add pages button (for N coins)
@@ -12,15 +6,19 @@
 
 - UI
    - Cost for album pages
+   - Time until reward?
 
 - Market
    - Add option to buy one 'daily' card.
    - Add discount for buying a pack.
    - Starter pack of ~10 cards.
+   - Show a pop-up with definition of a new card?
+   - Have a pack opening animation.
 
 - Bugs
    - Grab cursor doesn't work in FF.
    - Rarity icon can be dragged out.
+   - Level resets on refresh.
 
 - Code
    - Dealing with multiple instances of the game and LS saving. You can buy card in one window, then buy in another to pick the best rolls etc.
@@ -34,6 +32,8 @@
    - Add rarity match bonuses.
    - Coins as dragable game objects.
    - Haradric cube.
+   - Remove card name from card descriptions.
+   - Resolve issue with enertia and newtons first law.
 
 - Reseach / Upgrade & progression system
    - Uses exp as currency. Exp gained for research completion.
