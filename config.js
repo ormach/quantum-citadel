@@ -15,7 +15,7 @@ let config = {
         inspectionCost: 5,
         researchReward: 40,
         researchSkip: 10,
-        cardsInPack: 3,
+        cardsInPack: 5,
     
     //Coin reward per second (off)
         coinInc: 1,

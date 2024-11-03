@@ -120,6 +120,7 @@
                 //Override values of new objects
                 g.plObj.coins = g.ref.plObj.coins
                 g.plObj.exp = g.ref.plObj.exp
+                g.plObj.lvl = g.ref.plObj.lvl
 
                 //Calculate gained gold
                 //Compare date of previous event with new date.
@@ -159,7 +160,7 @@
             let packs = 3
             for(let i = 0; i < packs; i++){
                 if(g.plObj.lvl >= i * 2){
-                    el(`market-pack-${i}`).innerHTML = `Buy for ${config.cardCost * 3} ${coinIco}`
+                    el(`market-pack-${i}`).innerHTML = `Buy for ${config.cardCost * config.cardsInPack} ${coinIco}`
                     el(`market-pack-${i}`).disabled = false
                 }
                 else{
@@ -474,7 +475,7 @@
         constructor(){
             this.width = 5
             this.height = config.albumRows
-            this.pageIdArr = ['page-1', 'page-2', 'page-3']
+            this.pageIdArr = ['page-1', 'page-2', 'page-3', 'page-4', 'page-5']
 
             //Update id to default page
             this.page = this.pageIdArr[0]        

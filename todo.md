@@ -1,4 +1,6 @@
 - Change log
+   - Resolved a bug when player level would not be saved.
+   - Changed card pack cost to 100, and now there are 5 cards per pack.
 
 - Collection pages
    - Add pages button (for N coins)
@@ -18,7 +20,7 @@
 - Bugs
    - Grab cursor doesn't work in FF.
    - Rarity icon can be dragged out.
-   - Level resets on refresh.
+   - Got thermal energy quest, added correct card and lost.
 
 - Code
    - Dealing with multiple instances of the game and LS saving. You can buy card in one window, then buy in another to pick the best rolls etc.
@@ -34,6 +36,7 @@
    - Haradric cube.
    - Remove card name from card descriptions.
    - Resolve issue with enertia and newtons first law.
+   - Give bonus coins per card rarity in response.
 
 - Reseach / Upgrade & progression system
    - Uses exp as currency. Exp gained for research completion.
