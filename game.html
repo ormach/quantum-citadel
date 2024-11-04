@@ -115,21 +115,6 @@
             </div>
         </div>
 
-<!-- Contract -->
-        <div id="contract" class=" page">
-            
-            <div class="contract-container">
-                <h1 id="contract-heading">Contract</h1>
-                <p id="contract-description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
-                <div id="contract-content" class="card-container-grid"></div>
-                <div class="row">
-                    <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
-                    <button id="contract-button-skip" onclick="g.plObj.pay('skip research')"></button>
-                </div> 
-            </div>
-
-        </div>
-
 <!-- Collection -->
         <div id="collection-page" class=" page">
             <div class="collection-container">
@@ -150,6 +135,23 @@
                     </button>
                 </div>
             </div>
+        </div>
+
+<!-- Contract -->
+        <div id="contract" class=" page">
+                    
+            <div class="contract-container">
+                <div style="display: flex; justify-content: space-between;align-items: center;">
+                    <h1 id="contract-heading">Contract</h1>
+                    <div class="row">
+                        <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
+                        <button id="contract-button-skip" onclick="g.plObj.pay('skip research')"></button>
+                    </div> 
+                </div>
+                <p id="contract-description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
+                <div id="contract-content" class="card-container-grid"></div>
+            </div>
+
         </div>
 
 <!-- Inspection table -->
