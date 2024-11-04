@@ -6,14 +6,14 @@ let config = {
     //Progression exp lvl
         playerLvl: 1,
         expPerResearch: 1,
-        expBase: 2,
+        expBase: 4,
         expMult: 1,
-        expExpo: 0.4,
+        expExpo: 0.5,
 
     //Costs
         cardCost:       20,
         inspectionCost: 5,
-        researchReward: 40,
+        researchReward: 25,
         researchSkip: 10,
         cardsInPack: 5,
     
@@ -23,7 +23,7 @@ let config = {
 
     //Coin reward per time
         rewardInterval: 60000 * 10, //1min x N
-        rewardsValue: 100,
+        rewardsValue: 105,
     
         cardsToStartQuest: 4,
 
