@@ -5,6 +5,9 @@
    - Added illustrations to 7 cards and updated older art.
    - Fixed error and rewrote certain physics term definitions.
    - Added a basic countdown timer to indicate how much time is left until daily coin reward.
+   - Added an ability to submit multiple card per research question.
+   - Added reward bonuses per card quantity added to research.
+   - Added reward bonuses per card rarity added to research.
 
 - Collection pages
    - Add pages button (for N coins)
@@ -26,6 +29,7 @@
    - Grab cursor doesn't work in FF.
    - Rarity icon can be dragged out.
    - Got thermal energy quest, added correct card and lost.
+   - There is total exp calculation bug.
 
 - Code
    - Dealing with multiple instances of the game and LS saving. You can buy card in one window, then buy in another to pick the best rolls etc.

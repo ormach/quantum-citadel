@@ -668,17 +668,58 @@
 
             //Check placed cards 
             let addedCards = findByProperty(g.cards, 'location', 'contract-content_slot-0', 'includes')
-            // console.log(addedCards);
+            console.log(addedCards);
             // console.log(findByProperty(addedCards, 'name', this.contractCard.name));
+
+            //Check if cards have the same name
+            let cardsAreTheSame = true
+
+            addedCards.forEach(card =>{
+                if(card.name != addedCards[0].name){
+                    cardsAreTheSame = false
+                }
+            })
             
             //Win
-            if(addedCards != undefined && findByProperty(addedCards, 'name', this.contractCard.name) != undefined){
-                showAlert(`You win ${config.researchReward} coins, and gain ${config.expPerResearch} exp.`)
-                g.plObj.changeCoins(config.researchReward)
-                g.plObj.gainExp(config.expPerResearch)
+            if(
+                addedCards != undefined 
+                && findByProperty(addedCards, 'name', this.contractCard.name) != undefined 
+                && cardsAreTheSame //Check if all items are the same
+            ){
+                let coinsReward = 0
+                let expReward = config.expPerResearch
+
+                //Modify reward based on card rarity
+                addedCards.forEach(card => {
+                    if(card.rarity === 'rare'){
+                        coinsReward += 5
+                    }
+                    else if (card.rarity === 'epic'){
+                        expReward += 1
+                    }
+                    else if (card.rarity === 'legendary'){
+                        coinsReward += 10 * addedCards.length
+                    }
+                    else if (card.rarity === 'set'){
+                        expReward += 1 * addedCards.length
+                    }
+                })
+                
+                //Modify reward based on card quantity
+                for(var i = 0; i < addedCards.length; i++){
+                    coinsReward += Math.round(config.researchReward * (1 + i / 5))
+                    // console.log(coinsReward);
+                }
+                
+                g.plObj.changeCoins(coinsReward)
+                
+                g.plObj.gainExp(expReward)
+                
+                showAlert(`You win ${coinsReward} coins, and gain ${expReward} exp.`)
+            } 
 
             //Loose
-            } else{
+            else{
                 showAlert(`You lost ${config.researchReward} coins.`)
                 g.plObj.changeCoins(-config.researchReward)
             }
