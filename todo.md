@@ -1,6 +1,10 @@
 - Change log
    - Resolved a bug when player level would not be saved.
-   - Changed card pack cost to 100, and now there are 5 cards per pack.
+   - Changed card pack cost to 80, and now there are 4 cards per pack.
+   - Changed the set size from 20 to 10 cards. This helps with an issue when player gets a research related to the card that they don't have. Having smaller sets makes it easier to get required cards.
+   - Added illustrations to 7 cards and updated older art.
+   - Fixed error and rewrote certain physics term definitions.
+   - Added a basic countdown timer to indicate how much time is left until daily coin reward.
 
 - Collection pages
    - Add pages button (for N coins)
@@ -16,6 +20,7 @@
    - Starter pack of ~10 cards.
    - Show a pop-up with definition of a new card?
    - Have a pack opening animation.
+   - Make pack generator.
 
 - Bugs
    - Grab cursor doesn't work in FF.
@@ -44,3 +49,4 @@
    - Save research in LS to avoid resetting on refresh.
    - Sell album ui upgrades.
    - Add secondary descriptions for cards.
+   - Automatically add new packs instead of data.js packs object.

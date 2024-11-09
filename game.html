@@ -75,6 +75,12 @@
             <span id="exp-indicator">1 (1/14 exp)</span>
         </div> -->
 
+        <div id="reward-container">
+            <button class="light" id="reward-btn" onclick="g.getReward()" disabled>
+                <span id="reward-timer">Get reward</span>
+            </button>
+        </div>
+        
     </div>
     <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
@@ -97,27 +103,27 @@
                 <div class="row">
                     <div class="market-item">
                         <img src="./img/library/pack=objects.png" alt="">
-                        <button id="market-pack-0" class="light" onclick="g.plObj.pay('pack', 'objects')"></button>
+                        <button id="market-pack-objects" class="light" onclick="g.plObj.pay('pack', 'objects')"></button>
                     </div>
 
                     <div class="market-item">
                         <img src="./img/library/pack=gravity.png" alt="">
-                        <button id="market-pack-1" class="light" onclick="g.plObj.pay('pack', 'gravitation')"></button>
+                        <button id="market-pack-gravitation" class="light" onclick="g.plObj.pay('pack', 'gravitation')"></button>
                     </div>
 
                     <div class="market-item">
                         <img src="./img/library/pack=planetary motion.png" alt="">
-                        <button id="market-pack-2" class="light" onclick="g.plObj.pay('pack', 'planetary motion')"></button>
+                        <button id="market-pack-pl-motion" class="light" onclick="g.plObj.pay('pack', 'planetary motion')"></button>
                     </div>
 
                     <div class="market-item">
                         <img src="./img/library/pack=energy.png" alt="">
-                        <button id="market-pack-3" class="light" onclick="g.plObj.pay('pack', 'energy')"></button>
+                        <button id="market-pack-energy" class="light" onclick="g.plObj.pay('pack', 'energy')"></button>
                     </div>
 
                     <div class="market-item">
                         <img src="./img/library/pack=electricity.png" alt="">
-                        <button id="market-pack-4" class="light" onclick="g.plObj.pay('pack', 'electricity')"></button>
+                        <button id="market-pack-electricity" class="light" onclick="g.plObj.pay('pack', 'electricity')"></button>
                     </div>
 
                 </div>

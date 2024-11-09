@@ -19,10 +19,10 @@ let config = {
     
     //Coin reward per second (off)
         coinInc: 1,
-        coinIncTime: 1000,
 
     //Coin reward per time
         rewardInterval: 60000 * 10, //1min x N
+        runTimer: true,
         rewardsValue: 105,
     
         cardsToStartQuest: 4,

@@ -97,9 +97,6 @@
         //Check if game state available and override stuff
         loadGame(){
             let data = localStorage.getItem('gameData')
-            let loadDate = Date.now()
-
-            this.saveGame()
 
             //Load game
             if(typeof data === 'string'){
@@ -122,30 +119,61 @@
                 g.plObj.exp = g.ref.plObj.exp
                 g.plObj.lvl = g.ref.plObj.lvl
 
-                //Calculate gained gold
-                //Compare date of previous event with new date.
-                if(loadDate - g.ref.date > config.rewardInterval){
-                    // console.log('Get reward');
-                    g.date = Date.now()
-                    this.plObj.changeCoins(config.rewardsValue)
-                    showAlert(`Daily reward! You get ${config.rewardsValue} coins.`)
-                }
-                //No reward
-                else{
-                    g.date = g.ref.date
-                    console.log(`No reward yet, ${(loadDate - g.ref.date) / 1000}/${config.rewardInterval/1000}s remaining.`);
-                }
+                console.log(g, g.ref);
+                
+                //Load time from g.ref to g, brause we don't add it in constructor
+                this.rewardTime = g.ref.rewardTime
+
+                //Check interval reward
+                this.triggerReward()
             }
             //New game
             else{
                 console.log('Game: No saved game found.');
                 
-                //Save log in date-time
-                this.date = Date.now()
+                //Save the game initiation time for reward calc
+                this.rewardTime = Date.now()
             }
 
-            // console.log(loadDate, g.date);
             this.saveGame()
+        }
+
+        triggerReward(){
+
+            //Previous load date - New load date
+            if(Date.now() - g.rewardTime > config.rewardInterval){
+
+                //Enable reward button
+                el('reward-btn').removeAttribute("disabled")
+
+                //Disable timer
+                config.runTimer = false
+
+                //Change button label
+                el('reward-timer').innerHTML = 'Get reward'
+            }
+
+            this.saveGame()
+
+            //Return time until reward
+            return Math.floor((config.rewardInterval -  (Date.now() - g.rewardTime)) / 1000)
+        }
+
+        getReward(){
+             //Add coins to player
+             this.plObj.changeCoins(config.rewardsValue) 
+
+             //Display alert
+             showAlert(`Daily reward! You get ${config.rewardsValue} coins.`)
+
+             //Update previous load date
+             this.rewardTime = Date.now()
+
+             //Disable button
+             el('reward-btn').setAttribute("disabled","")
+
+             //Enable timer
+             config.runTimer = true
         }
 
         //Regen html based on game state
@@ -157,17 +185,19 @@
             el('exp').innerHTML = `Lvl: ${g.plObj.lvl} (Exp: ${g.plObj.exp}/${g.plObj.lvlUpExp})`
             
             //Market
-            let packs = config.totalMarketPacks
-            for(let i = 0; i < packs; i++){
-                if(g.plObj.lvl >= i * 2){
-                    el(`market-pack-${i}`).innerHTML = `Buy for ${config.cardCost * config.cardsInPack} ${coinIco}`
-                    el(`market-pack-${i}`).disabled = false
+            packsRef.map(pack => {
+                // console.log(pack.lvlRequirement);
+                
+                if(g.plObj.lvl >= pack.lvlRequirement){
+                    el(`market-pack-${pack.packId}`).innerHTML = `Buy for ${config.cardCost * config.cardsInPack} ${coinIco}`
+                    el(`market-pack-${pack.packId}`).disabled = false
                 }
                 else{
-                    el(`market-pack-${i}`).innerHTML = `Requers LVL ${i * 2}`
-                    el(`market-pack-${i}`).disabled = true
+                    el(`market-pack-${pack.packId}`).innerHTML = `Requers LVL ${pack.lvlRequirement}`
+                    el(`market-pack-${pack.packId}`).disabled = true
                 }
-            }
+            })
+
             
             //Inspection
             el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
@@ -562,7 +592,7 @@
         //Add option to add new pages
     }
     
-//CONTRACT
+//CONTRACT RESEARCH
     //If > 4 cards in album, generate a contract with card description, player has to pick the right card to win.
     class Research{
         constructor(){
@@ -605,8 +635,6 @@
 
 
                 // console.table(researchCardPool, ['set']);
-                
-
                 this.contractCard = rarr(researchCardPool)
     
                 //Generate new slots
@@ -692,15 +720,24 @@
         g.research = new Research
         
         //Interval sync
-        // setInterval(intervalSync, config.coinIncTime)
+        setInterval(intervalSync, 1000)
     }
 
 
     //INTERVAL SYNC
     //g per sec
     function intervalSync(){
-        g.plObj.coins += config.coinInc
-        g.updateUI() 
+        
+        //Chek for interval coin reward
+        let remainingTime = g.triggerReward()
+
+        //Stop timer if reward is available, has to be here due to label update
+        if(!config.runTimer) return
+
+        //Converst seconds to hh:mm:ss format
+        let convertTime = new Date(remainingTime * 1000).toISOString().slice(11,19);
+
+        el('reward-timer').innerHTML = `Reward in ${convertTime}`
     }
 
     function allCards(){

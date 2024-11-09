@@ -2,17 +2,32 @@ let cardRarityRef = ['common', 'rare', 'epic', 'legendary', 'set']
 let packsRef = [
     {
         name:"objects",
+        packId:"objects",
         lvlRequirement: 0,
         lvlUnlockResearch: 2,
     },
     {
         name:"gravitation",
+        packId:"gravitation",
         lvlRequirement: 3,
-        lvlUnlockResearch: 4,
+        lvlUnlockResearch: 5,
+    },
+    {
+        name:"planetary motion",
+        packId:"pl-motion",
+        lvlRequirement: 6,
+        lvlUnlockResearch: 8,
     },
     {
         name:"energy",
-        lvlRequirement: 5,
-        lvlUnlockResearch: 6,
+        packId:"energy",
+        lvlRequirement: 9,
+        lvlUnlockResearch: 11,
+    },
+    {
+        name:"electricity",
+        packId:"electricity",
+        lvlRequirement: 12,
+        lvlUnlockResearch: 14,
     }
 ]
