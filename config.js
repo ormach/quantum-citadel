@@ -15,7 +15,7 @@ let config = {
         inspectionCost: 5,
         researchReward: 25,
         researchSkip: 10,
-        cardsInPack: 5,
+        cardsInPack: 4,
     
     //Coin reward per second (off)
         coinInc: 1,
@@ -31,4 +31,7 @@ let config = {
 
     //Testing
         rClickEvent: true,
+
+    //Automate
+        totalMarketPacks: 5
 }

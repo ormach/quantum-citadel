@@ -157,7 +157,7 @@
             el('exp').innerHTML = `Lvl: ${g.plObj.lvl} (Exp: ${g.plObj.exp}/${g.plObj.lvlUpExp})`
             
             //Market
-            let packs = 3
+            let packs = config.totalMarketPacks
             for(let i = 0; i < packs; i++){
                 if(g.plObj.lvl >= i * 2){
                     el(`market-pack-${i}`).innerHTML = `Buy for ${config.cardCost * config.cardsInPack} ${coinIco}`
@@ -365,7 +365,6 @@
             g.updateUI()
         }
 
-        
         //Pay for something
         pay(operation, type){
             //Pack
