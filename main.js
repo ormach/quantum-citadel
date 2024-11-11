@@ -198,7 +198,6 @@
                 }
             })
 
-            
             //Inspection
             el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
 
@@ -502,7 +501,7 @@
 //COLLECTION
     class Collection{
         constructor(){
-            this.width = 5
+            this.width = config.albumColumns
             this.height = config.albumRows
             this.pageIdArr = ['page-1', 'page-2', 'page-3', 'page-4', 'page-5']
 
@@ -519,18 +518,6 @@
 
             let quant = this.width * this.height
             g.genCardSlot(this.page, quant)
-            
-            //Set collection width
-            let gap = 4
-            let padding = 24
-            el(this.page).setAttribute('style',
-                `
-                    width: calc(((var(--card-width) + ${gap}px) * ${this.width}) + (2 * ${padding}px));
-                    padding:${padding}px;
-                ` 
-            )
-
-            // console.log(`Collection: Slots generated.`);   
         }
 
         loadPage(pageId){

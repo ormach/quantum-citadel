@@ -16,7 +16,6 @@
     --card-offset: 4px;
     --section-width: 800px;
 
-    --hand-height: 118px;
     --hand-color: rgb(0, 0, 0);
     --nav-color: rgb(74, 74, 74);
     --nav-max-width: 1280px;
@@ -41,7 +40,7 @@ body{
 
     font-family: sans-serif;
     line-height: 150%;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--font-color);
 
     display: flex;
@@ -109,7 +108,7 @@ h2{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 24px;
+        gap: 16px;
 
         padding: 4px 4px 4px 14px;
 
@@ -142,21 +141,25 @@ h2{
         color: var(--font-color-light);
     }
     #hand {
-        position: fixed;
-        bottom: 0px;
-        height: var(--hand-height);
-        /* height: calc(var(--card-height) + 8px - 100px); */
-        width: calc(100% - 24px);
-        max-width: var(--nav-max-width);
+        /* position: relative; */
 
-        border-radius: 12px 12px 12px 12px;
+        height: 56px;
+        flex-grow: 1;
+        flex-shrink: 1;
+        width: 100%;
+        /* position: fixed; */
+        /* bottom: 0px; */
+        /* height: calc(var(--card-height) + 8px - 100px); */
+        /* width: calc(100% - 24px); */
+        /* max-width: var(--nav-max-width); */
+
+        border-radius: 4px;
 
         display: flex;
-        /* justify-content: center; */
         gap: 4px;
 
         padding: 4px;
-        margin: 12px;
+        /* margin: 12px; */
 
         background-color: var(--hand-color);
         z-index: 13;
@@ -164,7 +167,7 @@ h2{
         overflow-x: scroll;
         overflow-y: hidden;
 
-        transition: all 0.4s;
+        /* transition: all 0.4s; */
     }
     /* #hand:hover{
         transition: all 0.2s;
@@ -287,20 +290,19 @@ h2{
     .contract-container{
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 12px;
 
-        padding: 32px;
+        padding: 20px;
 
-        width: var(--section-width);
-        height: 520px;
+        width: 400px;
 
         background-color: rgb(214, 214, 206);
         box-shadow: 0px 0px 36px var(--b20);
 
     }
-    .contract-description{
+    #contract-description{
+        min-height: 120px;
         height: auto;
-        flex-grow: 1;
     }
     .row{
         display: flex;
@@ -311,10 +313,10 @@ h2{
 /* MARKET */
     #market-container{
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-wrap: wrap;
 
-        min-width: var(--section-width);
+        width: 1000px;
 
         gap: 24px;
         background-color: #383232;
@@ -371,14 +373,14 @@ h2{
     .collection-container{
         display: flex;
         flex-direction: column;
-        padding: 12px 0;
-        background-color: rgb(59, 59, 59);
-        border: 2px solid black;
+        padding: 0px 0;
+        /* background-color: rgb(59, 59, 59); */
+        /* border: 2px solid black; */
     }
     .collection-container .tab-group{
         display: flex;
         gap: 4px;
-        justify-content: center;    
+        justify-content: flex-start;    
     }
     .collection-container .tab-group .active {
         background-color: rgb(141, 141, 141);
@@ -386,18 +388,22 @@ h2{
     .collection-container .row {
         gap: 0px;
     }
-    .collection-container .row button {
-        height: auto;
-        border: none;
-        border-radius: 0;
-    }
     .collection-container .tab-group button{
         border: none;
         border-radius: 0;
         background-color: rgb(79, 79, 79);
+        height: 48px;
     }
     .collection{
         background-color: rgb(141, 141, 141);
+
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-auto-rows: max-content;
+        column-gap: 4px;
+        row-gap: 4px;
+
+        padding: 16px;
     }
 
 

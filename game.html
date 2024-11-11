@@ -55,34 +55,31 @@
     <div id="nav" class="">
         <img id="logo" src="./img/logo-nobg.svg" alt="">
 
-        <div class="btn-group">
+        <!-- <div class="btn-group">
             <button class="light" onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
             <button class="light" onclick="el('contract').scrollIntoView()">Contract</button>
             <button class="light" onclick="el('collection-page').scrollIntoView()">Album</button>
             <button class="light" onclick="el('table-page').scrollIntoView()">Inspection</button>
             <button class="light" onclick="el('hand').classList.toggle('hand-shrink')"><img src="./img/ico/slots.svg" alt=""></button> 
-        </div>
+        </div> -->
 
+        <!-- Exp -->
         <div id="exp" class="stat"></div>
+        
+        <!-- Hand -->
+        <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+        <!-- Coins -->
         <div id="coins" class="stat">
             <img src="./img/ico/coin.svg" alt="">
             <span id="coin-indicator"></span>
         </div>
-        
-        <!-- Stats -->
-        <!-- <div id="exp" class="stat">
-            <img src="./img/ico/time.svg" alt="">
-            <span id="exp-indicator">1 (1/14 exp)</span>
-        </div> -->
 
-        <div id="reward-container">
-            <button class="light" id="reward-btn" onclick="g.getReward()" disabled>
-                <span id="reward-timer">Get reward</span>
-            </button>
-        </div>
-        
+        <!-- Reward -->
+        <button class="light" id="reward-btn" onclick="g.getReward()" style="width: 176px;" disabled>
+            <span id="reward-timer"></span>
+        </button> 
     </div>
-    <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
 
 <!-- Pages -->
@@ -97,76 +94,75 @@
     
 <!-- Market -->
         <div id="market" class=" page">
+            <!-- <h1>Market</h1> -->
             <div id="market-container">
-                <h1>Market</h1>
-
-                <div class="row">
-                    <div class="market-item">
-                        <img src="./img/library/pack=objects.png" alt="">
-                        <button id="market-pack-objects" class="light" onclick="g.plObj.pay('pack', 'objects')"></button>
-                    </div>
-
-                    <div class="market-item">
-                        <img src="./img/library/pack=gravity.png" alt="">
-                        <button id="market-pack-gravitation" class="light" onclick="g.plObj.pay('pack', 'gravitation')"></button>
-                    </div>
-
-                    <div class="market-item">
-                        <img src="./img/library/pack=planetary motion.png" alt="">
-                        <button id="market-pack-pl-motion" class="light" onclick="g.plObj.pay('pack', 'planetary motion')"></button>
-                    </div>
-
-                    <div class="market-item">
-                        <img src="./img/library/pack=energy.png" alt="">
-                        <button id="market-pack-energy" class="light" onclick="g.plObj.pay('pack', 'energy')"></button>
-                    </div>
-
-                    <div class="market-item">
-                        <img src="./img/library/pack=electricity.png" alt="">
-                        <button id="market-pack-electricity" class="light" onclick="g.plObj.pay('pack', 'electricity')"></button>
-                    </div>
-
+                <div class="market-item">
+                    <img src="./img/library/pack=objects.png" alt="">
+                    <button id="market-pack-objects" class="light" onclick="g.plObj.pay('pack', 'objects')"></button>
                 </div>
+
+                <div class="market-item">
+                    <img src="./img/library/pack=gravity.png" alt="">
+                    <button id="market-pack-gravitation" class="light" onclick="g.plObj.pay('pack', 'gravitation')"></button>
+                </div>
+
+                <div class="market-item">
+                    <img src="./img/library/pack=planetary motion.png" alt="">
+                    <button id="market-pack-pl-motion" class="light" onclick="g.plObj.pay('pack', 'planetary motion')"></button>
+                </div>
+
+                <div class="market-item">
+                    <img src="./img/library/pack=energy.png" alt="">
+                    <button id="market-pack-energy" class="light" onclick="g.plObj.pay('pack', 'energy')"></button>
+                </div>
+
+                <div class="market-item">
+                    <img src="./img/library/pack=electricity.png" alt="">
+                    <button id="market-pack-electricity" class="light" onclick="g.plObj.pay('pack', 'electricity')"></button>
+                </div>  
             </div>
         </div>
 
-<!-- Collection -->
-        <div id="collection-page" class=" page">
-            <div class="collection-container">
-                <div class=" tab-group">
-                    <button id="page-1_tab" class="collection-tab" onclick="g.collection.loadPage('page-1')">Page 1</button>
-                    <button id="page-2_tab" class="collection-tab" onclick="g.collection.loadPage('page-2')">Page 2</button>
-                    <button id="page-3_tab" class="collection-tab" onclick="g.collection.loadPage('page-3')">Page 3</button>
-                    <button id="page-4_tab" class="collection-tab" onclick="g.collection.loadPage('page-4')">Page 4</button>
-                    <button id="page-5_tab" class="collection-tab" onclick="g.collection.loadPage('page-5')">Page 5</button>
-                </div>
-                <div class="row">
-                    <button onclick="g.collection.loadPage('previous')">
-                        <img src="./img/ico/id=arrow-l.svg" alt="">
-                    </button>
-                    <div id="collection" class="card-container-grid collection"></div>            
-                    <button onclick="g.collection.loadPage('next')">
-                        <img src="./img/ico/id=arrow-r.svg" alt="">
-                    </button>
-                </div>
-            </div>
-        </div>
+        <div style="display: flex; gap: 12px; justify-content: center;">
 
-<!-- Contract -->
-        <div id="contract" class=" page">
-                    
-            <div class="contract-container">
-                <div style="display: flex; justify-content: space-between;align-items: center;">
-                    <h1 id="contract-heading">Contract</h1>
-                    <div class="row">
-                        <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
-                        <button id="contract-button-skip" onclick="g.plObj.pay('skip research')"></button>
-                    </div> 
-                </div>
-                <p id="contract-description">Short description of the theme and how to complete the contract. Probably with some hinths or historical info.</p>
-                <div id="contract-content" class="card-container-grid"></div>
-            </div>
+            <!-- Collection -->
+                    <div id="collection-page" class=" page">
+                        <div class="collection-container">
+                            <div class=" tab-group">
+                                <button onclick="g.collection.loadPage('previous')">
+                                    <img src="./img/ico/id=arrow-l.svg" alt="">
+                                </button>
+                                <button id="page-1_tab" class="collection-tab" onclick="g.collection.loadPage('page-1')">Page 1</button>
+                                <button id="page-2_tab" class="collection-tab" onclick="g.collection.loadPage('page-2')">Page 2</button>
+                                <button id="page-3_tab" class="collection-tab" onclick="g.collection.loadPage('page-3')">Page 3</button>
+                                <button id="page-4_tab" class="collection-tab" onclick="g.collection.loadPage('page-4')">Page 4</button>
+                                <button id="page-5_tab" class="collection-tab" onclick="g.collection.loadPage('page-5')">Page 5</button>
+                                <button onclick="g.collection.loadPage('next')">
+                                    <img src="./img/ico/id=arrow-r.svg" alt="">
+                                </button>
+                            </div>
 
+                            <div id="collection" class="card-container-grid collection"></div>            
+            
+                        </div>
+                    </div>
+            
+            <!-- Contract -->
+                    <div id="contract" class=" page">
+                        <div class="contract-container">
+                            <div style="display: flex; justify-content: space-between;align-items: center;">
+                                <h1 id="contract-heading"></h1>
+                                
+                            </div>
+                            <p id="contract-description"></p>
+                            <div id="contract-content" class="card-container-grid"></div>
+                            <div class="row">
+                                <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
+                                <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
+                            </div> 
+                        </div>
+            
+                    </div>
         </div>
 
 <!-- Inspection table -->

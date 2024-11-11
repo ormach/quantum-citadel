@@ -27,7 +27,9 @@ let config = {
     
         cardsToStartQuest: 4,
 
-        albumRows: 2,
+    //Collection
+        albumRows: 3,
+        albumColumns: 4,
 
     //Testing
         rClickEvent: true,
