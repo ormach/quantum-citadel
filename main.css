@@ -73,6 +73,7 @@ h2{
 
         background-image: url("./img/bg/env.svg");
         background-position: center;
+        background-repeat: no-repeat;
     }
     #title-container{
         display: flex;
