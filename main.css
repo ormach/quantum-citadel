@@ -123,7 +123,6 @@ h2{
         background-color: rgb(80, 80, 80);
         padding: 4px 4px 4px 10px;
         border: 2px solid black;
-        
     }
     #nav #logo {
         height: 44px;
@@ -174,6 +173,25 @@ h2{
     } */
     .hand-shrink{
         height: calc(var(--card-height) - 24px) !important;
+    }
+    #menu-container{
+        position: relative;
+    }
+    #menu{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        z-index: 2;
+
+        background-color: #383232;
+        border: 2px solid black;
+        border-radius: 8px;
+        padding: 8px;
+        width: 180px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
     }
 
 
@@ -284,29 +302,71 @@ h2{
         flex-wrap: wrap;
     }
 
-
-/* CONTRACT */
-    .contract-container{
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-
-        padding: 20px;
-
-        width: 400px;
-
-        background-color: rgb(214, 214, 206);
-        box-shadow: 0px 0px 36px var(--b20);
-
+    #collection-research{
+        display: flex; 
+        gap: 4px; 
+        justify-content: center;
     }
-    #contract-description{
-        min-height: 120px;
-        height: auto;
-    }
-    .row{
-        display: flex;
-        gap: 8px;
-    }
+    /* COLLECTION */
+        .collection-container{
+            display: flex;
+            flex-direction: column;
+            padding: 0px 0;
+            background-color: rgb(59, 59, 59);
+            border: 2px solid black;
+        }
+        .collection-container .tab-group{
+            display: flex;
+            gap: 4px;
+            justify-content: flex-start;    
+        }
+        .collection-container .tab-group .active {
+            background-color: rgb(141, 141, 141);
+        }
+        .collection-container .row {
+            gap: 0px;
+        }
+        .collection-container .tab-group button{
+            border: none;
+            border-radius: 0;
+            background-color: rgb(79, 79, 79);
+            height: 48px;
+        }
+        .collection{
+            background-color: rgb(141, 141, 141);
+
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-auto-rows: max-content;
+            column-gap: 4px;
+            row-gap: 4px;
+
+            padding: 16px;
+        }
+    /* RESEARCH CONTRACT */
+        .contract-container{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            padding: 20px;
+
+            width: 400px;
+            height: 100%;
+
+            background-color: rgb(214, 214, 206);
+            box-shadow: 0px 0px 36px var(--b20);
+            border: 2px solid black;
+
+        }
+        #contract-description{
+            min-height: 120px;
+            height: auto;
+        }
+        .row{
+            display: flex;
+            gap: 8px;
+        }
 
 
 /* MARKET */
@@ -323,6 +383,8 @@ h2{
 
         padding: 24px;
         color: var(--font-color-light);
+
+        position: relative;
     }
     .market-item{
         display: flex;
@@ -337,6 +399,11 @@ h2{
     .market-item img{
         max-width: 282px;
     }
+    #market-container .page-btn{
+        position: absolute;
+        right: 0;
+    }
+
 
 /* INSPECTION TABLE */
     .table-container{
@@ -369,45 +436,7 @@ h2{
         /* height: var(--card-height); */
     }
 
-
-/* COLLECTION */
-    .collection-container{
-        display: flex;
-        flex-direction: column;
-        padding: 0px 0;
-        background-color: rgb(59, 59, 59);
-        /* border: 2px solid black; */
-    }
-    .collection-container .tab-group{
-        display: flex;
-        gap: 4px;
-        justify-content: flex-start;    
-    }
-    .collection-container .tab-group .active {
-        background-color: rgb(141, 141, 141);
-    }
-    .collection-container .row {
-        gap: 0px;
-    }
-    .collection-container .tab-group button{
-        border: none;
-        border-radius: 0;
-        background-color: rgb(79, 79, 79);
-        height: 48px;
-    }
-    .collection{
-        background-color: rgb(141, 141, 141);
-
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-auto-rows: max-content;
-        column-gap: 4px;
-        row-gap: 4px;
-
-        padding: 16px;
-    }
-
-
+/* UI */
 /* ALERT/NOTIFICATION */
     #alert{
         position: fixed;

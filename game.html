@@ -73,11 +73,26 @@
                 <img src="./img/ico/coin.svg" alt="">
                 <span id="coin-indicator"></span>
             </div>
-            
+
             <!-- Reward -->
             <button class="light" id="reward-btn" onclick="g.getReward()" style="width: 176px;" disabled>
                 <span id="reward-timer"></span>
             </button> 
+
+            <!-- Menu -->
+             <div id="menu-container">
+                 <button class="light" onclick="toggleMenu()">
+                    <img src="./img/ico/menu.svg">
+                 </button>
+                 <div id="menu" class="hide">
+                    <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`)";>Learn more</button>
+                    <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`)";>Report an issue</button>
+                    <button class="light" onclick="clearLs()">Reset the game</button>
+                    <button class="light" onclick="toggleMenu()">
+                        <img src="./img/ico/tab-hide.svg">
+                    </button>
+                 </div>
+             </div>
         </div>
 
         <!-- Hand -->
@@ -101,11 +116,10 @@
             <!-- <h1>Market</h1> -->
             <div id="market-container">
             </div>
-            <button onclick="g.market.nextPage()">Next page</button>
         </div>
 
-<!-- Collection contract -->
-        <div style="display: flex; gap: 12px; justify-content: center;">
+<!-- Collection & Research contract -->
+        <div id="collection-research">
 
             <!-- Collection -->
                     <div id="collection-page" class=" page">
@@ -134,11 +148,10 @@
                         <div class="contract-container">
                             <div style="display: flex; justify-content: space-between;align-items: center;">
                                 <h1 id="contract-heading"></h1>
-                                
                             </div>
                             <p id="contract-description"></p>
                             <div id="contract-content" class="card-container-grid"></div>
-                            <div class="row">
+                            <div id="contract-controlls" class="row">
                                 <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
                                 <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
                             </div> 

@@ -1,26 +1,23 @@
 - Change log
-
+   - Implemented market pack slider to show 3 packs per page.
+   - Implemented new interface for album and reserch. Before research UI was placed belowe the album oto match the overall design idea of placing game sections in a column layout to rely on native web scrolling for navigation. But after testing, it became clear that scrolling down for each quest while holding a card is not very convinient.
+   - Added a basic menu with option to reset the game and a link to discord.
+   - Fixed a bug with research contract UI.
+   - Fixed a bug when research contract would reset on page reload.
 
 - Collection pages
    - Add pages button (for N coins)
    - Add number of cards per page.
-
-- UI
    - Cost for album pages
-   - Time until reward?
 
 - Market
    - Add option to buy one 'daily' card.
-   - Add discount for buying a pack.
    - Starter pack of ~10 cards.
    - Show a pop-up with definition of a new card?
    - Have a pack opening animation.
-   - Make pack generator.
 
 - Bugs
-   - Grab cursor doesn't work in FF.
    - Rarity icon can be dragged out.
-   - Got thermal energy quest, added correct card and lost.
    - There is total exp calculation bug.
 
 - Code

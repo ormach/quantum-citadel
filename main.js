@@ -119,13 +119,20 @@
                 g.plObj.exp = g.ref.plObj.exp
                 g.plObj.lvl = g.ref.plObj.lvl
 
-                console.log(g, g.ref);
+                console.log("New game:");
+                console.log(g);
+                
+                console.log("Loaded game:");
+                console.log(g.ref);
                 
                 //Load time from g.ref to g, brause we don't add it in constructor
                 this.rewardTime = g.ref.rewardTime
 
                 //Check interval reward
                 this.triggerReward()
+
+                //Load previous research 
+                g.research = new Research(g.ref.research.contractCard)
             }
             //New game
             else{
@@ -133,6 +140,9 @@
                 
                 //Save the game initiation time for reward calc
                 this.rewardTime = Date.now()
+
+                //New research
+                g.research = new Research
             }
 
             this.saveGame()
@@ -188,8 +198,8 @@
             el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
 
             //Research
-            el('contract-heading').innerHTML = `Research contract for ${config.researchReward + coinIco}`
-            el('contract-button-skip').innerHTML = `Skip for ${config.researchSkip + coinIco}`
+            el('contract-heading').innerHTML = `New research`
+            el('contract-button-skip').innerHTML = `Skip (${config.researchSkip + coinIco})`
     
             //Allocate cards
             // g.cards.forEach(card => {
@@ -468,10 +478,14 @@
 
         genPage(){
             let container = el('market-container')
-            container.innerHTML = ""
+            container.innerHTML = `
+                <button class="page-btn light" onclick="g.market.nextPage()">
+                    <img src="./img/ico/id=arrow-r.svg" alt="">
+                </button>
+            `
 
             let initialPack = this.currentPage * this.packsPerPage
-
+            
             for(let i = initialPack; i < this.packsPerPage * (this.currentPage + 1); i++){
                 if(this.packs[i] !== undefined){
                     let btn
@@ -624,7 +638,7 @@
 //CONTRACT RESEARCH
     //If > 4 cards in album, generate a contract with card description, player has to pick the right card to win.
     class Research{
-        constructor(){
+        constructor(loadedCard){
             this.width = 1
             this.height = 1
             // this.researchId = genId('re')
@@ -634,8 +648,9 @@
 
             //Generate "get N cards" contract
             if(g.cards.length < config.cardsToStartQuest){ 
+                el('contract-heading').classList.add('hide')
                 el('contract-description').innerHTML = `Get ${config.cardsToStartQuest} cards, to unlock research contracts.`
-                el('contract-button').classList.add('hide')
+                el('contract-controlls').classList.add('hide')
             }
     
             //Generate "Find correct card" contract
@@ -643,61 +658,50 @@
                 //Define research pool based on level.
                 let researchCardPool = []
 
-                //Add cards that player owns
-                g.cards.forEach(card => {
-                    researchCardPool.push(findByProperty(g.cardsRef, "name", card.name))
-                })
-                // researchCardPool.push(...g.cards)
-
-                //Add cards from each pack is level requirement is met
-                packsRef.forEach(pack => {
-                    if(pack.lvlUnlockResearch <= g.plObj.lvl){
-                        g.cardsRef.forEach(card => {
-                            if(card.set === pack.name){
-                                researchCardPool.push(card)
-                            }
-                        })
-                    }
-                })
-
-                //Remove duplicates
-
-
-                // console.table(researchCardPool, ['set']);
-                this.contractCard = rarr(researchCardPool)
+                //Check for loaded card
+                if(loadedCard !== undefined){
+                    this.contractCard = loadedCard
+                } else {
+                    //Add cards that player owns
+                    g.cards.forEach(card => {
+                        researchCardPool.push(findByProperty(g.cardsRef, "name", card.name))
+                    })
+                    // researchCardPool.push(...g.cards)
+    
+                    //Add cards from each pack is level requirement is met
+                    packsRef.forEach(pack => {
+                        if(pack.lvlUnlockResearch <= g.plObj.lvl){
+                            g.cardsRef.forEach(card => {
+                                if(card.set === pack.name){
+                                    researchCardPool.push(card)
+                                }
+                            })
+                        }
+                    })
+    
+                    //Remove duplicates
+                    // console.table(researchCardPool, ['set']);
+                    this.contractCard = rarr(researchCardPool)
+                }
     
                 //Generate new slots
                 let slotQuantity = this.width * this.height;
                 g.genCardSlot('contract-content', slotQuantity)
     
                 //Set descriotion
-                // let desc = `description_${rng(2)}`
-                // console.log(desc);
                 el('contract-description').innerHTML = this.contractCard[`description_${rng(2)}`]
 
                 //Make button visible if reset from get N cards
-                el('contract-button').classList.remove('hide')
+                el('contract-heading').classList.remove('hide')
+                el('contract-controlls').classList.remove('hide')
             }
-    
-            //Generate rarity puzzle
-            // for(let i=0;i< this.width * this.height; i++){
-            //     this.raritySequence.push(rarr(cardRarityRef))
-            // } 
-
-            //Add rarity sequence icons
-            // this.raritySequence.forEach(node => {
-            //     let img = document.createElement('img')
-            //     img.setAttribute('src', `./img/rarity/${node}.svg`)
-
-            //     el('contract-content').append(img)
-            // })
         }
 
         sellResearch(){
 
             //Check placed cards 
             let addedCards = findByProperty(g.cards, 'location', 'contract-content_slot-0', 'includes')
-            console.log(addedCards);
+            // console.log(addedCards);
             // console.log(findByProperty(addedCards, 'name', this.contractCard.name));
 
             //Check if cards have the same name
@@ -741,13 +745,11 @@
                 }
                 
                 g.plObj.changeCoins(coinsReward)
-                
                 g.plObj.gainExp(expReward)
-                
                 showAlert(`You win ${coinsReward} coins, and gain ${expReward} exp.`)
             } 
 
-            //Loose
+            //Lose
             else{
                 showAlert(`You lost ${config.researchReward} coins.`)
                 g.plObj.changeCoins(-config.researchReward)
@@ -788,9 +790,6 @@
         //Load/generate game
         g.loadGame()
         g.updateUI()
-
-        //Gen init contract
-        g.research = new Research
         
         //Interval sync
         setInterval(intervalSync, 1000)
@@ -823,6 +822,10 @@
                 }
             )
         })
+    }
+
+    function toggleMenu(){
+        el('menu').classList.toggle('hide')
     }
     
 //Fetch csv file, parse to JSON, assing it to reg obj
