@@ -335,7 +335,7 @@
             //On right click event
             card.addEventListener("contextmenu", (event) => {
                 if(config.rClickEvent == true){
-                    if(this.location === "hand"){
+                    if(this.location === "hand" || this.location.includes('page')){
                         this.location = "contract-content_slot-0"
                     } else {
                         this.location = "hand"
@@ -650,7 +650,7 @@
             if(g.cards.length < config.cardsToStartQuest){ 
                 el('contract-heading').classList.add('hide')
                 el('contract-description').innerHTML = `Get ${config.cardsToStartQuest} cards, to unlock research contracts.`
-                el('contract-controlls').classList.add('hide')
+                el('contract-controls').classList.add('hide')
             }
     
             //Generate "Find correct card" contract
@@ -693,7 +693,7 @@
 
                 //Make button visible if reset from get N cards
                 el('contract-heading').classList.remove('hide')
-                el('contract-controlls').classList.remove('hide')
+                el('contract-controls').classList.remove('hide')
             }
         }
 

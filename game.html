@@ -51,6 +51,9 @@
 </head>
 
 <body>
+     <div class="bg-cover"></div>
+
+
 <!-- Navigation -->
     <div id="nav" class="">
         <div class="nav-container"> 
@@ -99,10 +102,14 @@
         <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
     
-
-
 <!-- Pages -->
     <div id="wrapper">
+
+<!-- Title section -->
+        <div id="title-container">
+            <img src="./img/logo.svg" alt="">
+            <p>Small card game that helps you learn physics.</p>
+        </div>
 
 <!-- Start screen -->
         <div id="cover" class="page hide">
@@ -144,19 +151,26 @@
                     </div>
             
             <!-- Contract -->
-                    <div id="contract" class=" page">
-                        <div class="contract-container">
-                            <div style="display: flex; justify-content: space-between;align-items: center;">
-                                <h1 id="contract-heading"></h1>
-                            </div>
-                            <p id="contract-description"></p>
+                    <div id="contract" class="contract-container">
+                        <img src="./img/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">
+                        <img src="./img/bg/pen.svg"          style="position: absolute; bottom: -32px; right: -92px;">
+
+
+                        <div style="display: flex; justify-content: space-between;align-items: center;">
+                            <h1 id="contract-heading"></h1>
+                        </div>
+
+                        <p id="contract-description"></p>
+
+                        <div class="contract-card-container">
                             <div id="contract-content" class="card-container-grid"></div>
-                            <div id="contract-controlls" class="row">
-                                <button id="contract-button" onclick="g.research.sellResearch()">Submit for review</button>
+    
+                            <div id="contract-controls">
+                                <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
                                 <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
                             </div> 
                         </div>
-            
+
                     </div>
         </div>
 

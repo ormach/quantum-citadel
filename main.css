@@ -1,5 +1,6 @@
 :root{
     --w0: rgba(0,0,0,0.0);
+    --w5: rgba(255,255,255,0.05);
     --w20: rgba(255,255,255,0.2);
     --w70: rgba(255,255,255,0.7);
 
@@ -35,7 +36,7 @@
     flex-shrink: 0; 
 }
 body{
-    background-color: var(--bg);
+    background-color: black;
 
     font-family: sans-serif;
     line-height: 150%;
@@ -44,6 +45,8 @@ body{
 
     display: flex;
     justify-content: center;
+
+    overflow-x: hidden;
 }
 .hide {
     display: none !important;
@@ -60,6 +63,30 @@ h2{
     font-family: 'Grenze', sans-serif;
 }
 
+/* DECORATION */
+    .bg-cover{
+        position: absolute;
+        top: 0;
+
+        width: 100%;
+        height: 848px;
+
+        background-image: url("./img/bg/env.svg");
+        background-position: center;
+    }
+    #title-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        color: white;
+        gap: 16px;
+        margin: 126px 0;
+    }
+    #title-container img {
+        height: 88px;
+    }
 
 /* BUTTON */
     button{
@@ -79,6 +106,7 @@ h2{
         align-items: center;
 
         line-height: 100%;
+        z-index: 2;
     }
     button img {
         padding-bottom: 3px;
@@ -158,7 +186,7 @@ h2{
 
         padding: 4px;
 
-        background-color: rgba(0,0,0,0.8);
+        background-color: rgba(136, 136, 136, 0.8);
         border-radius: 10px 10px 0 0;
         z-index: 13;
 
@@ -202,9 +230,7 @@ h2{
         align-content: flex-start;
         justify-content: flex-start;
         gap: 48px;
-        /* padding: 0px 200px; */
-        padding: 96px 0 200px 0;
-
+        padding: 48px 0 200px 0;
     }
     .page {
         display: flex;
@@ -229,7 +255,7 @@ h2{
         background-size: var(--card-width) var(--card-height);
 
         /* outline: 2px solid white; */
-        border-radius: 6px;
+        border-radius: 2px;
 
         overflow: hidden;
         cursor: grab;
@@ -276,13 +302,13 @@ h2{
     .card-container {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
 
-        align-items: flex-start;
-        background-color: var(--b05);
+        align-items: center;
+        background-color: var(--w5);
 
-        height: var(--card-height);
-        width: var(--card-width);
+        height: calc(var(--card-height) + 16px);
+        width: calc(var(--card-width) + 16px);
 
         position: relative;
     }
@@ -303,16 +329,15 @@ h2{
     }
 
     #collection-research{
-        display: flex; 
-        gap: 4px; 
+        display: flex;  
         justify-content: center;
     }
     /* COLLECTION */
         .collection-container{
             display: flex;
             flex-direction: column;
-            padding: 0px 0;
-            background-color: rgb(59, 59, 59);
+            padding: 8px;
+            background-color: #5F544E;
             border: 2px solid black;
         }
         .collection-container .tab-group{
@@ -321,7 +346,8 @@ h2{
             justify-content: flex-start;    
         }
         .collection-container .tab-group .active {
-            background-color: rgb(141, 141, 141);
+            background-color: #1D1D1D;
+            color: wheat;
         }
         .collection-container .row {
             gap: 0px;
@@ -333,7 +359,7 @@ h2{
             height: 48px;
         }
         .collection{
-            background-color: rgb(141, 141, 141);
+            background-color: #1D1D1D;
 
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -341,7 +367,7 @@ h2{
             column-gap: 4px;
             row-gap: 4px;
 
-            padding: 16px;
+            padding: 12px;
         }
     /* RESEARCH CONTRACT */
         .contract-container{
@@ -349,15 +375,16 @@ h2{
             flex-direction: column;
             gap: 12px;
 
-            padding: 20px;
+            padding: 32px 24px;
 
             width: 400px;
             height: 100%;
 
-            background-color: rgb(214, 214, 206);
+            background-color: #beb9ae;
             box-shadow: 0px 0px 36px var(--b20);
             border: 2px solid black;
 
+            position: relative;
         }
         #contract-description{
             min-height: 120px;
@@ -366,6 +393,28 @@ h2{
         .row{
             display: flex;
             gap: 8px;
+        }
+        .contract-card-container{
+            display: flex;
+            gap: 8px;
+            height:min-content;
+            width: 100%;
+        }
+        .contract-card-container .card-container{
+            border: 2px dashed var(--b20);
+        }
+        #contract-controls{
+            display: flex;
+            flex-direction: column;
+            outline: 2px solid black;
+            flex-grow: 1;
+        }
+        #contract-controls button {
+            height: 100%;
+            border-radius: 0px;
+            border: none;
+            flex-shrink: 1 ;
+            border-bottom: 2px solid black;
         }
 
 
