@@ -183,20 +183,6 @@
             //Nav
             el('coin-indicator').innerHTML = `${g.plObj.coins}`
             el('exp').innerHTML = `Lvl: ${g.plObj.lvl} (Exp: ${g.plObj.exp}/${g.plObj.lvlUpExp})`
-            
-            //Market
-            packsRef.map(pack => {
-                // console.log(pack.lvlRequirement);
-                
-                if(g.plObj.lvl >= pack.lvlRequirement){
-                    el(`market-pack-${pack.packId}`).innerHTML = `Buy for ${config.cardCost * config.cardsInPack} ${coinIco}`
-                    el(`market-pack-${pack.packId}`).disabled = false
-                }
-                else{
-                    el(`market-pack-${pack.packId}`).innerHTML = `Requers LVL ${pack.lvlRequirement}`
-                    el(`market-pack-${pack.packId}`).disabled = true
-                }
-            })
 
             //Inspection
             el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
@@ -458,6 +444,7 @@
         levelUp(){
 
             this.lvl++
+            g.market.genPage() //Updates button labels based on pl lvl
         
             //Reduce exp by elp required to lvl up
             this.exp = this.exp - this.lvlUpExp
@@ -467,6 +454,61 @@
         
             //Check exp to see if more than 1 level was gained
             this.gainExp(0)
+        }
+    }
+
+//MARKET
+    class Market {
+        constructor(){
+            this.packs = packsRef
+            this.currentPage = 0
+            this.packsPerPage = 3
+            this.lastPage = 1
+        }
+
+        genPage(){
+            let container = el('market-container')
+            container.innerHTML = ""
+
+            let initialPack = this.currentPage * this.packsPerPage
+
+            for(let i = initialPack; i < this.packsPerPage * (this.currentPage + 1); i++){
+                if(this.packs[i] !== undefined){
+                    let btn
+                    let pack = this.packs[i]
+
+                    if(g.plObj.lvl >= pack.lvlRequirement){
+                        btn = `
+                            <button id="market-pack-${pack.packId}" class="light" onclick="g.plObj.pay('pack', '${pack.name}')">
+                                Buy for ${config.cardCost * config.cardsInPack} 
+                                <img src="./img/ico/coin.svg">
+                            </button>
+                        `
+                    }
+                    else{
+                        btn = `
+                            <button disabled id="market-pack-${pack.packId}" class="light" onclick="g.plObj.pay('pack', '${pack.name}')">
+                                Requers LVL ${pack.lvlRequirement}
+                            </button>
+                        `
+                    }
+
+                    container.innerHTML += `
+                        <div class="market-item">
+                            <img src="./img/library/pack=${pack.name}.png" alt="">
+                            ${btn}
+                        </div>
+                    `
+                }
+            }
+        }
+
+        nextPage(){
+            this.currentPage++
+            if(this.currentPage > this.lastPage){
+                this.currentPage = 0
+            }
+            this.genPage()
         }
     }
 
@@ -740,10 +782,13 @@
         })
         cardsRef = g.cardsRef
         
+        g.market = new Market
+        g.market.genPage()
+
         //Load/generate game
         g.loadGame()
         g.updateUI()
-        
+
         //Gen init contract
         g.research = new Research
         

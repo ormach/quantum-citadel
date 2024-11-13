@@ -8,7 +8,7 @@ let config = {
         expPerResearch: 1,
         expBase: 4,
         expMult: 1,
-        expExpo: 0.5,
+        expExpo: 0.3,
 
     //Costs
         cardCost:       20,

@@ -53,33 +53,37 @@
 <body>
 <!-- Navigation -->
     <div id="nav" class="">
-        <img id="logo" src="./img/logo-nobg.svg" alt="">
-
-        <!-- <div class="btn-group">
-            <button class="light" onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
-            <button class="light" onclick="el('contract').scrollIntoView()">Contract</button>
-            <button class="light" onclick="el('collection-page').scrollIntoView()">Album</button>
-            <button class="light" onclick="el('table-page').scrollIntoView()">Inspection</button>
-            <button class="light" onclick="el('hand').classList.toggle('hand-shrink')"><img src="./img/ico/slots.svg" alt=""></button> 
-        </div> -->
-
-        <!-- Exp -->
-        <div id="exp" class="stat"></div>
-        
-        <!-- Hand -->
-        <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
-        <!-- Coins -->
-        <div id="coins" class="stat">
-            <img src="./img/ico/coin.svg" alt="">
-            <span id="coin-indicator"></span>
+        <div class="nav-container"> 
+            <img id="logo" src="./img/logo-nobg.svg" alt="">
+    
+            <!-- <div class="btn-group">
+                <button class="light" onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
+                <button class="light" onclick="el('contract').scrollIntoView()">Contract</button>
+                <button class="light" onclick="el('collection-page').scrollIntoView()">Album</button>
+                <button class="light" onclick="el('table-page').scrollIntoView()">Inspection</button>
+                <button class="light" onclick="el('hand').classList.toggle('hand-shrink')"><img src="./img/ico/slots.svg" alt=""></button> 
+            </div> -->
+    
+            <!-- Exp -->
+            <div id="exp" class="stat"></div>
+            
+            
+            <!-- Coins -->
+            <div id="coins" class="stat">
+                <img src="./img/ico/coin.svg" alt="">
+                <span id="coin-indicator"></span>
+            </div>
+            
+            <!-- Reward -->
+            <button class="light" id="reward-btn" onclick="g.getReward()" style="width: 176px;" disabled>
+                <span id="reward-timer"></span>
+            </button> 
         </div>
 
-        <!-- Reward -->
-        <button class="light" id="reward-btn" onclick="g.getReward()" style="width: 176px;" disabled>
-            <span id="reward-timer"></span>
-        </button> 
+        <!-- Hand -->
+        <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
+    
 
 
 <!-- Pages -->
@@ -96,33 +100,11 @@
         <div id="market" class=" page">
             <!-- <h1>Market</h1> -->
             <div id="market-container">
-                <div class="market-item">
-                    <img src="./img/library/pack=objects.png" alt="">
-                    <button id="market-pack-objects" class="light" onclick="g.plObj.pay('pack', 'objects')"></button>
-                </div>
-
-                <div class="market-item">
-                    <img src="./img/library/pack=gravity.png" alt="">
-                    <button id="market-pack-gravitation" class="light" onclick="g.plObj.pay('pack', 'gravitation')"></button>
-                </div>
-
-                <div class="market-item">
-                    <img src="./img/library/pack=planetary motion.png" alt="">
-                    <button id="market-pack-pl-motion" class="light" onclick="g.plObj.pay('pack', 'planetary motion')"></button>
-                </div>
-
-                <div class="market-item">
-                    <img src="./img/library/pack=energy.png" alt="">
-                    <button id="market-pack-energy" class="light" onclick="g.plObj.pay('pack', 'energy')"></button>
-                </div>
-
-                <div class="market-item">
-                    <img src="./img/library/pack=electricity.png" alt="">
-                    <button id="market-pack-electricity" class="light" onclick="g.plObj.pay('pack', 'electricity')"></button>
-                </div>  
             </div>
+            <button onclick="g.market.nextPage()">Next page</button>
         </div>
 
+<!-- Collection contract -->
         <div style="display: flex; gap: 12px; justify-content: center;">
 
             <!-- Collection -->
