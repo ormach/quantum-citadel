@@ -21,7 +21,7 @@ let config = {
         coinInc: 1,
 
     //Coin reward per time
-        rewardInterval: 1 * 60000, //N x 1min
+        rewardInterval: 60 * 60000, //N x 1min
         runTimer: true,
         rewardsValue: 85,
     
