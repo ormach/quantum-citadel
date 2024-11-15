@@ -1,6 +1,6 @@
 - Change log
    - Implemented market pack slider to show 3 packs per page.
-   - Implemented new interface for album and reserch. Before research UI was placed belowe the album oto match the overall design idea of placing game sections in a column layout to rely on native web scrolling for navigation. But after testing, it became clear that scrolling down for each quest while holding a card is not very convinient.
+   - Implemented new interface for album and reserch. Before research UI was placed below the album to match the overall design idea of placing game sections in a column to use web scrolling for navigation. But after testing, it became clear that scrolling down for each quest while holding a card is not very convinient.
    - Added a basic menu with option to reset the game and a link to discord.
    - Fixed a bug with research contract UI.
    - Fixed a bug when research contract would reset on page reload.

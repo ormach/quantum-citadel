@@ -55,6 +55,10 @@
         //Save game on card movement
         g.saveGame()
 
+        //Calculate reward
+        // console.log(targetContainer);
+        g.calculateReward()
+        
         // console.log(
         //     findByProperty(g.cards, 'cardId', draggedCard.id)
         // );   
@@ -88,9 +92,12 @@
             this.cardsRef = []
             this.inspectionTable = new InspectionTable()
             this.collection = new Collection
+            this.totalReward = config.rewardsValue
         }
 
         saveGame(){
+            console.log("Game saved");
+
             localStorage.setItem('gameData', JSON.stringify(g))
         }
 
@@ -118,6 +125,7 @@
                 g.plObj.coins = g.ref.plObj.coins
                 g.plObj.exp = g.ref.plObj.exp
                 g.plObj.lvl = g.ref.plObj.lvl
+                g.totalReward = g.ref.totalReward
 
                 console.log("New game:");
                 console.log(g);
@@ -129,7 +137,7 @@
                 this.rewardTime = g.ref.rewardTime
 
                 //Check interval reward
-                this.triggerReward()
+                this.enableRewardButton()
 
                 //Load previous research 
                 g.research = new Research(g.ref.research.contractCard)
@@ -145,45 +153,70 @@
                 g.research = new Research
             }
 
-            this.saveGame()
+            // this.saveGame()
         }
 
-        triggerReward(){
+        enableRewardButton(){
 
             //Previous load date - New load date
             if(Date.now() - g.rewardTime > config.rewardInterval){
-
+                
                 //Enable reward button
                 el('reward-btn').removeAttribute("disabled")
+                
+                //Change button label
+                el('reward-timer').innerHTML = `Get reward (${this.totalReward}c)`
 
                 //Disable timer
                 config.runTimer = false
 
-                //Change button label
-                el('reward-timer').innerHTML = 'Get reward'
+                // console.log("Reward button enabled");
             }
-
-            this.saveGame()
 
             //Return time until reward
             return Math.floor((config.rewardInterval -  (Date.now() - g.rewardTime)) / 1000)
         }
 
         getReward(){
-             //Add coins to player
-             this.plObj.changeCoins(config.rewardsValue) 
+            //Add coins to player
+            this.plObj.changeCoins(this.totalReward) 
 
-             //Display alert
-             showAlert(`Daily reward! You get ${config.rewardsValue} coins.`)
+            //Display alert
+            showAlert(`Daily reward! You get ${this.totalReward} coins.`)
 
-             //Update previous load date
-             this.rewardTime = Date.now()
+            //Update previous load date
+            this.rewardTime = Date.now()
 
-             //Disable button
-             el('reward-btn').setAttribute("disabled","")
+            //Disable button
+            el('reward-btn').setAttribute("disabled","")
 
-             //Enable timer
-             config.runTimer = true
+            //Enable timer
+            config.runTimer = true
+        }
+
+        //Calculate reward value
+        calculateReward(){
+            this.totalReward = config.rewardsValue
+
+            g.cards.forEach(card =>{
+                if(!card.location.includes("page")) return
+
+                if(card.rarity === "rare"){
+                    this.totalReward += 1
+                }
+                else if (card.rarity === "epic"){
+                    this.totalReward += 5        
+                }
+                else if (card.rarity === "legenrary"){
+                    this.totalReward += 10
+                }
+                else if (card.rarity === "set"){
+                    this.totalReward += 15
+                }
+            })
+
+            console.log("Calculated reward value");
+            
         }
 
         //Regen html based on game state
@@ -365,14 +398,16 @@
                 el(locationId).append(cardHtmlElem)
             }     
 
+            //Calculate reward
+            g.calculateReward()
         }
     }
     
     //Move into Card class somehow
-    function moveCard(cardElem){
-        // el('hand').appendChild(cardElem)
-        el('hand').insertBefore(cardElem, el('hand').firstChild)    
-    }
+    // function moveCard(cardElem){
+    //     // el('hand').appendChild(cardElem)
+    //     el('hand').insertBefore(cardElem, el('hand').firstChild)    
+    // }
     
 //PLAYER & SHOP
     class PlayerObj{
@@ -795,13 +830,11 @@
         setInterval(intervalSync, 1000)
     }
 
-
     //INTERVAL SYNC
     //g per sec
     function intervalSync(){
-        
         //Chek for interval coin reward
-        let remainingTime = g.triggerReward()
+        let remainingTime = g.enableRewardButton()
 
         //Stop timer if reward is available, has to be here due to label update
         if(!config.runTimer) return
@@ -809,7 +842,10 @@
         //Converst seconds to hh:mm:ss format
         let convertTime = new Date(remainingTime * 1000).toISOString().slice(11,19);
 
-        el('reward-timer').innerHTML = `Reward in ${convertTime}`
+        el('reward-timer').innerHTML = `${g.totalReward}c reward in ${convertTime}`
+
+        // Saves reward timer and reward button state every sec
+        g.saveGame()
     }
 
     function allCards(){
