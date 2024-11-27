@@ -1,10 +1,5 @@
 - Change log
-   - Implemented market pack slider to show 3 packs per page.
-   - Implemented new interface for album and reserch area.
-   - Added a basic menu with option to reset the game and a link to discord.
-   - Fixed a bug with research contract UI.
-   - Fixed a bug when research contract would reset on page reload.
-   - Implemnted reward bonuses based on quantity and rarity of cards in the album.
+ 
 
 - Collection pages
    - Add pages button (for N coins)

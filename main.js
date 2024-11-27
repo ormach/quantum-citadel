@@ -207,7 +207,7 @@
                 else if (card.rarity === "epic"){
                     this.totalReward += 5        
                 }
-                else if (card.rarity === "legenrary"){
+                else if (card.rarity === "legendary"){
                     this.totalReward += 10
                 }
                 else if (card.rarity === "set"){
