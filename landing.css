@@ -12,13 +12,21 @@ html{
     font-size: 16px;
     font-family: sans-serif;
     line-height: 150% !important;
+
+    
 }
 body{
     display: flex; 
     flex-direction: column;
     justify-content: center; 
-    align-items: center;
+    align-items: center;       
 }
+
+.overflow{
+    min-width: 100%;
+    overflow-x: hidden; 
+}
+
 p, ul{
     color: #D8C3AC;
     max-width: 600px;
@@ -275,9 +283,9 @@ button.x:hover{
         background-size: cover;   
         background-position: center; 
     }
-    .hero-img{
+    #hero-img{
         width: 100%;
-        max-width: 1200px;
+        width: 1200px;
         height: 800px;
     
         position: absolute;
