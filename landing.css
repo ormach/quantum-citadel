@@ -76,7 +76,7 @@ button{
 button.x{
     background-image: none;
     background-color: rgba(255,255,255,0.0);
-    outline: 2px solid rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.2);
     padding: 16px;
 }
 button:hover{
@@ -252,6 +252,8 @@ button.x:hover{
     position: absolute;
     top: -312px;
 
+    opacity: 0.25;
+
     left: 50%;
     transform: translateX(-50%);
     z-index: -1;
@@ -295,5 +297,3 @@ button.x:hover{
         z-index: -1;
     }
 }
-
-
