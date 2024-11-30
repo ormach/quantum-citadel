@@ -22,7 +22,8 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="main.css">
+    <!-- <link rel="stylesheet" href="main.css"> -->
+    <link rel="stylesheet" href="landing.css">
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,27 +51,130 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 
-<body style="
-    display: flex; 
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center;
-    gap: 36px;
-    height: 100vh;
-    background-color: black;
-    color: aliceblue;
-">
-    <img style="height: 88px;" src="./img/logo.svg" alt="">
-    <p style="max-width: 480px; text-align: center;">
-        Casual web game where you collect cards to learn physics. <br> 
-        <a href="https://discord.gg/AT8KdVbcVT" style="color: bisque;">Join Discord</a> 
-        to get updates and join early access.
-    </p>
-    <div class="bg-cover" style="z-index: -1;"></div>
+<body>
+
+    <!-- Hero section -->
+     <div class="container">
+        <div class="wrapper hero">
+
+            <img style="height: 88px;" src="./img/logo-nobg.svg" alt="">
+            <img class="loop" style="height: 254px;" src="./img/landing/loop.svg" alt="">
+            <img style="height: 194px;" src="./img/landing/title.svg" alt="">
+
+            <button onclick="window.open('https://discord.gg/AT8KdVbcVT')">
+                <img src="./img/landing/disc-ico.svg" alt="">
+                <div class="line"></div>
+                Join Discord for updates
+            </button>
+
+            <img src="./img/landing/phyrary-key.jpg" alt="" class="hero-img" />
+
+        </div>
+
+        
+        <!-- UI examples -->
+        <div class="ui-container">
+             <p>
+                 Free browser game <br>
+                 where you collect cards <br>
+                 to learn physics. 
+             </p>
+
+            <img id="i1" src="./img/landing/album.png" alt="">
+            <img id="i2" src="./img/landing/shop.png" alt="">
+
+            <img class="slash" src="./img/landing/ui-slash.svg" alt="">
+        </div>
+
+        <!-- How it works -->
+        <div class="wrapper margin-bot">
+            <h2>How it works</h2>
+            <p>
+                Each day you get coins to buy cards. Each card represents a physics concept or phenomenon. You use cards to complete quests or keep them to get various bonuses. 
+            </p>
+            <ul>
+                <li>Learn as you play.</li> 
+                <li>Combine cards to get better rewards.</li>
+                <li>Manage your economy to progress faster.</li>
+            </ul>
+        </div>
+
+        <!-- Anki -->
+        <div class="wrapper margin-bot">
+
+            <h2>Anki & spaced repetition</h2>
+            <p>
+                If you are familiar with Anki cards, you may also know that spaced repetition is one of the better ways to retain learned material. Phyrary cards uses a similar method, to prevent you from forgetting what you have learned while playing the game.
+            </p>
+        </div>
+
+        <!-- Card examples -->
+        <div class="wrapper" style="position: relative;">
+            <div class="card-container margin-bot">
+                 <img id="c1" src="./img/landing/1.png" alt="">
+                 <img id="c2" src="./img/landing/2.png" alt="">
+                 <img id="c3" src="./img/landing/3.png" alt="">
+                 <img id="c4" src="./img/landing/4.png" alt="">
+                 <img id="c5" src="./img/landing/5.png" alt="">
+            </div>
+            
+            <img id="land" src="./img/landing/land.svg" alt="">
+        </div>
+
+        <!-- Cards and sets -->
+        <div class="wrapper margin-bot">
+
+            <h2>Cards & themes</h2>
+            <p>
+                The game has 5 sets of 10 cards that cover introductory physics areas. So far the game covers: 
+            </p>
+            <ul>
+                <li>Objects: Teaches you about object properties.</li>
+                <li>Gravity: Newton's laws and gravitation.</li>
+                <li>Planetary motion: Kepler's laws.</li>
+                <li>Energy: Teaches you about various energy types.</li>
+                <li>Electricity: Learn about voltage, electrical current and more.</li>
+            </ul>
+        </div>
+
+        <div class="wrapper margin-bot">
+
+            <h2>Way forward</h2>
+            <p>
+                Early development version is available for testing. If you are interested, join Discord. I make weekly updates, and plan to add more cards and game systems over time.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+     <div class="footer">
+        <div class="container">
+            <div class="wrapper">
+       
+                <img style="height: 88px;" src="./img/logo-nobg.svg" alt="">
+
+                <div class="btn-wrapper">
+                    <button onclick="window.open('https://discord.gg/AT8KdVbcVT')">
+                        <img src="./img/landing/disc-ico.svg" alt="">
+                        <div class="line"></div>
+                        Join Discord for updates
+                    </button>
+                    <button class="x" onclick="window.open('https://x.com/pavelmorr')">
+                        <img src="./img/landing/x-ico.svg" alt="">
+                    </button>
+                </div>
+
+                <img id="stars" src="./img/landing/footer-stars.svg"/>
+                <img id="glow" src="./img/landing/footer-glow.svg"/>
+                <img id="spike" src="./img/landing/footer-spike.svg"/>
+            </div>
+        </div>
+     </div>
+
 </body>
 </html>
 
-<script src="utility.js"></script>
+<!-- <script src="utility.js"></script>
 <script src="config.js"></script>
 <script src="data.js"></script>
-<script src="main.js"></script>
+<script src="main.js"></script> -->
