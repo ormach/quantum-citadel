@@ -254,11 +254,11 @@ button.x:hover{
 }
 
 #land{
-    width: 2229px !important;
-    height: 1447px;
-
     position: absolute;
     top: -312px;
+
+    width: 100vw !important;
+    height: 1447px;
 
     opacity: 0.25;
 
