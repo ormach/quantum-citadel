@@ -124,6 +124,14 @@ button.x:hover{
         transform: translateX(-50%);
         left: 50%;
         z-index: -1;
+
+        width: 100vw;
+        height: 800px;
+
+        background-image: url(./img/landing/footer-spike.svg);
+        background-repeat: no-repeat;
+        background-size: 2762px 800px;
+        background-position: center;
     }
 
     #stars{
@@ -178,7 +186,6 @@ button.x:hover{
         outline: 2px solid white;
         width: 600px;
     }
-
     #i1{
         transform: rotate(-6deg) translateY(160px);
         align-self: flex-start;
@@ -248,6 +255,7 @@ button.x:hover{
 
 #land{
     width: 2229px !important;
+    height: 1447px;
 
     position: absolute;
     top: -312px;
@@ -257,6 +265,11 @@ button.x:hover{
     left: 50%;
     transform: translateX(-50%);
     z-index: -1;
+
+    background-image: url(./img/landing/land.svg);
+    background-repeat: no-repeat;
+    background-size: 2229px 1447px;
+    background-position: center;
 }
 
 .hero{
@@ -265,11 +278,19 @@ button.x:hover{
 
     position: relative;
     
-    .loop{
+    #logo{
+        height: 88px;
+    }
+    #loop{
         position: absolute;
-    
+        
+        height: 254px;
+
         left: 50%;
         transform: translateX(-50%);
+    }
+    #heading{
+        height: 194px;  
     }
     .bg-cover{
         width: 100%;

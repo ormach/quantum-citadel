@@ -1,0 +1,59 @@
+/* Uses max-width value from .container style*/
+.container{
+    max-width: 1144px;
+    /* outline: 2px dashed greenyellow; */
+    transition: all 0.2s;
+}
+
+@media only screen and (max-width: 1190px) {
+    .container{max-width: 952px;}
+}
+@media only screen and (max-width: 1000px) {
+    .container{max-width: 760px;}
+    .ui-container p {
+        display: none;
+    }
+}
+@media only screen and (max-width: 808px) {
+    .container{max-width: 568px;}
+}
+@media only screen and (max-width: 616px) {
+    .container{max-width: 424px;}
+    #heading{
+        transform: scale(0.75);
+    }
+    #loop{
+        display: none;
+    }
+}
+@media only screen and (max-width: 472px) {
+    .container{max-width: 312px;}
+    #heading{
+        transform: scale(0.5);
+    }
+
+    .btn-wrapper{
+        flex-direction: column;
+
+        button{
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    #i1, #i2{
+        transform: rotate(0deg) translate(0) !important;
+        align-self: center !important;
+        width: 100% !important;
+
+    }
+
+    .ui-container{
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    h2{
+        line-height: 86%;
+    }
+}
