@@ -24,6 +24,14 @@
     --font-color-light: rgba(236, 237, 212, 0.88);
 }
 
+/* For anchor links nav */
+*, html{
+    /* Disables gestures */
+    touch-action: none; 
+
+    /*Removes browser stretching on scroll*/
+    overscroll-behavior: none;
+}
 
 *{
     padding: 0;
