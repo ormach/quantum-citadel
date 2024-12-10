@@ -131,20 +131,80 @@
             <!-- Collection -->
                     <div id="collection-page" class=" page">
                         <div class="collection-container">
-                            <div class=" tab-group">
-                                <!-- < -->
-                                <button onclick="g.collection.loadPage('previous')">
+
+                            <div class="subtab-group">
+                                <!-- Craft album -->
+                                <button  class="tab" onclick="toggleModal('crafting-modal')">
+                                    <img src="./img/ico/repair.svg" alt="">
+                                </button>
+                            </div>
+
+                            <!-- Config modal -->
+                            <div id="crafting-modal" class="hide">
+                                <button onclick="toggleModal('crafting-modal')">
+                                    <img src="./img/ico/item-x.svg" alt="">
+                                </button>
+
+                                <h1>Crafting</h1>
+                                <p>Modify your album properties</p>
+
+                                <div>
+                                    <p>Modify pages</p>
+                                    <button onclick="toggleModal('crafting-modal')">
+                                        <img src="./img/ico/add.svg" alt="">
+                                        Add page
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <p>Add card slots</p>
+                                    <button onclick="toggleModal('crafting-modal')">
+                                        <img src="./img/ico/add.svg" alt="">
+                                        Add card slot
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <p>Modify rows</p>
+                                    <button onclick="toggleModal('crafting-modal')">
+                                        <img src="./img/ico/add.svg" alt="">
+                                        Add card row
+                                    </button>
+                                    <button onclick="toggleModal('crafting-modal')">
+                                        <img src="./img/ico/add.svg" alt="">
+                                        Remove card row
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <p>Modify columns</p>
+                                    <button onclick="toggleModal('crafting-modal')">
+                                        <img src="./img/ico/add.svg" alt="">
+                                        Add card slot
+                                    </button>
+                                    <button onclick="toggleModal('crafting-modal')">
+                                        <img src="./img/ico/add.svg" alt="">
+                                        Remove card column
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="tab-group">
+                                <!-- Prev page btn -->
+                                <button class="secondary-btn" onclick="g.collection.loadPage('previous')">
                                     <img src="./img/ico/id=arrow-l.svg" alt="">
                                 </button>
-                                <button id="page-1_tab" class="collection-tab" onclick="g.collection.loadPage('page-1')">I</button>
-                                <button id="page-2_tab" class="collection-tab" onclick="g.collection.loadPage('page-2')">II</button>
-                                <button id="page-3_tab" class="collection-tab" onclick="g.collection.loadPage('page-3')">III</button>
-                                <button id="page-4_tab" class="collection-tab" onclick="g.collection.loadPage('page-4')">IV</button>
-                                <button id="page-5_tab" class="collection-tab" onclick="g.collection.loadPage('page-5')">V</button>
-                                <!-- > -->
-                                <button onclick="g.collection.loadPage('next')">
+
+                                <button id="page-1_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-1')">I</button>
+                                <button id="page-2_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-2')">II</button>
+                                <button id="page-3_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-3')">III</button>
+                                <button id="page-4_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-4')">IV</button>
+                                <button id="page-5_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-5')">V</button>
+                                
+                                <!-- Next page btn -->
+                                <button class="secondary-btn" onclick="g.collection.loadPage('next')">
                                     <img src="./img/ico/id=arrow-r.svg" alt="">
-                                </button>
+                                </button> 
                             </div>
 
                             <!-- Cards -->

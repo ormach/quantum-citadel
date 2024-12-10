@@ -348,6 +348,8 @@ h2{
             padding: 8px;
             background-color: #5F544E;
             border: 2px solid black;
+
+            position: relative;
         }
         .collection-container .tab-group{
             display: flex;
@@ -362,12 +364,16 @@ h2{
             gap: 0px;
         }
         .collection-container .tab-group button{
-            border: none;
-            border-radius: 0;
-            background-color: rgb(79, 79, 79);
+            background-color: #4B443F;
+
             height: 48px;
+
             font-family: 'Grenze', sans-serif;
             font-size: 24px;
+        }
+        .secondary-btn{
+            border: none !important;
+            background-color: var(--w0) !important;
         }
         .collection{
             background-color: #1D1D1D;
@@ -379,6 +385,39 @@ h2{
             row-gap: 4px;
 
             padding: 12px;
+        }
+        .tab{
+            border: 2px solid black;
+            border-bottom: none;
+            border-radius: 0 !important;
+        }
+        /* Subtab */
+        .subtab-group{
+            display: flex;
+            position: absolute;
+            top: -38px;
+        }
+        .subtab-group button{
+            background-color: #1F1F1F;
+            height: 38px;
+        }
+        /* Crafting modal */
+        #crafting-modal{
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: #4B443F;
+
+            z-index: 3;
+
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding: 52px;
         }
     /* RESEARCH CONTRACT */
         .contract-container{
