@@ -842,7 +842,7 @@
         //Converst seconds to hh:mm:ss format
         let convertTime = new Date(remainingTime * 1000).toISOString().slice(11,19);
 
-        el('reward-timer').innerHTML = `${g.totalReward}c reward in ${convertTime}`
+        el('reward-timer').innerHTML = `${g.totalReward}c in ${convertTime}`
 
         // Saves reward timer and reward button state every sec
         g.saveGame()

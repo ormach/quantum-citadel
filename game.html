@@ -58,29 +58,6 @@
     <div id="nav" class="">
         <div class="nav-container"> 
             <img id="logo" src="./img/logo-nobg.svg" alt="">
-    
-            <!-- <div class="btn-group">
-                <button class="light" onclick="el('market').scrollIntoView({ block: 'start' })">Market</button>
-                <button class="light" onclick="el('contract').scrollIntoView()">Contract</button>
-                <button class="light" onclick="el('collection-page').scrollIntoView()">Album</button>
-                <button class="light" onclick="el('table-page').scrollIntoView()">Inspection</button>
-                <button class="light" onclick="el('hand').classList.toggle('hand-shrink')"><img src="./img/ico/slots.svg" alt=""></button> 
-            </div> -->
-    
-            <!-- Exp -->
-            <div id="exp" class="stat"></div>
-            
-            
-            <!-- Coins -->
-            <div id="coins" class="stat">
-                <img src="./img/ico/coin.svg" alt="">
-                <span id="coin-indicator"></span>
-            </div>
-
-            <!-- Reward -->
-            <button class="light" id="reward-btn" onclick="g.getReward()" style="width: 220px;" disabled>
-                <span id="reward-timer"></span>
-            </button> 
 
             <!-- Menu -->
              <div id="menu-container">
@@ -100,6 +77,24 @@
 
         <!-- Hand -->
         <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+        <div class="nav-container"> 
+    
+            <!-- Exp -->
+            <div id="exp" class="stat"></div>
+            
+            
+            <!-- Coins -->
+            <div id="coins" class="stat">
+                <img src="./img/ico/coin.svg" alt="">
+                <span id="coin-indicator"></span>
+            </div>
+
+            <!-- Reward -->
+            <button class="light" id="reward-btn" onclick="g.getReward()" style="width: 160px;" disabled>
+                <span id="reward-timer"></span>
+            </button> 
+        </div>
     </div>
     
 <!-- Pages -->
@@ -254,6 +249,9 @@
                 </div>
             </div>
         </div>
+
+<!-- Sell cards -->
+        <p style="color: aquamarine;">Sell extra cards for 10c</p>
 
     </div>
 
