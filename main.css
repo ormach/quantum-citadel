@@ -1,7 +1,9 @@
 :root{
     --w0: rgba(0,0,0,0.0);
     --w5: rgba(255,255,255,0.05);
+    --w10: rgba(255,255,255,0.1);
     --w20: rgba(255,255,255,0.2);
+    --w50: rgba(255,255,255,0.5);
     --w70: rgba(255,255,255,0.7);
 
     --b05: rgba(0,0,0,0.05);
@@ -152,18 +154,30 @@ h2{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
         
         /* flex-grow: 1; */
 
         border-radius: 10px 10px 0 0;
 
-        background-color: rgb(80, 80, 80);
-        padding: 4px 4px 4px 10px;
+        background-color: rgb(36, 36, 36);
         border: 2px solid black;
+    }
+    .divider{
+        background-color: black;
+        width: 2px;
+        align-self: stretch;
+    }
+    .nav-button{
+        border: none;
+        border-radius: 0;
+        color: white;
+    }
+    .nav-container button:hover{
+        background-color: var(--w10);
     }
     #nav #logo {
         height: 44px;
+        margin: 0 12px 0 10px;
     }
     #nav .btn-group{
         display: flex;
@@ -191,17 +205,18 @@ h2{
         /* height: calc(var(--card-height) + 8px - 100px); */
         /* width: calc(100% - 24px); */
         /* max-width: var(--nav-max-width); */
-
+        
         display: flex;
         gap: 4px;
-
+        
         padding: 4px;
-
-        background-color: rgba(136, 136, 136, 0.3);
-        /* border-top: 2px solid transparent; */
+        
+        /* background: linear-gradient(to top, var(--w20), transparent); */
+        background-color: rgba(63, 63, 63, 0.3);
+        border-top: 2px solid white;
         border-left: 2px solid white;
-        border-right: 2px solid white;
-        /* border-radius: 10px 10px 0 0; */
+        border-right: 2px solid white; 
+        border-radius: 10px 10px 0 0;
         z-index: 13;
 
         overflow-x: scroll;

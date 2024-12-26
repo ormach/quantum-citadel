@@ -57,22 +57,25 @@
 <!-- Navigation -->
     <div id="nav" class="">
         <div class="nav-container"> 
-            <img id="logo" src="./img/logo-nobg.svg" alt="">
+            <img id="logo" src="./img/logo-nobg.svg">
+
+            <div class="divider"></div>
 
             <!-- Menu -->
-             <div id="menu-container">
-                 <button class="light" onclick="toggleMenu()">
+            <div id="menu-container">
+                <button class="nav-button" onclick="toggleMenu()">
                     <img src="./img/ico/menu.svg">
-                 </button>
-                 <div id="menu" class="hide">
+                </button>
+
+                <div id="menu" class="hide">
                     <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`)";>Learn more</button>
                     <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`)";>Report an issue</button>
                     <button class="light" onclick="clearLs()">Reset the game</button>
                     <button class="light" onclick="toggleMenu()">
                         <img src="./img/ico/tab-hide.svg">
                     </button>
-                 </div>
-             </div>
+                </div>
+            </div>
         </div>
 
         <!-- Hand -->
@@ -83,6 +86,7 @@
             <!-- Exp -->
             <div id="exp" class="stat"></div>
             
+            <div class="divider"></div>
             
             <!-- Coins -->
             <div id="coins" class="stat">
@@ -90,8 +94,10 @@
                 <span id="coin-indicator"></span>
             </div>
 
+            <div class="divider"></div>
+
             <!-- Reward -->
-            <button class="light" id="reward-btn" onclick="g.getReward()" style="width: 160px;" disabled>
+            <button id="reward-btn" class="nav-button" onclick="g.getReward()" style="width: 160px;" disabled>
                 <span id="reward-timer"></span>
             </button> 
         </div>
