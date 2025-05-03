@@ -1,7 +1,7 @@
 let config = {
 
     //Starting coins
-        coins: 200,
+        coins: 20000,
 
     //Progression exp lvl
         playerLvl: 1,

@@ -93,6 +93,7 @@
             this.inspectionTable = new InspectionTable()
             this.collection = new Collection
             this.totalReward = config.rewardsValue
+            this.sellArea = new sellArea()
         }
 
         saveGame(){
@@ -587,7 +588,36 @@
             }    
         }
     }
-    
+
+// SELL AREA
+class sellArea {
+    constructor(){
+    }
+
+    sell(){
+        if(el('sell-area').childNodes.length > 0){
+            // console.log(el('table').childNodes[0]);
+
+            // Count the number of cards in the 'sell-area' before deletion
+            const numberOfCards = el('sell-area').childNodes.length;
+
+            // Remove all child nodes within 'sell-area'
+            while (el('sell-area').firstChild) {
+                el('sell-area').removeChild(el('sell-area').firstChild);
+            }
+
+            // Find and remove all card references from g.cards connected to 'sell-area'
+            g.cards = g.cards.filter(card => card.location !== 'sell-area');
+
+            //Give player 10c
+            g.plObj.changeCoins(numberOfCards * 10
+            )
+
+            g.saveGame()
+            g.updateUI()
+        }
+    }
+}
 
 //COLLECTION
     class Collection{
@@ -781,12 +811,12 @@
                 
                 g.plObj.changeCoins(coinsReward)
                 g.plObj.gainExp(expReward)
-                showAlert(`You win ${coinsReward} coins, and gain ${expReward} exp.`)
+                showAlert(`Correct!<br> You win ${coinsReward} coins, and gain ${expReward} exp.`)
             } 
 
             //Lose
             else{
-                showAlert(`You lost ${config.researchReward} coins.`)
+                showAlert(`Incorrect!<br> You lost ${config.researchReward} coins.`)
                 g.plObj.changeCoins(-config.researchReward)
             }
 

@@ -239,7 +239,7 @@
         </div>
 
 <!-- Inspection table -->
-        <div id="table-page" class=" page">
+        <div id="table-page" class="page">
             <div class="table-container">
                 <h1>Inspection table</h1>
 
@@ -257,7 +257,19 @@
         </div>
 
 <!-- Sell cards -->
-        <p style="color: aquamarine;">Sell extra cards for 10c</p>
+        <div id="sell-card" class="page">
+            <div class="table-container">
+                <h1>Sell a card</h1>
+                        <p>Add card into the slot, then press Sell to get 10c.</p>
+
+                <div class="row">
+                    <div>
+                        <div id="sell-area" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <button id="sellButton" onclick="g.sellArea.sell()">Sell for 10c</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
