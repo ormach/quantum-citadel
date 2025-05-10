@@ -97,7 +97,7 @@
         }
 
         saveGame(){
-            console.log("Game saved");
+            // console.log("Game saved");
 
             localStorage.setItem('gameData', JSON.stringify(g))
         }
@@ -127,12 +127,13 @@
                 g.plObj.exp = g.ref.plObj.exp
                 g.plObj.lvl = g.ref.plObj.lvl
                 g.totalReward = g.ref.totalReward
+                g.cardsRef = g.ref.cardsRef //Load card ref to kepp card frequency ranges
 
-                console.log("New game:");
-                console.log(g);
-                
-                console.log("Loaded game:");
-                console.log(g.ref);
+                // console.log("New game:");
+                // console.log(g);
+                //
+                // console.log("Loaded game:");
+                // console.log(g.ref);
                 
                 //Load time from g.ref to g, brause we don't add it in constructor
                 this.rewardTime = g.ref.rewardTime
@@ -142,6 +143,7 @@
 
                 //Load previous research 
                 g.research = new Research(g.ref.research.contractCard)
+                g.research.researchCardPool = g.ref.research.researchCardPool //load card pool for card frequency roll calculation
             }
             //New game
             else{
@@ -216,13 +218,13 @@
                 }
             })
 
-            console.log("Calculated reward value");
+            // console.log("Calculated reward value");
             
         }
 
         //Regen html based on game state
         updateUI(){
-            let coinIco = `<img src="./img/ico/coin.svg">`
+            let coinIco = `<img src="../img/ico/coin.svg">`
 
             //Nav
             el('coin-indicator').innerHTML = `${g.plObj.coins}`
@@ -276,6 +278,7 @@
             // console.log(args);            
             let newCardName = args.name
 
+            //Recreates existing card
             if(args.mode === 'regen'){            
                 // this.cardRefObj = args.cardObj
                 // console.log(this.cardRefObj);
@@ -286,6 +289,8 @@
                 this.rarity = args.cardObj.rarity
                 this.location = args.cardObj.location  
             }
+
+            //Creates new random card
             else{
                 //Choose random card if no name provided
                 if(args.name == undefined){
@@ -516,7 +521,7 @@
             let container = el('market-container')
             container.innerHTML = `
                 <button class="page-btn light" onclick="g.market.nextPage()">
-                    <img src="./img/ico/id=arrow-r.svg" alt="">
+                    <img src="../img/ico/id=arrow-r.svg" alt="">
                 </button>
             `
 
@@ -531,7 +536,7 @@
                         btn = `
                             <button id="market-pack-${pack.packId}" class="light" onclick="g.plObj.pay('pack', '${pack.name}')">
                                 Buy for ${config.cardCost * config.cardsInPack} 
-                                <img src="./img/ico/coin.svg">
+                                <img src="../img/ico/coin.svg">
                             </button>
                         `
                     }
@@ -590,7 +595,7 @@
     }
 
 // SELL AREA
-class sellArea {
+    class sellArea {
     constructor(){
     }
 
@@ -706,12 +711,13 @@ class sellArea {
         constructor(loadedCard){
             this.width = 1
             this.height = 1
+            this.researchCardPool = []
             // this.researchId = genId('re')
             // this.raritySequence = []
             el('contract-content').innerHTML = ''
 
 
-            //Generate "get N cards" contract
+            //Generate "get N cards" contract if not enough cards
             if(g.cards.length < config.cardsToStartQuest){ 
                 el('contract-heading').classList.add('hide')
                 el('contract-description').innerHTML = `Get ${config.cardsToStartQuest} cards, to unlock research contracts.`
@@ -720,46 +726,121 @@ class sellArea {
     
             //Generate "Find correct card" contract
             else{
-                //Define research pool based on level.
-                let researchCardPool = []
+                this.pickRandomQuestion(loadedCard)
 
-                //Check for loaded card
-                if(loadedCard !== undefined){
-                    this.contractCard = loadedCard
-                } else {
-                    //Add cards that player owns
-                    g.cards.forEach(card => {
-                        researchCardPool.push(findByProperty(g.cardsRef, "name", card.name))
-                    })
-                    // researchCardPool.push(...g.cards)
-    
-                    //Add cards from each pack is level requirement is met
-                    packsRef.forEach(pack => {
-                        if(pack.lvlUnlockResearch <= g.plObj.lvl){
-                            g.cardsRef.forEach(card => {
-                                if(card.set === pack.name){
-                                    researchCardPool.push(card)
-                                }
-                            })
-                        }
-                    })
-    
-                    //Remove duplicates
-                    // console.table(researchCardPool, ['set']);
-                    this.contractCard = rarr(researchCardPool)
-                }
-    
+
                 //Generate new slots
                 let slotQuantity = this.width * this.height;
                 g.genCardSlot('contract-content', slotQuantity)
-    
+
+
                 //Set descriotion
                 el('contract-description').innerHTML = this.contractCard[`description_${rng(2)}`]
+
 
                 //Make button visible if reset from get N cards
                 el('contract-heading').classList.remove('hide')
                 el('contract-controls').classList.remove('hide')
             }
+        }
+
+
+        //Pick random research
+        pickRandomQuestion(loadedCard){
+            //Define research pool based on level.
+            clearArr(this.researchCardPool) //properly remove items from array
+
+            //Check for loaded card
+            if(loadedCard !== undefined){
+                //If contract exists, load contract card
+                this.contractCard = loadedCard
+            }
+
+            //If no loaded cards, generate
+            else {
+                //Add cards that player owns
+                g.cards.forEach(card => {
+                    this.researchCardPool.push(findByProperty(g.cardsRef, "name", card.name))
+                })
+                // researchCardPool.push(...g.cards)
+
+                //Add cards from each pack if level requirement is met
+                packsRef.forEach(pack => {
+                    if(pack.lvlUnlockResearch <= g.plObj.lvl){
+                        g.cardsRef.forEach(card => {
+                            if(card.set === pack.name){
+                                this.researchCardPool.push(card)
+                            }
+                        })
+                    }
+                })
+
+                //Remove duplicates
+                this.researchCardPool = removeDuplicatesArr(this.researchCardPool)
+                // console.table(this.researchCardPool)
+
+                //Pick random card
+                let cardNotSelected = true
+
+                //Roll for frequency
+                while(cardNotSelected){
+
+                    //Pick random card from pool
+                    this.contractCard = rarr(this.researchCardPool)
+                    // console.log(`Rolling new card:`)
+                    // console.log(this.contractCard)
+                    // console.log(typeof this.contractCard.frequencyRange === "number" && !isNaN(this.contractCard.frequencyRange))
+
+                    //Check its frequency value
+                    if(typeof this.contractCard.frequencyRange === "number" && !isNaN(this.contractCard.frequencyRange)){
+
+                            //Roll
+                            let roll = rng(0, this.researchCardPool.length)
+                            // console.log(`Roll:${roll}\nFrequency range: ${this.contractCard.frequencyRange}\nPool: ${config.cardsInPack * g.plObj.lvl}`)
+
+                            //If roll less that freq, reroll
+                            if(roll > this.contractCard.frequencyRange){
+
+                                // console.log("Card selected")
+
+                                cardNotSelected = false
+                                return
+                            }
+
+                            // console.log("Card not selected. Rerolling.")
+                    }
+
+                    //Select card if no frequency
+                    else{
+                        // console.log("No frequency range value. Card selected.")
+                        cardNotSelected = false
+                    }
+                }
+            }
+        }
+
+
+        //Q frequency management
+        setFrequencyScore(sourceCard){
+            // console.log(sourceCard)
+
+            //Find card in reference
+            let referenceCard = findByProperty(g.cardsRef, 'name', sourceCard.name)
+            // console.log(referenceCard)
+
+            //Set new frequency
+            referenceCard.frequencyRange = this.researchCardPool.length + 1 //+1 due to order of operations
+        }
+
+        //Reduces freq scores of each card per research
+        reduceFrequencyScores(){
+            g.cardsRef.forEach(card => {
+                card.frequencyRange--
+
+                if(card.frequencyRange < 1){
+                    card.frequencyRange = undefined
+                }
+            })
         }
 
         sellResearch(){
@@ -769,7 +850,8 @@ class sellArea {
             // console.log(addedCards);
             // console.log(findByProperty(addedCards, 'name', this.contractCard.name));
 
-            //Check if cards have the same name
+
+            //Check if multiple cards in slot have the same name
             let cardsAreTheSame = true
 
             addedCards.forEach(card =>{
@@ -777,11 +859,12 @@ class sellArea {
                     cardsAreTheSame = false
                 }
             })
-            
+
+
             //Win
             if(
-                addedCards != undefined 
-                && findByProperty(addedCards, 'name', this.contractCard.name) != undefined 
+                addedCards != undefined //Cards are added
+                && findByProperty(addedCards, 'name', this.contractCard.name) != undefined //Check if contract question matches the added card
                 && cardsAreTheSame //Check if all items are the same
             ){
                 let coinsReward = 0
@@ -808,22 +891,37 @@ class sellArea {
                     coinsReward += Math.round(config.researchReward * (1 + i / 5))
                     // console.log(coinsReward);
                 }
-                
+
+
+
+                //Reduce card frequency score
+                this.setFrequencyScore(this.contractCard)
+
+
+
+                //Misc
                 g.plObj.changeCoins(coinsReward)
                 g.plObj.gainExp(expReward)
                 showAlert(`Correct!<br> You win ${coinsReward} coins, and gain ${expReward} exp.`)
             } 
 
+
             //Lose
             else{
                 showAlert(`Incorrect!<br> You lost ${config.researchReward} coins.`)
                 g.plObj.changeCoins(-config.researchReward)
+
             }
+
 
             //Remove cards from g.cards after completing the research
             addedCards.forEach(card => {
                 removeFromArr(g.cards, card)
             })
+
+
+            //Reduce frequency of all cards by 1
+            this.reduceFrequencyScores()
 
             //Generate new research
             g.research = new Research()
@@ -847,6 +945,7 @@ class sellArea {
                 g.cardsRef.push(card)
             }
         })
+
         cardsRef = g.cardsRef
         
         g.market = new Market

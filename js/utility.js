@@ -71,6 +71,10 @@ function cloneArr(arr){//Make a detached copy of an array
     return JSON.parse(JSON.stringify(arr));
 }
 
+function clearArr(arr){
+    arr.splice(0, arr.length);
+}
+
 function removeDuplicatesArr(arr){
     return [...new Set(arr)];
 }

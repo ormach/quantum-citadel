@@ -1,7 +1,7 @@
 let config = {
 
     //Starting coins
-        coins: 20000,
+        coins: 200,
 
     //Progression exp lvl
         playerLvl: 1,
@@ -21,7 +21,7 @@ let config = {
         coinInc: 1,
 
     //Coin reward per time
-        rewardInterval: 60 * 60000, //N x 1min
+        rewardInterval: 60 * 6000, //N x 1min
         runTimer: true,
         rewardsValue: 85,
     
@@ -36,4 +36,8 @@ let config = {
 
     //Automate
         totalMarketPacks: 5
+}
+
+if(1 === 2){
+        config.coins = 20000
 }

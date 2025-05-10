@@ -1,4 +1,6 @@
 - Change log
+  - Added an option to sell cards.
+  - Added question frequency algorithm that makes correctly answered questions appear less frequently.
  
 
 - Collection pages
@@ -14,7 +16,8 @@
 
 - Bugs
    - Rarity icon can be dragged out.
-   - There is total exp calculation bug.
+   - There is total exp calculation bug. Exp resets on refresh.
+   - Purchase button for higher level pack is disabled on reload even if you have exact lvl.
 
 - Code
    - Dealing with multiple instances of the game and LS saving. You can buy card in one window, then buy in another to pick the best rolls etc.
@@ -25,17 +28,15 @@
 
 - Game design
    - Create formulas as research quests. Add =, >, < signs.
+   - Crate interactive physics problems that can be solved by rearranging variables mentioned in the problem.
    - Add rarity match bonuses.
-   - Coins as dragable game objects.
+   - Coins as draggable game objects.
    - Haradric cube.
    - Remove card name from card descriptions.
-   - Resolve issue with enertia and newtons first law.
-   - Give bonus coins per card rarity in response.
+   - Resolve issue with inertia and newtons first law (similar descriptions).
 
-- Reseach / Upgrade & progression system
+- Research / Upgrade & progression system
    - Uses exp as currency. Exp gained for research completion.
-   - Exp can be spent to affect the daily rewar or available packs.
-   - Save research in LS to avoid resetting on refresh.
+   - Exp can be spent to affect the daily reward or available packs.
    - Sell album ui upgrades.
-   - Add secondary descriptions for cards.
    - Automatically add new packs instead of data.js packs object.
