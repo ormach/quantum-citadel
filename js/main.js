@@ -108,7 +108,7 @@
 
             //Load game
             if(typeof data === 'string'){
-                console.log('Game: Game loaded.');
+                console.log('Game loaded');
     
                 //Store loaded data
                 g.ref = JSON.parse(data)

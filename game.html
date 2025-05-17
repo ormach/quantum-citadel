@@ -1,295 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phyrary Cards</title>
-    
-    <!-- Share link preview -->
-    <meta property="og:title" content="Library Of Morr" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.gatesofmorr.com" />
-    <meta property="og:image:url" content="https://www.gatesofmorr.com/img/share-image.png" />
-    <meta property="og:image:type" content="image/png" >
-    <meta property="og:image:width" content="1200" >
-    <meta property="og:image:height" content="1200" >
 
-    <!-- Descriptions -->
-    <meta property="og:description" content="A free web rougelike with unique dice based combat system, many interesting items and map events." />
-    <meta name="description" content="A free web rougelike with unique dice based combat system, many interesting items and map events.">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Phyrary Cards</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/main.css">
+        <!-- Share link preview -->
+        <meta property="og:title" content="Library Of Morr" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.gatesofmorr.com" />
+        <meta property="og:image:url" content="https://www.gatesofmorr.com/img/share-image.png" />
+        <meta property="og:image:type" content="image/png" >
+        <meta property="og:image:width" content="1200" >
+        <meta property="og:image:height" content="1200" >
 
-    <!-- Google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- Descriptions -->
+        <meta property="og:description" content="A free web rougelike with unique dice based combat system, many interesting items and map events." />
+        <meta name="description" content="A free web rougelike with unique dice based combat system, many interesting items and map events.">
 
-    <!-- Mono -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Grenze -->
-    <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/main.css">
 
-    <!-- "UnifrakturMaguntia" 'UnifrakturCook' -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet"> -->
+        <!-- Google fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+        <!-- Mono -->
+        <!-- <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet"> -->
 
-    <!-- Favicon -->
-    <link rel="apple-touch-icon"      sizes="180x180"    href="./favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32"      href="./favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16"      href="./favicon/favicon-16x16.png">
-<!--    <link rel="manifest"                                 href="favicon/manifest.json">-->
-    <link rel="mask-icon"                                href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-</head>
+        <!-- Grenze -->
+        <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<body>
-     <div class="bg-cover"></div>
+        <!-- "UnifrakturMaguntia" 'UnifrakturCook' -->
+        <!-- <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet"> -->
 
+        <!-- Inter -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
-<!-- Navigation -->
-    <div id="nav" class="">
-        <div class="nav-container"> 
-            <img id="logo" src="./img/logo-nobg.svg">
+        <!-- Favicon -->
+        <link rel="apple-touch-icon"      sizes="180x180"    href="./favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32"      href="./favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16"      href="./favicon/favicon-16x16.png">
+    <!--    <link rel="manifest"                                 href="favicon/manifest.json">-->
+        <link rel="mask-icon"                                href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+    </head>
 
-            <div class="divider"></div>
+    <body>
 
-            <!-- Menu -->
-            <div id="menu-container">
-                <button class="nav-button" onclick="toggleMenu()">
-                    <img src="./img/ico/menu.svg">
-                </button>
+        <div class="bg-cover"></div>
 
-                <div id="menu" class="hide">
-                    <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`)";>Learn more</button>
-                    <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`)";>Report an issue</button>
-                    <button class="light" onclick="clearLs()">Reset the game</button>
-                    <button class="light" onclick="toggleMenu()">
-                        <img src="./img/ico/tab-hide.svg">
+    <!-- Navigation -->
+        <div id="nav" class="">
+            <div class="nav-container">
+                <img id="logo" src="./img/logo-nobg.svg">
+
+                <div class="divider"></div>
+
+                <!-- Menu -->
+                <div id="menu-container">
+                    <button class="nav-button" onclick="toggleMenu()">
+                        <img src="./img/ico/menu.svg">
                     </button>
+
+                    <div id="menu" class="hide">
+                        <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`)";>Learn more</button>
+                        <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`)";>Report an issue</button>
+                        <button class="light" onclick="clearLs()">Reset the game</button>
+                        <button class="light" onclick="toggleMenu()">
+                            <img src="./img/ico/tab-hide.svg">
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Hand -->
-        <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <!-- Hand -->
+            <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
-        <div class="nav-container"> 
-    
-            <!-- Exp -->
-            <div id="exp" class="stat"></div>
-            
-            <div class="divider"></div>
-            
-            <!-- Coins -->
-            <div id="coins" class="stat">
-                <img src="./img/ico/coin.svg" alt="">
-                <span id="coin-indicator"></span>
-            </div>
+            <div class="nav-container">
 
-            <div class="divider"></div>
+                <!-- Exp -->
+                <div id="exp" class="stat"></div>
 
-            <!-- Reward -->
-            <button id="reward-btn" class="nav-button" onclick="g.getReward()" style="width: 160px;" disabled>
-                <span id="reward-timer"></span>
-            </button> 
-        </div>
-    </div>
-    
-<!-- Pages -->
-    <div id="wrapper">
+                <div class="divider"></div>
 
-<!-- Title section -->
-        <div id="title-container">
-            <img src="./img/logo.svg" alt="">
-            <p>Small card game that helps you learn physics.</p>
-        </div>
+                <!-- Coins -->
+                <div id="coins" class="stat">
+                    <img src="./img/ico/coin.svg" alt="">
+                    <span id="coin-indicator"></span>
+                </div>
 
-<!-- Start screen -->
-        <div id="cover" class="page hide">
-            <h1>Library of morr</h1>
-            <p>A science based web game where you collect cards to complete science related puzzles.</p>
-            <button onclick="viewScreen('library'); toggleNav()">Play</button>
-        </div>
-    
-<!-- Market -->
-        <div id="market" class=" page">
-            <!-- <h1>Market</h1> -->
-            <div id="market-container">
+                <div class="divider"></div>
+
+                <!-- Reward -->
+                <button id="reward-btn" class="nav-button" onclick="g.getReward()" style="width: 160px;" disabled>
+                    <span id="reward-timer"></span>
+                </button>
             </div>
         </div>
 
-<!-- Collection & Research contract -->
-        <div id="collection-research">
+    <!-- Pages -->
+        <div id="wrapper">
 
-            <!-- Collection -->
-                    <div id="collection-page" class=" page">
-                        <div class="collection-container">
+    <!--Phaser canvas-->
+            <div id="game-container">
+                <p id="game-log"></p>
+            </div>
 
-<!--                            <div class="subtab-group">-->
-<!--                                &lt;!&ndash; Craft album &ndash;&gt;-->
-<!--                                <button  class="tab" onclick="toggleModal('crafting-modal')">-->
-<!--                                    <img src="./img/ico/repair.svg" alt="">-->
-<!--                                </button>-->
-<!--                            </div>-->
+    <!-- Title section -->
+    <!--        <div id="title-container">-->
+    <!--            <img src="./img/logo.svg" alt="">-->
+    <!--            <p>Small card game that helps you learn physics.</p>-->
+    <!--        </div>-->
 
-                            <!-- Config modal -->
-                            <div id="crafting-modal" class="hide">
-                                <button onclick="toggleModal('crafting-modal')">
-                                    <img src="./img/ico/item-x.svg" alt="">
-                                </button>
+    <!-- Start screen -->
+            <div id="cover" class="page hide">
+                <h1>Library of morr</h1>
+                <p>A science based web game where you collect cards to complete science related puzzles.</p>
+                <button onclick="viewScreen('library'); toggleNav()">Play</button>
+            </div>
 
-                                <h1>Crafting</h1>
-                                <p>Modify your album properties</p>
+    <!-- Market -->
+            <div id="market" class=" page">
+                <!-- <h1>Market</h1> -->
+                <div id="market-container">
+                </div>
+            </div>
 
-                                <div>
-                                    <p>Modify pages</p>
+    <!-- Collection & Research contract -->
+            <div id="collection-research">
+
+                <!-- Collection -->
+                        <div id="collection-page" class=" page">
+                            <div class="collection-container">
+
+    <!--                            <div class="subtab-group">-->
+    <!--                                &lt;!&ndash; Craft album &ndash;&gt;-->
+    <!--                                <button  class="tab" onclick="toggleModal('crafting-modal')">-->
+    <!--                                    <img src="./img/ico/repair.svg" alt="">-->
+    <!--                                </button>-->
+    <!--                            </div>-->
+
+                                <!-- Config modal -->
+                                <div id="crafting-modal" class="hide">
                                     <button onclick="toggleModal('crafting-modal')">
-                                        <img src="./img/ico/add.svg" alt="">
-                                        Add page
+                                        <img src="./img/ico/item-x.svg" alt="">
+                                    </button>
+
+                                    <h1>Crafting</h1>
+                                    <p>Modify your album properties</p>
+
+                                    <div>
+                                        <p>Modify pages</p>
+                                        <button onclick="toggleModal('crafting-modal')">
+                                            <img src="./img/ico/add.svg" alt="">
+                                            Add page
+                                        </button>
+                                    </div>
+
+                                    <div>
+                                        <p>Add card slots</p>
+                                        <button onclick="toggleModal('crafting-modal')">
+                                            <img src="./img/ico/add.svg" alt="">
+                                            Add card slot
+                                        </button>
+                                    </div>
+
+                                    <div>
+                                        <p>Modify rows</p>
+                                        <button onclick="toggleModal('crafting-modal')">
+                                            <img src="./img/ico/add.svg" alt="">
+                                            Add card row
+                                        </button>
+                                        <button onclick="toggleModal('crafting-modal')">
+                                            <img src="./img/ico/add.svg" alt="">
+                                            Remove card row
+                                        </button>
+                                    </div>
+
+                                    <div>
+                                        <p>Modify columns</p>
+                                        <button onclick="toggleModal('crafting-modal')">
+                                            <img src="./img/ico/add.svg" alt="">
+                                            Add card slot
+                                        </button>
+                                        <button onclick="toggleModal('crafting-modal')">
+                                            <img src="./img/ico/add.svg" alt="">
+                                            Remove card column
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="tab-group">
+                                    <!-- Prev page btn -->
+                                    <button class="secondary-btn" onclick="g.collection.loadPage('previous')">
+                                        <img src="./img/ico/id=arrow-l.svg" alt="">
+                                    </button>
+
+                                    <button id="page-1_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-1')">I</button>
+                                    <button id="page-2_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-2')">II</button>
+                                    <button id="page-3_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-3')">III</button>
+                                    <button id="page-4_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-4')">IV</button>
+                                    <button id="page-5_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-5')">V</button>
+
+                                    <!-- Next page btn -->
+                                    <button class="secondary-btn" onclick="g.collection.loadPage('next')">
+                                        <img src="./img/ico/id=arrow-r.svg" alt="">
                                     </button>
                                 </div>
 
-                                <div>
-                                    <p>Add card slots</p>
-                                    <button onclick="toggleModal('crafting-modal')">
-                                        <img src="./img/ico/add.svg" alt="">
-                                        Add card slot
-                                    </button>
-                                </div>
+                                <!-- Cards -->
+                                <div id="collection" class="card-container-grid collection"></div>
 
-                                <div>
-                                    <p>Modify rows</p>
-                                    <button onclick="toggleModal('crafting-modal')">
-                                        <img src="./img/ico/add.svg" alt="">
-                                        Add card row
-                                    </button>
-                                    <button onclick="toggleModal('crafting-modal')">
-                                        <img src="./img/ico/add.svg" alt="">
-                                        Remove card row
-                                    </button>
-                                </div>
+                            </div>
+                        </div>
 
-                                <div>
-                                    <p>Modify columns</p>
-                                    <button onclick="toggleModal('crafting-modal')">
-                                        <img src="./img/ico/add.svg" alt="">
-                                        Add card slot
-                                    </button>
-                                    <button onclick="toggleModal('crafting-modal')">
-                                        <img src="./img/ico/add.svg" alt="">
-                                        Remove card column
-                                    </button>
+                <!-- Contract -->
+                        <div id="contract" class="contract-container">
+                            <img src="./img/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">
+                            <img src="./img/bg/pen.svg"          style="position: absolute; bottom: -32px; right: -92px;">
+
+
+                            <div style="display: flex; justify-content: space-between;align-items: center;">
+                                <h1 id="contract-heading"></h1>
+                            </div>
+
+                            <p id="contract-description"></p>
+
+                            <div class="contract-card-container">
+                                <div id="contract-content" class="card-container-grid"></div>
+
+                                <div id="contract-controls">
+                                    <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
+                                    <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
                                 </div>
                             </div>
 
-                            <div class="tab-group">
-                                <!-- Prev page btn -->
-                                <button class="secondary-btn" onclick="g.collection.loadPage('previous')">
-                                    <img src="./img/ico/id=arrow-l.svg" alt="">
-                                </button>
+                        </div>
+            </div>
 
-                                <button id="page-1_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-1')">I</button>
-                                <button id="page-2_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-2')">II</button>
-                                <button id="page-3_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-3')">III</button>
-                                <button id="page-4_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-4')">IV</button>
-                                <button id="page-5_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-5')">V</button>
-                                
-                                <!-- Next page btn -->
-                                <button class="secondary-btn" onclick="g.collection.loadPage('next')">
-                                    <img src="./img/ico/id=arrow-r.svg" alt="">
-                                </button> 
+    <!-- Inspect & sell -->
+            <div class="row">
+
+                <!-- Sell cards -->
+                <div id="sell-card" class="page">
+                    <div class="table-container">
+                        <h1>Sell a card</h1>
+                        <p>Add card into the slot, then press Sell to get 10c.</p>
+
+                        <div class="row">
+                            <div>
+                                <div id="sell-area" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                <button id="sellButton" onclick="g.sellArea.sell()">Sell for 10c</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inspection table -->
+                <div id="table-page" class="page">
+                    <div class="table-container">
+                        <h1>Inspection table</h1>
+
+                        <div class="row">
+                            <div>
+                                <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                <button id="inspectButton" onclick="g.plObj.pay('inspect')"></button>
                             </div>
 
-                            <!-- Cards -->
-                            <div id="collection" class="card-container-grid collection"></div>            
-            
-                        </div>
-                    </div>
-            
-            <!-- Contract -->
-                    <div id="contract" class="contract-container">
-                        <img src="./img/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">
-                        <img src="./img/bg/pen.svg"          style="position: absolute; bottom: -32px; right: -92px;">
-
-
-                        <div style="display: flex; justify-content: space-between;align-items: center;">
-                            <h1 id="contract-heading"></h1>
-                        </div>
-
-                        <p id="contract-description"></p>
-
-                        <div class="contract-card-container">
-                            <div id="contract-content" class="card-container-grid"></div>
-    
-                            <div id="contract-controls">
-                                <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
-                                <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
-                            </div> 
-                        </div>
-
-                    </div>
-        </div>
-
-<!-- Inspect & sell -->
-        <div class="row">
-
-            <!-- Sell cards -->
-            <div id="sell-card" class="page">
-                <div class="table-container">
-                    <h1>Sell a card</h1>
-                    <p>Add card into the slot, then press Sell to get 10c.</p>
-
-                    <div class="row">
-                        <div>
-                            <div id="sell-area" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            <button id="sellButton" onclick="g.sellArea.sell()">Sell for 10c</button>
+                            <div id="inspector">
+                                <p>Add card into the slot, then press Inspect to identify it.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Inspection table -->
-            <div id="table-page" class="page">
-                <div class="table-container">
-                    <h1>Inspection table</h1>
-
-                    <div class="row">
-                        <div>
-                            <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            <button id="inspectButton" onclick="g.plObj.pay('inspect')"></button>
-                        </div>
-
-                        <div id="inspector">
-                            <p>Add card into the slot, then press Inspect to identify it.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
 
-    </div>
 
+    <!-- Notification -->
+    <!-- ALERT -->
+        <div id="alert" class="hide" onclick="this.classList.add('hide')">
+            <p id="alert-note">Message.</p>
+            <img src="./img/ico/item-x.svg" alt="">
+        </div>
 
-<!-- Notification -->
-<!-- ALERT -->
-    <div id="alert" class="hide" onclick="this.classList.add('hide')">
-        <p id="alert-note">Message.</p>
-        <img src="./img/ico/item-x.svg" alt="">
-    </div>
+    </body>
 
-</body>
 </html>
 
+<!--JS files-->
 <script src="js/utility.js"></script>
 <script src="js/config.js"></script>
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
+
+<!--Phaser-->
+<script src="//cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.js"></script>
+<script src="js/phaserlogic.js"></script>
