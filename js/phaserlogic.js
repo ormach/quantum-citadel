@@ -1,7 +1,9 @@
 const phaserConfig = {
     type: Phaser.AUTO,
-    width: 1000,
-    height: 500,
+
+    width: 1200,
+    height: 600,
+    // transparent: true,
 
     scale: {
         // mode: Phaser.Scale.NONE,
@@ -96,7 +98,7 @@ function create() {
     //Add the background image to the scene
     const cw = this.sys.game.config.width;  // Get canvas width
     const ch = this.sys.game.config.height; // Get canvas height
-    const bg = this.add.image(cw/2, ch/2, 'background');
+    // const bg = this.add.image(cw/2, ch/2, 'background');
     // const bg = this.add.image(cw, ch, 'background');
 
 

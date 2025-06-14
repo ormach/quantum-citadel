@@ -27,6 +27,11 @@
 }
 
 /* For anchor links nav */
+/*outline*/
+/*body *{*/
+/*    border: 1px solid rgba(255,0,0,0.5);*/
+/*}*/
+
 *, html{
     /* Disables gestures */
     touch-action: none; 
@@ -76,8 +81,8 @@ h2{
 /*Phaser*/
     #game-container {
         z-index: 1;
-        width:1000px;
-        height: 500px;
+        width: 1200px;
+        height: 600px;
         align-self: center;
 
         position: relative;
@@ -86,8 +91,8 @@ h2{
         /*Fixed margin in contianer*/
         display: block;
         /*transform: scale(0.5);*/
-        width:1000px;
-        height: 500px;
+        width:1200px;
+        height: 600px;
     }
     #game-log{
         position: absolute;
