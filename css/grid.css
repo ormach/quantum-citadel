@@ -1,3 +1,17 @@
+/*Map CSS grid*/
+:root {
+    --cell-size: 48px;
+    --grid-width: 12;
+    --grid-height: 4;
+}
+
+/*#map{*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(var(--grid-width),  var(--cell-size));*/
+/*    grid-template-rows:    repeat(var(--grid-height), var(--cell-size));*/
+
+/*}*/
+
 /* Uses max-width value from .container style*/
 .container{
     max-width: 1144px;

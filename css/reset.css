@@ -56,16 +56,16 @@ table {
 }
 
 /* Hide all scrollbars */
-    /* Chrome, Safari. Opera */
-    *::-webkit-scrollbar {
-        /* display: none; */
-    }
+/*    !* Chrome, Safari. Opera *!*/
+/*    *::-webkit-scrollbar {*/
+/*        !* display: none; *!*/
+/*    }*/
 
-    /* IE, Edge, Firefox */
-    * {
-          /* IE and Edge */
-        -ms-overflow-style: none;
+/*    !* IE, Edge, Firefox *!*/
+/*    * {*/
+/*          !* IE and Edge *!*/
+/*        -ms-overflow-style: none;*/
 
-        /* Firefox */
-        scrollbar-width: none;
-    }  
+/*        !* Firefox *!*/
+/*        scrollbar-width: none;*/
+/*    }*/
