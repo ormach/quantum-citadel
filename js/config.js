@@ -32,12 +32,12 @@ let config = {
         albumColumns: 4,
 
     //Testing
-        rClickEvent: true,
+        rClickEvent: false,
 
     //Automate
         totalMarketPacks: 5
 }
 
-if(1 === 2){
+if(1 === 1){
         config.coins = 20000
 }

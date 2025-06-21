@@ -53,13 +53,11 @@
 
     <body id="body">
 
-
-
     <!-- Navigation -->
-        <div id="nav-wrapper" class="">
+        <div id="nav-wrapper">
             <div id="nav">
                 <div class="nav-container">
-                    <img id="logo" src="./img/logo-nobg.svg">
+                    <img id="logo" src="./img/muon-logo-1.svg">
 
                     <div class="divider"></div>
 
@@ -79,9 +77,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Hand -->
-                <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
                 <div class="nav-container">
 
@@ -103,196 +98,247 @@
                         <span id="reward-timer"></span>
                     </button>
                 </div>
+
+                <!-- Hand -->
+                <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             </div>
         </div>
 
+    <!-- Modal wrapper-->
+        <div id="modal-wrapper">
+            <!-- Market -->
+            <div id="market" class="modal hide">
+
+                <!-- Close button -->
+                <button class="secondary-btn" onclick="el('market').classList.add('hide')">
+                    <img src="./img/ico/item-x.svg" alt="">
+                </button>
+
+                <div id="market-container"></div>
+            </div>
+
+            <!-- Collection & Research contract -->
+            <div id="collection-research" class="modal hide">
+
+                <!-- Collection -->
+                <div id="collection-page" class=" page">
+                    <div class="collection-container">
+
+                        <!--                            <div class="subtab-group">-->
+                        <!--                                &lt;!&ndash; Craft album &ndash;&gt;-->
+                        <!--                                <button  class="tab" onclick="toggleModal('crafting-modal')">-->
+                        <!--                                    <img src="./img/ico/repair.svg" alt="">-->
+                        <!--                                </button>-->
+                        <!--                            </div>-->
+
+                        <!-- Config modal -->
+                        <div id="crafting-modal" class="hide">
+                            <button onclick="toggleModal('crafting-modal')">
+                                <img src="./img/ico/item-x.svg" alt="">
+                            </button>
+
+                            <h1>Crafting</h1>
+                            <p>Modify your album properties</p>
+
+                            <div>
+                                <p>Modify pages</p>
+                                <button onclick="toggleModal('crafting-modal')">
+                                    <img src="./img/ico/add.svg" alt="">
+                                    Add page
+                                </button>
+                            </div>
+
+                            <div>
+                                <p>Add card slots</p>
+                                <button onclick="toggleModal('crafting-modal')">
+                                    <img src="./img/ico/add.svg" alt="">
+                                    Add card slot
+                                </button>
+                            </div>
+
+                            <div>
+                                <p>Modify rows</p>
+                                <button onclick="toggleModal('crafting-modal')">
+                                    <img src="./img/ico/add.svg" alt="">
+                                    Add card row
+                                </button>
+                                <button onclick="toggleModal('crafting-modal')">
+                                    <img src="./img/ico/add.svg" alt="">
+                                    Remove card row
+                                </button>
+                            </div>
+
+                            <div>
+                                <p>Modify columns</p>
+                                <button onclick="toggleModal('crafting-modal')">
+                                    <img src="./img/ico/add.svg" alt="">
+                                    Add card slot
+                                </button>
+                                <button onclick="toggleModal('crafting-modal')">
+                                    <img src="./img/ico/add.svg" alt="">
+                                    Remove card column
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="tab-group">
+                            <!-- Prev page btn -->
+                            <button class="secondary-btn" onclick="g.collection.loadPage('previous')">
+                                <img src="./img/ico/id=arrow-l.svg" alt="">
+                            </button>
+
+                            <button id="page-1_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-1')">I</button>
+                            <button id="page-2_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-2')">II</button>
+                            <button id="page-3_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-3')">III</button>
+                            <button id="page-4_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-4')">IV</button>
+                            <!--                            <button id="page-5_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-5')">V</button>-->
+
+                            <!-- Next page btn -->
+                            <button class="secondary-btn" onclick="g.collection.loadPage('next')">
+                                <img src="./img/ico/id=arrow-r.svg" alt="">
+                            </button>
+
+                            <!-- Close button -->
+                            <button class="secondary-btn" onclick="el('collection-research').classList.add('hide')">
+                                <img src="./img/ico/item-x.svg" alt="">
+                            </button>
+                        </div>
+
+                        <!-- Cards -->
+                        <div id="collection" class="card-container-grid collection"></div>
+
+                    </div>
+                </div>
+
+                <!-- Contract -->
+                <div id="contract" class="contract-container">
+                    <img src="./img/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">
+                    <img src="./img/bg/pen.svg"          style="position: absolute; bottom: -32px; right: -92px;">
 
 
-    <!-- Pages -->
+                    <div style="display: flex; justify-content: space-between;align-items: center;">
+                        <h1 id="contract-heading"></h1>
+                    </div>
+
+                    <p id="contract-description"></p>
+
+                    <div class="contract-card-container">
+                        <div id="contract-content" class="card-container-grid"></div>
+
+                        <div id="contract-controls">
+                            <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
+                            <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Inspection table -->
+            <div id="table-page" class="modal hide">
+                <div class="table-container">
+                    <!-- Close button -->
+                    <button class="secondary-btn" onclick="el('table-page').classList.add('hide')">
+                        <img src="./img/ico/item-x.svg" alt="">
+                    </button>
+
+                    <h1>Inspection table</h1>
+
+                    <div class="row">
+                        <div>
+                            <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                            <button id="inspectButton" onclick="g.plObj.pay('inspect')"></button>
+                        </div>
+
+                        <div id="inspector">
+                            <p>Add card into the slot, then press Inspect to identify it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sell cards -->
+            <div id="sell-card" class="modal hide">
+                <div class="table-container">
+                    <!-- Close button -->
+                    <button class="secondary-btn" onclick="el('sell-card').classList.add('hide')">
+                        <img src="./img/ico/item-x.svg" alt="">
+                    </button>
+
+                    <h1>Sell a card</h1>
+                    <p>Add card into the slot, then press Sell to get 10c.</p>
+
+                    <div class="row">
+                        <div>
+                            <div id="sell-area" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                            <button id="sellButton" onclick="g.sellArea.sell()">Sell for 10c</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Build -->
+            <div id="builders" class="modal">
+                <div class="modal-container">
+
+                    <div class="modal-nav">
+                        <p>Buildings</p>
+
+                        <!-- Close button -->
+                        <button class="secondary-btn close-btn" onclick="el('builders').classList.add('hide')">
+                            <img src="./img/ico/item-x.svg" alt="">
+                        </button>
+                    </div>
+
+                    <div class="btn-container">
+                        <button onclick="g.plObj.pay('build', 'tower')">Tower</button>
+                        <button onclick="g.plObj.pay('build', 'library')">Library</button>
+                        <button onclick="g.plObj.pay('build', 'mine')">Mine</button>
+
+                        <button onclick="g.plObj.pay('build', 'builders')">Builders</button>
+                        <button onclick="g.plObj.pay('build', 'storage')">Storage</button>
+                        <button onclick="g.plObj.pay('build', 'house')">House</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- MAP -->
         <div id="wrapper">
             <!--Grid-->
             <div id="map-container">
                 <div id="map">
+
+                    <div id="bu-architect" class="building" onclick="toggleModal('market')">
+                        <img src="./img/structure/storage.png">
+                    </div>
+
+                    <div id="bu-library" class="building" onclick="toggleModal('collection-research')">
+                        <img src="./img/structure/library.png">
+                    </div>
+
+                    <div id="bu-mine" class="building" onclick="toggleModal('table-page')">
+                        <img src="./img/structure/mine.png">
+                    </div>
+
+                    <div id="bu-inspect" class="building" onclick="toggleModal('sell-card')">
+                        <img src="./img/structure/house.png">
+                    </div>
+
+                    <div id="bu-builders" class="building" onclick="toggleModal('builders')">
+                        <img src="./img/structure/builders.png">
+                    </div>
+
+
+                    <div id="map-marker"></div>
+
                     <div id="map-environment">
                         <img id="grid-bg" src="./img/bg/city.svg">
                     </div>
-                    <div id="map-marker"></div>
                 </div>
 
             </div>
-
-    <!-- Title section -->
-    <!--        <div id="title-container">-->
-    <!--            <img src="./img/logo.svg" alt="">-->
-    <!--            <p>Small card game that helps you learn physics.</p>-->
-    <!--        </div>-->
-
-    <!-- Start screen -->
-<!--            <div id="cover" class="page hide">-->
-<!--                <h1>Library of morr</h1>-->
-<!--                <p>A science based web game where you collect cards to complete science related puzzles.</p>-->
-<!--                <button onclick="viewScreen('library'); toggleNav()">Play</button>-->
-<!--            </div>-->
-
-    <!-- Market -->
-            <div id="market" class=" page hide">
-                <!-- <h1>Market</h1> -->
-                <div id="market-container">
-                </div>
-            </div>
-
-    <!-- Collection & Research contract -->
-            <div id="collection-research" class="hide">
-
-                <!-- Collection -->
-                        <div id="collection-page" class=" page">
-                            <div class="collection-container">
-
-    <!--                            <div class="subtab-group">-->
-    <!--                                &lt;!&ndash; Craft album &ndash;&gt;-->
-    <!--                                <button  class="tab" onclick="toggleModal('crafting-modal')">-->
-    <!--                                    <img src="./img/ico/repair.svg" alt="">-->
-    <!--                                </button>-->
-    <!--                            </div>-->
-
-                                <!-- Config modal -->
-                                <div id="crafting-modal" class="hide">
-                                    <button onclick="toggleModal('crafting-modal')">
-                                        <img src="./img/ico/item-x.svg" alt="">
-                                    </button>
-
-                                    <h1>Crafting</h1>
-                                    <p>Modify your album properties</p>
-
-                                    <div>
-                                        <p>Modify pages</p>
-                                        <button onclick="toggleModal('crafting-modal')">
-                                            <img src="./img/ico/add.svg" alt="">
-                                            Add page
-                                        </button>
-                                    </div>
-
-                                    <div>
-                                        <p>Add card slots</p>
-                                        <button onclick="toggleModal('crafting-modal')">
-                                            <img src="./img/ico/add.svg" alt="">
-                                            Add card slot
-                                        </button>
-                                    </div>
-
-                                    <div>
-                                        <p>Modify rows</p>
-                                        <button onclick="toggleModal('crafting-modal')">
-                                            <img src="./img/ico/add.svg" alt="">
-                                            Add card row
-                                        </button>
-                                        <button onclick="toggleModal('crafting-modal')">
-                                            <img src="./img/ico/add.svg" alt="">
-                                            Remove card row
-                                        </button>
-                                    </div>
-
-                                    <div>
-                                        <p>Modify columns</p>
-                                        <button onclick="toggleModal('crafting-modal')">
-                                            <img src="./img/ico/add.svg" alt="">
-                                            Add card slot
-                                        </button>
-                                        <button onclick="toggleModal('crafting-modal')">
-                                            <img src="./img/ico/add.svg" alt="">
-                                            Remove card column
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="tab-group">
-                                    <!-- Prev page btn -->
-                                    <button class="secondary-btn" onclick="g.collection.loadPage('previous')">
-                                        <img src="./img/ico/id=arrow-l.svg" alt="">
-                                    </button>
-
-                                    <button id="page-1_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-1')">I</button>
-                                    <button id="page-2_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-2')">II</button>
-                                    <button id="page-3_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-3')">III</button>
-                                    <button id="page-4_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-4')">IV</button>
-                                    <button id="page-5_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-5')">V</button>
-
-                                    <!-- Next page btn -->
-                                    <button class="secondary-btn" onclick="g.collection.loadPage('next')">
-                                        <img src="./img/ico/id=arrow-r.svg" alt="">
-                                    </button>
-                                </div>
-
-                                <!-- Cards -->
-                                <div id="collection" class="card-container-grid collection"></div>
-
-                            </div>
-                        </div>
-
-                <!-- Contract -->
-                        <div id="contract" class="contract-container">
-                            <img src="./img/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">
-                            <img src="./img/bg/pen.svg"          style="position: absolute; bottom: -32px; right: -92px;">
-
-
-                            <div style="display: flex; justify-content: space-between;align-items: center;">
-                                <h1 id="contract-heading"></h1>
-                            </div>
-
-                            <p id="contract-description"></p>
-
-                            <div class="contract-card-container">
-                                <div id="contract-content" class="card-container-grid"></div>
-
-                                <div id="contract-controls">
-                                    <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
-                                    <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
-                                </div>
-                            </div>
-
-                        </div>
-            </div>
-
-    <!-- Inspect & sell -->
-            <div class="row hide">
-
-                <!-- Sell cards -->
-                <div id="sell-card" class="page">
-                    <div class="table-container">
-                        <h1>Sell a card</h1>
-                        <p>Add card into the slot, then press Sell to get 10c.</p>
-
-                        <div class="row">
-                            <div>
-                                <div id="sell-area" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                                <button id="sellButton" onclick="g.sellArea.sell()">Sell for 10c</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Inspection table -->
-                <div id="table-page" class="page">
-                    <div class="table-container">
-                        <h1>Inspection table</h1>
-
-                        <div class="row">
-                            <div>
-                                <div id="table" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                                <button id="inspectButton" onclick="g.plObj.pay('inspect')"></button>
-                            </div>
-
-                            <div id="inspector">
-                                <p>Add card into the slot, then press Inspect to identify it.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
-
 
     <!-- Notification -->
     <!-- ALERT -->
@@ -310,4 +356,4 @@
 <script src="js/config.js"></script>
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
-<script src="js/grid.js"></script>
+<script src="js/map.js"></script>

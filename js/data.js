@@ -31,3 +31,42 @@ let packsRef = [
         lvlUnlockResearch: 14,
     }
 ]
+
+let buildingsRef = {
+    house: {
+        cost: 12,
+        time: 30,
+        width: 24,
+        height: 48,
+    },
+    tower: {
+        cost: 100,
+        time: 60,
+        width: 48,
+        height: 48,
+    },
+    storage: {
+        cost: 100,
+        time: 60,
+        width: 120,
+        height: 72,
+    },
+    mine: {
+        cost: 100,
+        time: 60,
+        width: 72,
+        height: 72,
+    },
+    library: {
+        cost: 100,
+        time: 60,
+        width: 120,
+        height: 72,
+    },
+    builders: {
+        cost: 100,
+        time: 60,
+        width: 72,
+        height: 72,
+    },
+}

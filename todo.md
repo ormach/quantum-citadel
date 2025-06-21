@@ -1,7 +1,5 @@
 - Change log
-  - Added an option to sell cards.
-  - Added question frequency algorithm that makes correctly answered questions appear less frequently.
- 
+  - Fixed a Firefox bug that would cause mab to be off centre.
 
 - Collection pages
    - Add pages button (for N coins)

@@ -77,7 +77,29 @@
       el(page).classList.remove('hide')
     }
 
-    //Show Nav
+    //Modals
+    function toggleModal(modalId){
+        let modals = document.getElementById('wrapper').querySelectorAll('.modal')
+
+        // modals.forEach(modal => {
+        //     if(modal.id !== modalId) modal.classList.toggle('hide')
+        // })
+
+        el(modalId).classList.toggle('hide')
+    }
+    //Hide all modals on Esc
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' || event.keyCode === 27) {
+            let modals = document.querySelectorAll('.modal')
+
+            modals.forEach(modal => {
+                modal.classList.add('hide')
+            })
+        }
+    });
+
+
+//Show Nav
     function toggleNav(){
         el('nav').classList.toggle('hide')
     }
@@ -93,7 +115,8 @@
             this.inspectionTable = new InspectionTable()
             this.collection = new Collection
             this.totalReward = config.rewardsValue
-            this.sellArea = new sellArea()
+            this.sellArea = new SellArea()
+            this.gameMap = new GameMap()
         }
 
         saveGame(){
@@ -348,7 +371,7 @@
         //Used for LS regen
         genHtml(){
             let card = document.createElement('div')
-            let cardImg = this.name
+            // let cardImg = this.name used to assign image lnked with name
             
             card.id = this.cardId
             card.classList = 'card'
@@ -358,7 +381,7 @@
             // console.log(this.cardRefObj);          
             
             if(this.cardRefObj.img === "y"){   
-                card.setAttribute('style',`background-image: url("./img/card/id=${cardImg}.png")`) 
+                // card.setAttribute('style',`background-image: url("./img/card/id=${cardImg}.png")`)
             }
             else {            
                 card.setAttribute('style',`background-image: url("./img/card/id=template.png")`) 
@@ -366,8 +389,9 @@
 
             card.innerHTML = `
                     <div class="card-data">
-                        <img draggable="false" src="./img/rarity/${this.rarity}.svg"/>
-                        <h2>${upp(this.name)}</h2>
+                        <img class="card-icon" draggable="false" src="./img/card/id=placeholder.svg"/>
+                        <p>${upp(this.name)}</p>
+                        <img class="card-rarity-icon" draggable="false" src="./img/rarity/${this.rarity}.svg"/>                 
                     </div>
             `
 
@@ -437,7 +461,7 @@
             if (operation === 'pack'){
                 let totalCost = config.cardCost * config.cardsInPack
                 
-                if(this.checkIfEounghCoins(totalCost)){
+                if(this.checkIfEnoughCoins(totalCost)){
                     this.changeCoins(-Math.abs(totalCost))
                     g.genCard({
                         "number": config.cardsInPack,
@@ -451,7 +475,7 @@
 
                 let totalCost = config.inspectionCost
 
-                if(this.checkIfEounghCoins(totalCost)){
+                if(this.checkIfEnoughCoins(totalCost)){
                     this.changeCoins(-Math.abs(totalCost))
                     g.inspectionTable.inspect()
                 }
@@ -461,21 +485,30 @@
 
                 let totalCost = config.researchSkip
 
-                if(this.checkIfEounghCoins(totalCost)){
+                if(this.checkIfEnoughCoins(totalCost)){
                     this.changeCoins(-Math.abs(totalCost))
                     g.research = new Research
+                }
+            }
+            //Build
+            else if (operation === 'build'){
+                let totalCost = buildingsRef[type].cost
+
+                if(this.checkIfEnoughCoins(totalCost)){
+                    this.changeCoins(-Math.abs(totalCost))
+                    g.gameMap.build(type)
                 }
             }
 
             g.saveGame()
         }
 
-        checkIfEounghCoins(cost){
+        checkIfEnoughCoins(cost){
             if(this.coins >= cost){
                 return true
             }
             else{
-                console.log(`Can't pay`);
+                showAlert(`Not enough coins. Need ${cost} coins.`)
             }
         }
 
@@ -595,7 +628,7 @@
     }
 
 // SELL AREA
-    class sellArea {
+    class SellArea {
     constructor(){
     }
 
