@@ -20,6 +20,9 @@
 - Code
    - Dealing with multiple instances of the game and LS saving. You can buy card in one window, then buy in another to pick the best rolls etc.
    - Move interval reward check to a separate method.
+   - Implement:
+   - Object.setPrototypeOf(savedData, Player.prototype);
+     savedData.greet(); // works
 
 - Inspection
    - If card was inspected, add it to cards metadata. On placing card into inspector/on hover, show metadata.

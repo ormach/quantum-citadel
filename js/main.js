@@ -1027,6 +1027,7 @@
     }
     
 //Fetch csv file, parse to JSON, assing it to reg obj
+
     fetch('./Library game cards [2024] - Sheet1.csv')
         .then(response => response.text())
         .then(
@@ -1039,4 +1040,3 @@
             () => startGame()
         )
         .catch(error => console.error('Error:', error))
-    
