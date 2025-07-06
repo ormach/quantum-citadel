@@ -14,9 +14,9 @@
 
     --bg: rgb(100, 100, 100);
 
-    --card-width: 200px;
+    --card-width: 208px;
     --card-height: 60px;
-    --card-offset: 4px;
+    --card-offset: 0px;
     --section-width: 800px;
 
     --nav-color: rgb(74, 74, 74);
@@ -75,7 +75,13 @@ h1{
     font-family: 'Grenze', sans-serif;
 }
 h2{
-    font-size: 17px;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+    font-family: 'Grenze', sans-serif;
+}
+h3{
+    font-size: 18px;
     font-weight: 400;
     letter-spacing: 0.1px;
     font-family: 'Grenze', sans-serif;
@@ -120,7 +126,7 @@ h2{
         align-items: center;
         justify-content: flex-start;
 
-        z-index: 14;
+        z-index: 140;
         pointer-events: none;
         padding: 48px;
     }
@@ -160,12 +166,52 @@ h2{
 
         border-radius: 0;
     }
-    #builders .btn-container{
+    .modal .btn-container{
         display: flex;
         gap: 8px;
         flex-direction: column;
 
         padding: 24px 24px 24px 24px;
+    }
+    .modal .structures-container{
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 600px;
+    }
+    .btn-structure{
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 160px;
+        width: 160px;
+
+        padding: 20px 0px;
+        gap: 12px;
+
+        position: relative;
+        background: linear-gradient(to bottom, #50514f, #646562);
+
+        border: 2px solid black;
+        color: white;
+    }
+    .btn-structure:hover{
+        background: linear-gradient(to bottom, #676866, #646562);
+    }
+    .btn-structure-img{
+        height: 120px;
+        width: 120px;
+    }
+    .btn-structure .btn-text{
+        font-size: 18px;
+    }
+
+    .building-img-container{
+        position: absolute;
+        bottom: -1px;
+
+    }
+    .building-img-container img{
+        scale: 0.5;
+        padding-bottom: 0 !important;
     }
 
 /*MAP*/
@@ -231,7 +277,7 @@ h2{
         align-items: center;
 
     }
-    .building:hover{
+    .interactive:hover{
         background: linear-gradient(to bottom, var(--w0), var(--w20));
         box-shadow: 0 7px 0px white;
         cursor: pointer;
@@ -240,36 +286,6 @@ h2{
         scale: 0.5;
     }
 
-    #bu-architect{
-        grid-row-start: 5;
-        grid-row-end: 5;
-        grid-column-start: 50;
-        grid-column-end: 50;
-    }
-    #bu-library{
-        grid-row-start: 5;
-        grid-row-end: 5;
-        grid-column-start: 44;
-        grid-column-end: 44;
-    }
-    #bu-mine{
-        grid-row-start: 5;
-        grid-row-end: 5;
-        grid-column-start: 56;
-        grid-column-end: 56;
-    }
-    #bu-inspect{
-        grid-row-start: 6;
-        grid-row-end: 6;
-        grid-column-start: 59;
-        grid-column-end: 59;
-    }
-    #bu-builders{
-        grid-row-start: 5;
-        grid-row-end: 5;
-        grid-column-start: 64;
-        grid-column-end: 64;
-    }
 
 
 /* BUTTON */
@@ -343,10 +359,10 @@ h2{
         justify-content: space-between;
 
         /* flex-grow: 1; */
-        border-radius: 10px;
+        border-radius: 8px;
         background-color: rgb(36, 36, 36);
         border: 2px solid black;
-        height: calc(var(--card-height) + 12px);
+        height: calc(var(--card-height) + 8px);
     }
     .divider{
         background-color: black;
@@ -357,6 +373,7 @@ h2{
         border: none;
         border-radius: 0;
         color: white;
+        height: calc(var(--card-height) + 8px);
     }
     .nav-container button:hover{
         background-color: var(--w10);
@@ -364,7 +381,7 @@ h2{
 
     #nav #logo {
         height: min-content;
-        margin: 0 12px 0 10px;
+        margin: 0 18px 1px 18px;
     }
     #nav .btn-group{
         display: flex;
@@ -372,6 +389,7 @@ h2{
     }
     .stat {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: flex-start;
         padding: 12px 12px 12px 12px;
@@ -381,25 +399,28 @@ h2{
 
         color: var(--font-color-light);
     }
+    #coin-indicator{
+        color: #FBC327;
+    }
     #hand {
         flex-grow: 1;
         flex-shrink: 1;
 
-        height: calc(var(--card-height) + 12px);
+        height: calc(var(--card-height) + 8px);
 
         width: 100%;
         min-width: 480px;
-        max-width: 800px;
+        /*max-width: 800px;*/
 
         display: flex;
-        gap: 4px;
+        gap: 2px;
 
         padding: 4px;
 
         /* background: linear-gradient(to top, var(--w20), transparent); */
-        background-color: rgba(63, 63, 63, 0.3);
-        border: 2px solid white;
-        border-radius: 10px;
+        background-color: var(--w20);
+        /*border: 2px solid white;*/
+        border-radius: 8px;
         z-index: 13;
 
         overflow-x: scroll;
@@ -419,11 +440,11 @@ h2{
     }
     #menu{
         position: absolute;
-        bottom: 0;
-        right: 0;
+        bottom: 72px;
+        right: -2px;
         z-index: 2;
 
-        background-color: #383232;
+        background-color: rgb(36, 36, 36);
         border: 2px solid black;
         border-radius: 8px;
         padding: 8px;
@@ -442,19 +463,20 @@ h2{
         height: var(--card-height);
         width: var(--card-width);
 
-        box-shadow: 0px 1px 0px var(--b20);
+        /*box-shadow: 0px 1px 0px var(--b20);*/
         background-size: var(--card-width) var(--card-height);
+        background-color: #E4E4E4;
 
-        /* outline: 2px solid white; */
-        border-radius: 0px;
+        /*border: 2px solid rgba(0,0,0,0.5);*/
+        border-radius: 4px;
 
         overflow: hidden;
         cursor: grab;
         z-index: 2;
+        font-size: 14px;
+        line-height: 18px;
 
         position: relative;
-
-        background-color: white;
     }
     .card:hover{
         box-shadow: 0px 1px 16px var(--b20);
@@ -473,10 +495,10 @@ h2{
     }
 
     .card .card-rarity-icon{
-        height: 16px;
-        width: 16px;
+        height: 20px;
+        width: 20px;
         position: absolute;
-        bottom:0;
+        top:0;
         right: 0;
     }
 
@@ -484,13 +506,17 @@ h2{
         /* background-color: white; */
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 4px;
 
-        padding: 4px;
+        padding: 4px 4px 4px 4px;
         color: rgb(0, 0, 0);
         width: 100%;
 
         /* outline: 2px solid black; */
+    }
+    .card-data p{
+        padding: 2px 0 0 6px;
+        line-height: 20px;
     }
 
     /* .card-frame{
@@ -513,8 +539,8 @@ h2{
         align-items: center;
         background-color: var(--w5);
 
-        height: calc(var(--card-height) + 16px);
-        width: calc(var(--card-width) + 16px);
+        height: calc(var(--card-height) + 0px);
+        width: calc(var(--card-width) + 0px);
 
         position: relative;
     }
@@ -534,7 +560,7 @@ h2{
         flex-wrap: wrap;
     }
 
-    #collection-research{
+    #library{
         display: flex;  
         justify-content: center;
         gap: 24px;

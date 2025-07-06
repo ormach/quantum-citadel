@@ -123,6 +123,7 @@
             // console.log("Game saved");
 
             localStorage.setItem('gameData', JSON.stringify(g))
+            // console.log(g.gameMap.buildings)
         }
 
         //Check if game state available and override stuff
@@ -146,11 +147,22 @@
                 })
 
                 //Override values of new objects
+                //g.ref is objet from LS
+                //!!! DON'T do g.plObj = g.ref.plObj it removes methods.
                 g.plObj.coins = g.ref.plObj.coins
                 g.plObj.exp = g.ref.plObj.exp
                 g.plObj.lvl = g.ref.plObj.lvl
                 g.totalReward = g.ref.totalReward
                 g.cardsRef = g.ref.cardsRef //Load card ref to kepp card frequency ranges
+
+                //Load buildings
+                g.gameMap.buildings = g.ref.gameMap.buildings
+                // console.log(g.gameMap.buildings)
+
+                //Add building html element to map
+                g.gameMap.buildings.forEach(building => {
+                    genBuildingHtmlElem(building, 'load')
+                })
 
                 // console.log("New game:");
                 // console.log(g);
@@ -162,12 +174,13 @@
                 this.rewardTime = g.ref.rewardTime
 
                 //Check interval reward
-                this.enableRewardButton()
+                // this.enableRewardButton()
 
                 //Load previous research 
                 g.research = new Research(g.ref.research.contractCard)
                 g.research.researchCardPool = g.ref.research.researchCardPool //load card pool for card frequency roll calculation
             }
+
             //New game
             else{
                 console.log('Game: No saved game found.');
@@ -177,6 +190,11 @@
 
                 //New research
                 g.research = new Research
+
+                //Prebuild buildings once at the start of a new game
+                prebuiltBuildingsRef.forEach(building => {
+                    g.gameMap.build(building.type, building)
+                })
             }
 
             // this.saveGame()
@@ -205,7 +223,7 @@
 
         getReward(){
             //Add coins to player
-            this.plObj.changeCoins(this.totalReward) 
+            this.plObj.changeCoins(this.totalReward)
 
             //Display alert
             showAlert(`Daily reward! You get ${this.totalReward} coins.`)
@@ -245,13 +263,39 @@
             
         }
 
+        //Generate UI
+        generateUI(){
+            let buildingKeys = Object.keys(buildingsRef)
+
+            buildingKeys.forEach(key => {
+
+                let buildingType = key
+                let building = buildingsRef[key]
+                console.log(building)
+
+                let btnContent = `
+                    <h2>${upp(buildingType)}</h2>
+                    <p>${building.cost} coins / ${building.time} min</p>
+                    <div class="building-img-container building" style="width:${building.width}px; height:${building.height}px;">
+                        <img src="./img/structure/id=${buildingType}.png">
+                    </div>
+                `
+
+                let buildingBtn = document.createElement('button')
+                buildingBtn.classList = 'btn-structure'
+                buildingBtn.innerHTML = btnContent
+                buildingBtn.setAttribute('onclick', `g.plObj.pay('build', '${buildingType}')`)
+
+                el('structure-container').append(buildingBtn)
+            })
+        }
         //Regen html based on game state
         updateUI(){
             let coinIco = `<img src="../img/ico/coin.svg">`
 
             //Nav
             el('coin-indicator').innerHTML = `${g.plObj.coins}`
-            el('exp').innerHTML = `Lvl: ${g.plObj.lvl} (Exp: ${g.plObj.exp}/${g.plObj.lvlUpExp})`
+            // el('exp').innerHTML = `Lvl: ${g.plObj.lvl} (Exp: ${g.plObj.exp}/${g.plObj.lvlUpExp})`
 
             //Inspection
             el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
@@ -341,7 +385,7 @@
                 else if (roll > 980){this.rarity = 'legendary'}
                 else if (roll > 900){this.rarity = 'epic'}
                 else if (roll > 700){this.rarity = 'rare'}
-                else               {this.rarity = 'common'}
+                else                {this.rarity = 'common'}
             }
 
             this.name = this.cardRefObj.name
@@ -379,21 +423,19 @@
             card.setAttribute('ondragstart','drag(event)')
             
             // console.log(this.cardRefObj);          
-            
-            if(this.cardRefObj.img === "y"){   
-                // card.setAttribute('style',`background-image: url("./img/card/id=${cardImg}.png")`)
-            }
-            else {            
-                card.setAttribute('style',`background-image: url("./img/card/id=template.png")`) 
+            let imgSrc = "./img/relics/id=template.png"
+            if(this.cardRefObj.img === "y"){
+                imgSrc = `./img/relics/id=${this.name}.png`
             }
 
             card.innerHTML = `
                     <div class="card-data">
-                        <img class="card-icon" draggable="false" src="./img/card/id=placeholder.svg"/>
+                        <img class="card-icon" draggable="false" src="${imgSrc}"/>
+                        <img class="" draggable="false" src="./img/misc/card-div.svg"/>
                         <p>${upp(this.name)}</p>
-                        <img class="card-rarity-icon" draggable="false" src="./img/rarity/${this.rarity}.svg"/>                 
                     </div>
             `
+                        // <img class="card-rarity-icon" draggable="false" src="./img/rarity/id=${this.rarity}.png"/>
 
             //On right click event
             card.addEventListener("contextmenu", (event) => {
@@ -984,15 +1026,18 @@
         g.market = new Market
         g.market.genPage()
 
+        //Generate UI
+        g.generateUI()
+
         //Load/generate game
         g.loadGame()
         g.updateUI()
         
         //Interval sync
-        setInterval(intervalSync, 1000)
+        // setInterval(intervalSync, 1000)
     }
 
-    //INTERVAL SYNC
+    //INTERVAL SYNC (not used atm)
     //g per sec
     function intervalSync(){
         //Chek for interval coin reward
@@ -1025,7 +1070,9 @@
     function toggleMenu(){
         el('menu').classList.toggle('hide')
     }
-    
+
+
+//LOAD GAME DATA
 //Fetch csv file, parse to JSON, assing it to reg obj
 
     fetch('./Library game cards [2024] - Sheet1.csv')

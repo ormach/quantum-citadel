@@ -35,6 +35,7 @@ let packsRef = [
 let buildingsRef = {
     house: {
         description: "Provides 1 worker in exchange for 1 food per day",
+        modalId: undefined,
         durability: 5,
         cost: 12,
         time: 30,
@@ -43,6 +44,7 @@ let buildingsRef = {
     },
     farm: {
         description: "Provides 1 food per day",
+        modalId: undefined,
         durability: 5,
         cost: 12,
         time: 30,
@@ -51,6 +53,7 @@ let buildingsRef = {
     },
     tower: {
         description: "Blocks intruders and provides protection for other buildings.",
+        modalId: undefined,
         durability: 50,
         cost: 100,
         time: 60,
@@ -59,6 +62,7 @@ let buildingsRef = {
     },
     storage: {
         description: "Stores relics and resources.",
+        modalId: undefined,
         durability: 10,
         cost: 100,
         time: 60,
@@ -67,6 +71,7 @@ let buildingsRef = {
     },
     mine: {
         description: "Provides relics and resources per time interval.",
+        modalId: 'market',
         durability: 10,
         cost: 100,
         time: 60,
@@ -75,6 +80,7 @@ let buildingsRef = {
     },
     library: {
         description: "Provides access to research..",
+        modalId: 'library',
         durability: 10,
         cost: 100,
         time: 60,
@@ -83,6 +89,16 @@ let buildingsRef = {
     },
     builders: {
         description: "Allows to build buildings.",
+        modalId: 'builders',
+        durability: 10,
+        cost: 100,
+        time: 60,
+        width: 72,
+        height: 72,
+    },
+    demolishers: {
+        description: "Allows to remove buildings.",
+        modalId: 'demolishers',
         durability: 10,
         cost: 100,
         time: 60,
@@ -90,3 +106,15 @@ let buildingsRef = {
         height: 72,
     },
 }
+let prebuiltBuildingsRef = [
+    {
+        type: 'builders',
+        x: 60,
+        y: 5,
+    },
+    {
+        type: 'library',
+        x: 55,
+        y: 5,
+    },
+]
