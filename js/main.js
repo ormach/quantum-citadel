@@ -271,7 +271,7 @@
 
                 let buildingType = key
                 let building = buildingsRef[key]
-                console.log(building)
+                // console.log(building)
 
                 let btnContent = `
                     <h2>${upp(buildingType)}</h2>

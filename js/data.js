@@ -93,8 +93,8 @@ let buildingsRef = {
         durability: 10,
         cost: 100,
         time: 60,
-        width: 72,
-        height: 72,
+        width: 48,
+        height: 48,
     },
     demolishers: {
         description: "Allows to remove buildings.",
@@ -106,15 +106,16 @@ let buildingsRef = {
         height: 72,
     },
 }
+
 let prebuiltBuildingsRef = [
     {
         type: 'builders',
-        x: 60,
-        y: 5,
+        x: 55,
+        y: 6,
     },
     {
         type: 'library',
-        x: 55,
+        x: 45,
         y: 5,
     },
 ]

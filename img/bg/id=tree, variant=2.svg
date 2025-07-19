@@ -1,0 +1,19 @@
+<svg width="48" height="144" viewBox="0 0 48 144" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 38L24 72L21 72L27 72" stroke="#708655" stroke-width="2"/>
+<path d="M24 38L24 72L21 72L27 72" stroke="#38432B" stroke-width="2"/>
+<path opacity="0.3" d="M24 106L24 72L21 72L27 72" stroke="url(#paint0_linear_710_44574)" stroke-width="2"/>
+<path d="M8 39C8 32.3726 13.3726 27 20 27H28C34.6274 27 40 32.3726 40 39V47C40 53.6274 34.6274 59 28 59H20C13.3726 59 8 53.6274 8 47V39Z" fill="#708655"/>
+<path d="M8 39C8 32.3726 13.3726 27 20 27H28C34.6274 27 40 32.3726 40 39V47C40 53.6274 34.6274 59 28 59H20C13.3726 59 8 53.6274 8 47V39Z" stroke="#708655" stroke-width="2"/>
+<path d="M8 39C8 32.3726 13.3726 27 20 27H28C34.6274 27 40 32.3726 40 39V47C40 53.6274 34.6274 59 28 59H20C13.3726 59 8 53.6274 8 47V39Z" stroke="black" stroke-opacity="0.4" stroke-width="2"/>
+<path opacity="0.5" d="M32 43V43C27.5817 43 24 46.5817 24 51V52V39" stroke="black" stroke-width="2"/>
+<rect x="23" y="58" width="2" height="2" fill="#38432B"/>
+<rect x="23" y="56" width="2" height="2" fill="#38432B"/>
+<rect x="21" y="54" width="2" height="2" fill="#38432B"/>
+<rect x="21" y="37" width="2" height="2" fill="#38432B"/>
+<defs>
+<linearGradient id="paint0_linear_710_44574" x1="24" y1="72" x2="24" y2="106" gradientUnits="userSpaceOnUse">
+<stop/>
+<stop offset="1" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

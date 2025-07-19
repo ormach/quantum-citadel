@@ -21,6 +21,10 @@ class GameMap{
         this.buildings = []
         this.buildMode = false
         this.focusedBuilding = null
+
+        this.setEnvironmentAnimVars()
+        this.setGroundElements()
+        this.setTrees()
     }
 
     build(buildingType, buildingRefObj){
@@ -41,6 +45,150 @@ class GameMap{
         }
 
         this.buildings.push(newBuildingObj)
+    }
+
+    //Clouds
+    setEnvironmentAnimVars(){
+
+        //Add sun
+        let sun = document.createElement('img');
+        sun.setAttribute('src', './img/bg/sun-1.svg');
+        sun.classList.add('map-sun')
+        el('map-sky').append(sun)
+
+        //Add clouds
+        let cloudQuant = rng(5,5)
+        let cloudRef = [
+            {id: 'cloud', quantity: 3},
+        ]
+        let cloudPosition = [
+            {x: 10, y:30},
+            {x: 35, y:25},
+            {x: 55, y:20},
+            {x: 85, y:30},
+            {x: 100, y:30},
+        ]
+        //Shuffle position coordinates
+        shuffle(cloudPosition)
+
+        for(let i = 0; i < cloudQuant; i++){
+            let refElement = rarr(cloudRef)
+            let spacing = 24 * rng(5, 0)
+
+            let cloudElement = document.createElement('img');
+            cloudElement.setAttribute(
+                'style',
+                `
+                    left: ${cloudPosition[i].x}%; 
+                    top:  ${cloudPosition[i].y}%; 
+                    padding-left: ${spacing}px;
+                    animation-duration: ${rng(500, 600)}s;
+                `
+            )
+            cloudElement.setAttribute('src', `./img/bg/id=${refElement.id}, variant=${rng(refElement.quantity)}.svg`);
+            cloudElement.classList.add('map-cloud')
+            el('map-sky').append(cloudElement)
+
+            //Flin elem
+            if(rng(2) == 2){htmlFlipX(cloudElement)}
+        }
+
+    }
+
+    //Grass, hills
+    setGroundElements(){
+        // Create grass container
+        let grassContainer = document.createElement('div');
+        grassContainer.id = 'grass-container';
+
+        //Gen grass element
+        let grassQuant = rng(20,10)
+        let decorationRef = [
+            {id: 'grass', quantity: 5},
+            {id: 'flower', quantity: 4},
+        ]
+
+        for(let i = 0; i < grassQuant; i++){
+            let decorationElement = rarr(decorationRef)
+            let spacing = 24 * rng(20, 0)
+
+            let grassElement = document.createElement('img');
+            grassElement.setAttribute('style', `padding:0px ${spacing}px 52px 0px`)
+            grassElement.setAttribute('src', `./img/bg/id=${decorationElement.id}, variant=${rng(decorationElement.quantity)}.svg`);
+            grassContainer.append(grassElement)
+
+            //Flin elem
+            if(rng(2) == 2){htmlFlipX(grassElement)}
+        }
+
+        // Add the element to the DOM
+        el('map-ground').appendChild(grassContainer);
+
+
+        //HILLS & VALLEYS
+        let hillContainer = document.createElement('div');
+        hillContainer.id = 'hill-container';
+
+        //Gen hill element
+        let hillQuant = 4
+        let hillRef = [
+            {width: 612, height: 98},
+            {width: 816, height: 146},
+        ]
+        let valleyRef = [
+            {width: 816, height: 146},
+            {width: 1224, height: 194},
+        ]
+
+        for(let i = 0; i < hillQuant; i++){
+            let elem = rarr(hillRef)
+            let id = 'hill'
+            let xOffset = rng(5)
+
+            //Pick valley on even iterations
+            if(i % 2 == 0){
+                elem = rarr(valleyRef)
+                id = 'valley'
+            }
+
+            let hillElement = document.createElement('img');
+            hillElement.setAttribute('src', `./img/bg/id=${id}, Variant=${elem.width}-${elem.height}.svg`);
+            hillElement.setAttribute('style', `transform:translateX(${240 * xOffset}px);`)
+            hillContainer.append(hillElement)
+        }
+
+        el('map-ground').appendChild(hillContainer);
+    }
+
+    //Trees
+    setTrees(){
+        let treeContainer = document.createElement('div');
+        treeContainer.id = 'tree-container';
+
+        //Gen tree element
+        let quant = rng(100,8)
+        let decorationRef = [
+            {id: 'tree-winter', quantity: 3},
+            {id: 'bush', quantity: 2},
+            {id: 'tree', quantity: 2},
+        ]
+
+        for(let i = 0; i < quant; i++){
+            let element = rarr(decorationRef)
+            let spacing = 24 * rng(20, 0)
+
+            let treeElement = document.createElement('img');
+            treeElement.setAttribute('src', `./img/bg/id=${element.id}, variant=${rng(element.quantity)}.svg`);
+            treeElement.setAttribute('style', `padding-left:${spacing}px;`)
+
+            treeContainer.append(treeElement)
+
+            //Flin elem
+            if(rng(2) == 2){htmlFlipX(treeElement)}
+        }
+
+        // Add the element to the DOM
+        el('map-ground').appendChild(treeContainer);
     }
 }
 
@@ -188,3 +336,6 @@ function relativeCoords ( event , mode ) {
         return {x: Math.floor(x / cellSize), y: Math.floor(y / cellSize)};
     }
 }
+
+
+//Environment

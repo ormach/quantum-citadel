@@ -93,6 +93,14 @@ function clearLs(){
     location.reload();
 }
 
+
+//Modify html
+function htmlFlipX(elem){
+    let styleContent = elem.getAttribute('style')
+    elem.setAttribute('style', `transform:scaleX(-1); ${styleContent} `)
+}
+
+
 //Used to find items by id in array
 function findByProperty(dataArr, propertyName, propertyValue, mode){
     let foundItem
