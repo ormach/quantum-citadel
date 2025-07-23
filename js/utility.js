@@ -23,8 +23,12 @@ function rng(maxValue, minValue){//Random number
     return Math.floor(Math.random() * (maxValue - minValue + 1) + minValue)
 }
 
-function rarr(arr){//Random arr item
+function rArr(arr){//Random arr item
     return arr[Math.floor(Math.random() * arr.length)]
+}
+
+function rObj(obj){//Random object key-value pair
+    return obj[rArr(Object.keys(obj))]
 }
 
 function shuffle(array) {//Suffle arr
@@ -68,7 +72,7 @@ function el(id, mod){//Returns html elem by id
     }
 }
 
-function cloneArr(arr){//Make a detached copy of an array
+function clone(arr){//Make a detached copy of an array
     return JSON.parse(JSON.stringify(arr));
 }
 

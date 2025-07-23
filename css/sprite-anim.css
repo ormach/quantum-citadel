@@ -110,7 +110,7 @@
     width: 32px;
     height: 32px;
 
-    background-image: url(../img/misc/id=bird.png);
+    background-image: url('../img/bg/id=bird, variant=1.svg');
     background-position: 0px;
     background-repeat: no-repeat;
 
@@ -118,6 +118,8 @@
 
     z-index: 50;
 
+
+    position: absolute;
     /*grid-column-start: 40;*/
     /*grid-row-start: 1;*/
 }
@@ -126,6 +128,9 @@
 }
 .speed-2{
     animation: bird 0.5s steps(4) infinite, bird-fly 28s steps(160) infinite ;
+}
+.speed-3{
+    animation: bird 1.25s steps(4) infinite, bird-fly 60s steps(160) infinite ;
 }
 
 @keyframes bird {

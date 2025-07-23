@@ -108,7 +108,7 @@
 //GAME & UI
     class Game {
         constructor(){
-            //Storge per game section, place in LS and build board state from this obj.
+            //Store per game section, place in LS and build board state from this obj.
             this.plObj = new PlayerObj()
             this.cards = [] //Stores all card objects
             this.cardsRef = []
@@ -117,10 +117,12 @@
             this.totalReward = config.rewardsValue
             this.sellArea = new SellArea()
             this.gameMap = new GameMap()
+
+            console.log('Generating new game obj.')
         }
 
         saveGame(){
-            // console.log("Game saved");
+            console.log("Game saved.");
 
             localStorage.setItem('gameData', JSON.stringify(g))
             // console.log(g.gameMap.buildings)
@@ -136,7 +138,7 @@
     
                 //Store loaded data
                 g.ref = JSON.parse(data)
-    
+
                 //Override game values?
                 g.ref.cards.forEach(card => {                    
                     new Card({
@@ -154,6 +156,9 @@
                 g.plObj.lvl = g.ref.plObj.lvl
                 g.totalReward = g.ref.totalReward
                 g.cardsRef = g.ref.cardsRef //Load card ref to kepp card frequency ranges
+
+                //Load map decorations
+                g.gameMap.envDecorations = g.ref.gameMap.envDecorations
 
                 //Load buildings
                 g.gameMap.buildings = g.ref.gameMap.buildings
@@ -174,11 +179,14 @@
                 this.rewardTime = g.ref.rewardTime
 
                 //Check interval reward
-                // this.enableRewardButton()
+                this.enableRewardButton()
 
                 //Load previous research 
                 g.research = new Research(g.ref.research.contractCard)
                 g.research.researchCardPool = g.ref.research.researchCardPool //load card pool for card frequency roll calculation
+
+                // console.log(g.ref.gameMap.envDecorations)
+                // console.log(g.gameMap.envDecorations)
             }
 
             //New game
@@ -293,9 +301,10 @@
         updateUI(){
             let coinIco = `<img src="../img/ico/coin.svg">`
 
-            //Nav
+            //Navigation
             el('coin-indicator').innerHTML = `${g.plObj.coins}`
-            // el('exp').innerHTML = `Lvl: ${g.plObj.lvl} (Exp: ${g.plObj.exp}/${g.plObj.lvlUpExp})`
+            el('lvl').innerHTML = `LVL: ${g.plObj.lvl}`
+            el('exp').innerHTML = `EXP: ${g.plObj.exp}/${g.plObj.lvlUpExp}`
 
             //Inspection
             el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
@@ -303,7 +312,7 @@
             //Research
             el('contract-heading').innerHTML = `New research`
             el('contract-button-skip').innerHTML = `Skip (${config.researchSkip + coinIco})`
-    
+
             //Allocate cards
             // g.cards.forEach(card => {
             //     // console.log(cardElem);       
@@ -362,12 +371,12 @@
                 //Choose random card if no name provided
                 if(args.name == undefined){
                     if(args.setName == undefined){
-                        args.name = rarr(cardsRef).name
+                        args.name = rArr(cardsRef).name
                     }
                     else {
                        let set = cardsRef.filter((card) => card.set === args.setName);
                     //    console.log(cardsRef, args.setName);
-                        newCardName = rarr(set).name                       
+                        newCardName = rArr(set).name                       
                     }
                 }
 
@@ -625,7 +634,7 @@
 
                     container.innerHTML += `
                         <div class="market-item">
-                            <img src="./img/library/pack=${pack.name}.png" alt="">
+                            <img src="./img/research/pack=${pack.name}.png" alt="">
                             ${btn}
                         </div>
                     `
@@ -861,7 +870,7 @@
                 while(cardNotSelected){
 
                     //Pick random card from pool
-                    this.contractCard = rarr(this.researchCardPool)
+                    this.contractCard = rArr(this.researchCardPool)
                     // console.log(`Rolling new card:`)
                     // console.log(this.contractCard)
                     // console.log(typeof this.contractCard.frequencyRange === "number" && !isNaN(this.contractCard.frequencyRange))
@@ -1032,9 +1041,16 @@
         //Load/generate game
         g.loadGame()
         g.updateUI()
+
+        //Generate map decoration elements after g is assigned
+        g.gameMap.setMapDecoration()
         
         //Interval sync
-        // setInterval(intervalSync, 1000)
+        setInterval(intervalSync, 1000)
+
+        //Save game on start
+        //Save was not set, don't remember why
+        g.saveGame()
     }
 
     //INTERVAL SYNC (not used atm)
@@ -1075,7 +1091,7 @@
 //LOAD GAME DATA
 //Fetch csv file, parse to JSON, assing it to reg obj
 
-    fetch('./Library game cards [2024] - Sheet1.csv')
+    fetch('./library game cards [2024] - Sheet1.csv')
         .then(response => response.text())
         .then(
             csvText  => {

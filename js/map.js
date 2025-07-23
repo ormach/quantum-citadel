@@ -1,36 +1,29 @@
-//MAP css grid
-let mapElem = el('map')
-let cellSize = 24
-let gridWidth = 96
-let gridHeight = 14
-
-//Set map columns and rows based on vars above
-mapElem.setAttribute('style', `
-    grid-template-columns: repeat(${gridWidth},  ${cellSize}px);
-    grid-template-rows:    repeat(${gridHeight}, ${cellSize}px);
-`)
-
-//Scrolls to center
-let wrapper = el('wrapper')
-wrapper.scrollLeft = (wrapper.scrollWidth - window.innerWidth) / 2
-wrapper.scrollTop = (wrapper.scrollHeight - window.innerHeight) / 2
-
-//Game map class
+//MAP CLASS
 class GameMap{
     constructor(){
         this.buildings = []
         this.buildMode = false
         this.focusedBuilding = null
 
-        this.setEnvironmentAnimVars()
-        this.setGroundElements()
-        this.setTrees()
+        //MAP css grid
+        this.mapElem = el('map')
+        this.cellSize = 24
+        this.gridWidth = 96
+        this.gridHeight = 14
+
+        //Set map columns and rows based on vars above
+        this.mapElem.setAttribute('style', `
+            grid-template-columns: repeat(${this.gridWidth},  ${this.cellSize}px);
+            grid-template-rows:    repeat(${this.gridHeight}, ${this.cellSize}px);
+        `)
+
+        this.scrollToMapCenter()
     }
 
+
+    //Buildings
     build(buildingType, buildingRefObj){
         let newBuildingObj
-
-        //Gen new building object
 
         //Prebuild
         if(buildingRefObj){
@@ -47,154 +40,197 @@ class GameMap{
         this.buildings.push(newBuildingObj)
     }
 
-    //Clouds
-    setEnvironmentAnimVars(){
 
-        //Add sun
-        let sun = document.createElement('img');
-        sun.setAttribute('src', './img/bg/sun-1.svg');
-        sun.classList.add('map-sun')
-        el('map-sky').append(sun)
-
-        //Add clouds
-        let cloudQuant = rng(5,5)
-        let cloudRef = [
-            {id: 'cloud', quantity: 3},
-        ]
-        let cloudPosition = [
-            {x: 10, y:30},
-            {x: 35, y:25},
-            {x: 55, y:20},
-            {x: 85, y:30},
-            {x: 100, y:30},
-        ]
-        //Shuffle position coordinates
-        shuffle(cloudPosition)
-
-        for(let i = 0; i < cloudQuant; i++){
-            let refElement = rarr(cloudRef)
-            let spacing = 24 * rng(5, 0)
-
-            let cloudElement = document.createElement('img');
-            cloudElement.setAttribute(
-                'style',
-                `
-                    left: ${cloudPosition[i].x}%; 
-                    top:  ${cloudPosition[i].y}%; 
-                    padding-left: ${spacing}px;
-                    animation-duration: ${rng(500, 600)}s;
-                `
-            )
-            cloudElement.setAttribute('src', `./img/bg/id=${refElement.id}, variant=${rng(refElement.quantity)}.svg`);
-            cloudElement.classList.add('map-cloud')
-            el('map-sky').append(cloudElement)
-
-            //Flin elem
-            if(rng(2) == 2){htmlFlipX(cloudElement)}
-        }
-
+    //Utility
+    scrollToMapCenter(){
+        wrapper.scrollLeft = (wrapper.scrollWidth - window.innerWidth) / 2
+        wrapper.scrollTop = (wrapper.scrollHeight - window.innerHeight) / 2
     }
 
-    //Grass, hills
-    setGroundElements(){
-        // Create grass container
-        let grassContainer = document.createElement('div');
-        grassContainer.id = 'grass-container';
 
-        //Gen grass element
-        let grassQuant = rng(20,10)
-        let decorationRef = [
-            {id: 'grass', quantity: 5},
-            {id: 'flower', quantity: 4},
-        ]
+    //Set environment decorations
+    setMapDecoration(){
 
-        for(let i = 0; i < grassQuant; i++){
-            let decorationElement = rarr(decorationRef)
-            let spacing = 24 * rng(20, 0)
+        //Assign reference env object
+        let rootRefObj
 
-            let grassElement = document.createElement('img');
-            grassElement.setAttribute('style', `padding:0px ${spacing}px 52px 0px`)
-            grassElement.setAttribute('src', `./img/bg/id=${decorationElement.id}, variant=${rng(decorationElement.quantity)}.svg`);
-            grassContainer.append(grassElement)
+        //LOAD decorations
+        if(g.gameMap.envDecorations != undefined &&  Object.keys(g.gameMap.envDecorations).length !== 0) {
+            rootRefObj = g.gameMap.envDecorations
+            console.log('Saved env ref:', rootRefObj)
 
-            //Flin elem
-            if(rng(2) == 2){htmlFlipX(grassElement)}
+            for(let key in rootRefObj) {
+
+                //Create containers.
+                let envContainer = document.createElement('div');
+                envContainer.id = `${key}-container`;
+                //Class
+                envContainer.classList.add('envContainer')
+
+
+                //Add sprites to container
+                if (key === 'sky') {
+                    //Add sun
+                    let sun = document.createElement('img');
+                    sun.setAttribute('src', './img/bg/sun-1.svg');
+                    sun.classList.add('sun')
+                    envContainer.append(sun)
+                }
+
+
+                //Shuffle position coordinates once
+                if (rootRefObj[key].absoluteCoords != undefined) {
+                    shuffle(rootRefObj[key].absoluteCoords)
+                }
+
+                //Generate sprites
+                for (let i = 0; i < Object.keys(rootRefObj[key].sprites).length; i++) {
+
+                    let sprite = rootRefObj[key].sprites[Object.keys(rootRefObj[key].sprites)[i]]
+
+                    // console.log('loading sprite')
+                    // console.log(sprite)
+
+                    //Append sprite
+                    envContainer.append(this.genEnvElemHtml(sprite))
+                }
+
+                //Append container
+                el('map-environment').appendChild(envContainer);
+            }
         }
 
-        // Add the element to the DOM
-        el('map-ground').appendChild(grassContainer);
+        //NEW decorations
+        else {
+            this.envDecorations = {}
+            rootRefObj = envDecorationsRef
+            console.log('New env ref:', rootRefObj)
 
+            for(let key in rootRefObj) {
+                //Add sprites object to stored ref object once per key
+                this.envDecorations[key] = {sprites: {}}
 
-        //HILLS & VALLEYS
-        let hillContainer = document.createElement('div');
-        hillContainer.id = 'hill-container';
+                //CONTAINER: Create
+                let envContainer = document.createElement('div');
+                envContainer.id = `${key}-container`;
+                envContainer.classList.add('envContainer')
 
-        //Gen hill element
-        let hillQuant = 4
-        let hillRef = [
-            {width: 612, height: 98},
-            {width: 816, height: 146},
-        ]
-        let valleyRef = [
-            {width: 816, height: 146},
-            {width: 1224, height: 194},
-        ]
+                //SPRITE: Add sun
+                if (key === 'sky') {
+                    //Add sun
+                    let sun = document.createElement('img');
+                    sun.setAttribute('src', './img/bg/sun-1.svg');
+                    sun.classList.add('sun')
+                    envContainer.append(sun)
+                }
 
-        for(let i = 0; i < hillQuant; i++){
-            let elem = rarr(hillRef)
-            let id = 'hill'
-            let xOffset = rng(5)
+                //SPRITE: Shuffle position coordinates once
+                if (rootRefObj[key].absoluteCoords != undefined) {
+                    shuffle(rootRefObj[key].absoluteCoords)
+                }
 
-            //Pick valley on even iterations
-            if(i % 2 == 0){
-                elem = rarr(valleyRef)
-                id = 'valley'
+                //SPRITE: Generate
+                for (let i = 0; i < rng(envDecorationsRef[key].elementQuantity[0], envDecorationsRef[key].elementQuantity[1]); i++) {
+
+                    //Append sprite
+                    envContainer.append(
+                        this.genEnvElemHtml(
+                            this.genEnvElemObj(key, i)
+                        )
+                    )
+                }
+
+                //CONTAINER: Append
+                el('map-environment').appendChild(envContainer);
             }
 
-            let hillElement = document.createElement('img');
-            hillElement.setAttribute('src', `./img/bg/id=${id}, Variant=${elem.width}-${elem.height}.svg`);
-            hillElement.setAttribute('style', `transform:translateX(${240 * xOffset}px);`)
-            hillContainer.append(hillElement)
+            console.log('Stored env decorations:', g.gameMap.envDecorations)
         }
-
-        el('map-ground').appendChild(hillContainer);
     }
 
-    //Trees
-    setTrees(){
-        let treeContainer = document.createElement('div');
-        treeContainer.id = 'tree-container';
+    genEnvElemObj(key, i){
 
-        //Gen tree element
-        let quant = rng(100,8)
-        let decorationRef = [
-            {id: 'tree-winter', quantity: 3},
-            {id: 'bush', quantity: 2},
-            {id: 'tree', quantity: 2},
-        ]
+        //Store ref object in game map
+        let envElemRef = clone(rObj(envDecorationsRef[key].sprites))
 
-        for(let i = 0; i < quant; i++){
-            let element = rarr(decorationRef)
-            let spacing = 24 * rng(20, 0)
+        //Gen unique id
+        envElemRef.elemId = genId(`${envElemRef.id}-`)
 
-            let treeElement = document.createElement('img');
-            treeElement.setAttribute('src', `./img/bg/id=${element.id}, variant=${rng(element.quantity)}.svg`);
-            treeElement.setAttribute('style', `padding-left:${spacing}px;`)
 
-            treeContainer.append(treeElement)
+        //Style
+        let style = ``
 
-            //Flin elem
-            if(rng(2) == 2){htmlFlipX(treeElement)}
+        //Absolute placement
+        if (envDecorationsRef[key].absoluteCoords != undefined) {
+            style += `
+                        left: ${envDecorationsRef[key].absoluteCoords[i].x}; 
+                        top:  ${envDecorationsRef[key].absoluteCoords[i].y}; 
+                    `
         }
 
-        // Add the element to the DOM
-        el('map-ground').appendChild(treeContainer);
+        //Spacing
+        if (envElemRef.spacing != undefined) {
+            style += `margin-left: ${24 * rng(envElemRef.spacing[0], envElemRef.spacing[1])}px;`
+        }
+        if (envElemRef.spacingY != undefined) {
+            style += `padding-bottom: ${24 * rng(envElemRef.spacingY[0], envElemRef.spacingY[1])}px;`
+        }
+
+        //Flip elem
+        if (envElemRef.flipXPercentChance != undefined) {
+            if (rng(100) < envElemRef.flipXPercentChance) {
+                style += `transform:scaleX(-1);`
+            }
+        }
+
+        //Set animation
+        if (envElemRef.animationDuration != undefined) {
+            style += `animation-duration: ${rng(envElemRef.animationDuration[0], envElemRef.animationDuration[1])}ms;`
+        }
+
+        //Save ref obj in game map
+        envElemRef.style = style
+        envElemRef.spriteType = rng(envElemRef.quantity)
+        this.envDecorations[key].sprites[envElemRef.elemId] = envElemRef
+        // console.log(this.envDecorations[key])
+
+        return envElemRef
+    }
+
+    genEnvElemHtml(envElemRef){
+        // console.log(envElemRef)
+
+        //Create HTML sprite
+        let envElemHTML
+
+        //Create animation container
+        if (envElemRef.animation) {
+            envElemHTML = document.createElement('div');
+        }
+
+        //Create img html element
+        else {
+            envElemHTML = document.createElement('img');
+            //Img source
+            envElemHTML.setAttribute('src', `./img/bg/id=${envElemRef.id}, variant=${envElemRef.spriteType}.svg`);
+        }
+
+        //Class
+        envElemHTML.classList.add(envElemRef.id)
+        //Animation
+        if (envElemRef.speed != undefined) {
+            envElemHTML.classList.add(`speed-${rng(envElemRef.speed, 1)}`)
+        }
+
+        //Style
+        envElemHTML.setAttribute('style', envElemRef.style)
+
+        return envElemHTML
     }
 }
 
 
-//BUILDINGS
-//Class for building obj-HTMLelement
+//BUILDINGS CLASS
 class Building{
     constructor(type, buildingRefObj){
         this.id = genId('building')
@@ -214,13 +250,12 @@ class Building{
         //Store id for allocation
         g.gameMap.focusedBuilding = this.id
 
-        // console.log(this)
-
         //Hide builder modal
         el('builders').classList.add('hide')
     }
 }
 
+//Not methods because on load building class is not initiated
 //Generate HTML elem for building
 function genBuildingHtmlElem(buildingObject, mode){
 
@@ -263,14 +298,13 @@ function genBuildingHtmlElem(buildingObject, mode){
         g.gameMap.focusedBuildingHtmlElem = building
 
         //Add mouse move event listener
-        mapElem.addEventListener('mousemove', moveBuilding);
+        g.gameMap.mapElem.addEventListener('mousemove', moveBuilding);
 
         //Add click exit event
-        mapElem.addEventListener('click', placeBuilding);
+        g.gameMap.mapElem.addEventListener('click', placeBuilding);
     }
 }
 
-//Building functions
 //Handles hover building projection while placing
 function moveBuilding(){
     //Set coordinates
@@ -280,7 +314,7 @@ function moveBuilding(){
     g.gameMap.focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
     // console.log(focusedBuildingObj)
 
-    if(y > 0 && y < gridHeight && x > 0 && x < gridWidth){
+    if(y > 0 && y < g.gameMap.gridHeight && x > 0 && x < g.gameMap.gridWidth){
         el(g.gameMap.focusedBuilding).setAttribute('style', `
             grid-column-start: ${x};
             grid-column-end: ${x};    
@@ -299,6 +333,7 @@ function moveBuilding(){
 
     // console.log(x, y)
 }
+
 //Clears event listeners when projection is placed on map
 function placeBuilding(){
 
@@ -306,8 +341,8 @@ function placeBuilding(){
     g.gameMap.buildMode = false
 
     //Clear event listeners for movement and placement
-    mapElem.removeEventListener('mousemove', moveBuilding);
-    mapElem.removeEventListener('click', placeBuilding);
+    g.gameMap.mapElem.removeEventListener('mousemove', moveBuilding);
+    g.gameMap.mapElem.removeEventListener('click', placeBuilding);
 
     let focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
     // console.log(focusedBuildingObj.x, focusedBuildingObj.y)
@@ -325,17 +360,14 @@ function placeBuilding(){
 }
 
 //Relative coords for map, helps to keep buildings aligned with css grid tiles
-function relativeCoords ( event , mode ) {
-    var bounds = mapElem.getBoundingClientRect();
+function relativeCoords(event , mode) {
+    var bounds = g.gameMap.mapElem.getBoundingClientRect();
     var x = event.clientX - bounds.left;
     var y = event.clientY - bounds.top;
 
     if (mode == 'coords') {
         return {x: x, y: y};
     }else{
-        return {x: Math.floor(x / cellSize), y: Math.floor(y / cellSize)};
+        return {x: Math.floor(x / g.gameMap.cellSize), y: Math.floor(y / g.gameMap.cellSize)};
     }
 }
-
-
-//Environment

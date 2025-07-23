@@ -31,7 +31,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
         <!-- Mono -->
-        <!-- <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet"> -->
+         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
 
         <!-- Grenze -->
         <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -62,39 +62,54 @@
 
                     <div class="divider"></div>
 
-                    <!-- Exp -->
-                    <!-- <div id="exp" class="stat"></div>-->
-
-
-
-                    <!-- Coins -->
-                    <div id="coins" class="stat">
-                        <img src="./img/ico/coin.svg" alt="">
-                        <span id="coin-indicator"></span>
+                    <!-- STATS: Exp, Coins -->
+                    <div class="stat-container">
+                        <div id="lvl" class="stat"></div>
+                        <div id="exp" class="stat"></div>
+                    </div>
+                    <div class="stat-container" style="margin: 0 24px">
+                        <div id="coins" class="stat">
+                            <img src="./img/ico/coin.svg" alt="">
+                            <span id="coin-indicator"></span>
+                        </div>
+                        <div id="stone" class="stat">
+                            <img src="./img/ico/id=stone, variant=1.svg" alt="">
+                            <span id="stone-indicator">0</span>
+                        </div>
                     </div>
 
-                    <div class="divider"></div>
+
+                        <div class="divider"></div>
+
+                    <!-- Build btn-->
+                    <button class="nav-button" onclick="toggleModal('builders')">
+                        <img src="./img/ico/id=repair, variant=1.svg">
+                    </button>
+
+                        <div class="divider"></div>
+
+                    <!-- Research btn-->
+                    <button class="nav-button" onclick="toggleModal('research')">
+                        <img src="./img/ico/id=book, variant=1.svg">
+                    </button>
+
+                        <div class="divider"></div>
 
                     <!-- Menu -->
                     <div id="menu-container">
                         <button class="nav-button" onclick="toggleMenu()">
-                            <img src="./img/ico/menu-2.svg">
+                            <img src="./img/ico/id=context-menu, variant=2.svg">
                         </button>
 
                         <div id="menu" class="hide">
                             <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`), toggleMenu()";>Learn more</button>
                             <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`), toggleMenu()";>Report an issue</button>
                             <button class="light" onclick="clearLs()">Reset the game</button>
-<!--                            <button class="light" onclick="toggleMenu()">-->
-<!--                                <img src="./img/ico/tab-hide.svg">-->
-<!--                            </button>-->
+                            <!--                            <button class="light" onclick="toggleMenu()">-->
+                            <!--                                <img src="./img/ico/tab-hide.svg">-->
+                            <!--                            </button>-->
                         </div>
                     </div>
-
-                    <!-- Reward button-->
-                    <!--                    <button id="reward-btn" class="nav-button" onclick="g.getReward()" style="width: 160px;" disabled>-->
-                    <!--                        <span id="reward-timer"></span>-->
-                    <!--                    </button>-->
                 </div>
 
                 <!-- Hand -->
@@ -104,11 +119,36 @@
 
     <!-- Modal wrapper-->
         <div id="modal-wrapper">
-            <!-- Market -->
-            <div id="market" class="modal hide">
+            <!-- Mine -->
+            <div id="mine" class="modal hide">
+                <div class="modal-container">
+
+                    <!--Nav-->
+                    <div class="modal-nav">
+                        <p>Mine</p>
+
+                        <!-- Close button -->
+                        <button class="secondary-btn" onclick="el('mine').classList.add('hide')">
+                            <img src="./img/ico/item-x.svg" alt="">
+                        </button>
+                    </div>
+
+                    <!-- Body-->
+                    <div class="btn-container">
+                        <p>Get mined coins.<br><br></p>
+
+                        <button id="reward-btn" class="secondary-btn" onclick="g.getReward()">
+                            <div id="reward-timer"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archeologist -->
+            <div id="archeologist" class="modal hide">
 
                 <!-- Close button -->
-                <button class="secondary-btn" onclick="el('market').classList.add('hide')">
+                <button class="secondary-btn" onclick="el('archeologist').classList.add('hide')">
                     <img src="./img/ico/item-x.svg" alt="">
                 </button>
 
@@ -116,7 +156,7 @@
             </div>
 
             <!-- Collection & Research contract -->
-            <div id="library" class="modal hide">
+            <div id="research" class="modal hide">
 
                 <!-- Collection -->
                 <div id="collection-page" class=" page">
@@ -197,7 +237,7 @@
                             </button>
 
                             <!-- Close button -->
-                            <button class="secondary-btn" onclick="el('library').classList.add('hide')">
+                            <button class="secondary-btn" onclick="el('research').classList.add('hide')">
                                 <img src="./img/ico/item-x.svg" alt="">
                             </button>
                         </div>
@@ -358,3 +398,4 @@
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
 <script src="js/map.js"></script>
+<script src="js/keyboard-shortcuts.js"></script>
