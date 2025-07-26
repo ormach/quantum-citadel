@@ -145,12 +145,15 @@
             </div>
 
             <!-- Archeologist -->
-            <div id="archeologist" class="modal hide">
+            <div id="archeologist" class="modal hide perim-border">
+                <div class="modal-nav">
+                    <h2 class="modal-heading">Archeologist</h2>
 
-                <!-- Close button -->
-                <button class="secondary-btn" onclick="el('archeologist').classList.add('hide')">
-                    <img src="./img/ico/item-x.svg" alt="">
-                </button>
+                    <!-- Close button -->
+                    <button class="secondary-btn close-btn" onclick="el('archeologist').classList.add('hide')">
+                        <img src="./img/ico/item-x.svg" alt="">
+                    </button>
+                </div>
 
                 <div id="market-container"></div>
             </div>
@@ -250,26 +253,34 @@
 
                 <!-- Contract -->
                 <div id="contract" class="contract-container">
-                    <img src="./img/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">
-                    <img src="./img/bg/pen.svg"          style="position: absolute; bottom: -32px; right: -92px;">
+<!--                    <img src="./img/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">-->
+<!--                    <img src="./img/bg/pen.svg"          style="position: absolute; bottom: -48px; right: -120px;">-->
 
+                    <div class="modal-nav">
+                        <h2 id="contract-heading" class="modal-heading">Research</h2>
 
-                    <div style="display: flex; justify-content: space-between;align-items: center;">
-                        <h1 id="contract-heading"></h1>
+                        <!-- Close button -->
+                        <button class="secondary-btn close-btn" onclick="el('research').classList.add('hide')">
+                            <img src="./img/ico/item-x.svg" alt="">
+                        </button>
                     </div>
 
-                    <p id="contract-description"></p>
+                    <div class="modal-body space-between">
+                        <p id="contract-description"></p>
 
-                    <div class="contract-card-container">
-                        <div id="contract-content" class="card-container-grid"></div>
+                        <div class="contract-card-container">
+                            <div id="contract-content" class="card-container-grid"></div>
 
-                        <div id="contract-controls">
-                            <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
-                            <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
+                            <div id="contract-controls">
+                                <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
+                                <div class="divider"></div>
+                                <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
+                            </div>
                         </div>
                     </div>
 
                 </div>
+
             </div>
 
             <!-- Inspection table -->
@@ -320,7 +331,7 @@
                 <div class="modal-container">
 
                     <div class="modal-nav">
-                        <h1>Buildings</h1>
+                        <h1 class="modal-heading">Buildings</h1>
 
                         <!-- Close button -->
                         <button class="secondary-btn close-btn" onclick="el('builders').classList.add('hide')">
@@ -357,28 +368,18 @@
         </div>
 
     <!-- MAP -->
-        <div id="wrapper">
-            <!--Grid-->
+        <div id="map-scroll-box">
             <div id="map-container">
                 <div id="map">
-<!--                    <div class="bird speed-1" style="position: absolute; left: 600px; top: 80px;"></div>-->
-<!--                    <div class="bird speed-2" style="position: absolute; left: 512px; top: 62px;"></div>-->
-<!--                    <div class="bird speed-2" style="position: absolute; left: 724px; top: 50px;"></div>-->
-
 <!--                    <div id="map-marker"></div>-->
+                    <div id="map-ground-line"></div>
 <!--                    <div class="unit-walk sprite"></div>-->
 <!--                    <div class="unit-walk sprite" style="grid-column-start: 39;"></div>-->
-
 <!--                    <div class="builders-ref sprite-builders" style="grid-column-start: 50;"></div>-->
-
-                    <div id="map-environment">
-                        <div id="map-sky"></div>
-                        <div id="map-ground"></div>
-                        <img id="grid-bg" src="./img/bg/env.svg" style="opacity: 0.0; position: absolute;">
-                    </div>
                 </div>
-
+                <div id="map-environment"></div>
             </div>
+
         </div>
 
     <!-- Notification -->

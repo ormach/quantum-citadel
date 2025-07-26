@@ -79,7 +79,7 @@
 
     //Modals
     function toggleModal(modalId){
-        let modals = document.getElementById('wrapper').querySelectorAll('.modal')
+        let modals = document.getElementById('modal-wrapper').querySelectorAll('.modal')
 
         // modals.forEach(modal => {
         //     if(modal.id !== modalId) modal.classList.toggle('hide')
@@ -271,31 +271,32 @@
             
         }
 
-        //Generate UI
+        //Generate builders modal UI
         generateUI(){
-            let buildingKeys = Object.keys(buildingsRef)
 
-            buildingKeys.forEach(key => {
+            //Create a button for each building in ref object
+            for(let key in buildingsRef){
+                if(buildingsRef[key].hide) continue;
 
-                let buildingType = key
-                let building = buildingsRef[key]
-                // console.log(building)
-
+                //Button HTML
                 let btnContent = `
-                    <h2>${upp(buildingType)}</h2>
-                    <p>${building.cost} coins / ${building.time} min</p>
-                    <div class="building-img-container building" style="width:${building.width}px; height:${building.height}px;">
-                        <img src="./img/structure/id=${buildingType}.png">
+                    <h2>${upp(key)}</h2>
+                    <p>${buildingsRef[key].cost} coins / ${buildingsRef[key].time} min</p>
+                    <div class="building-img-container building" style="width:${buildingsRef[key].width}px; height:${buildingsRef[key].height}px;">
+                        <img src="./img/structure/id=${key}.png">
                     </div>
                 `
 
+                //Create HTML element
                 let buildingBtn = document.createElement('button')
                 buildingBtn.classList = 'btn-structure'
                 buildingBtn.innerHTML = btnContent
-                buildingBtn.setAttribute('onclick', `g.plObj.pay('build', '${buildingType}')`)
+                buildingBtn.setAttribute('onclick', `g.plObj.pay('build', '${key}')`)
 
+                //Append
                 el('structure-container').append(buildingBtn)
-            })
+            }
+
         }
         //Regen html based on game state
         updateUI(){
@@ -310,7 +311,6 @@
             el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
 
             //Research
-            el('contract-heading').innerHTML = `New research`
             el('contract-button-skip').innerHTML = `Skip (${config.researchSkip + coinIco})`
 
             //Allocate cards
@@ -602,23 +602,31 @@
         }
 
         genPage(){
+
             let container = el('market-container')
+
+            //Container HTML
             container.innerHTML = `
                 <button class="page-btn light" onclick="g.market.nextPage()">
                     <img src="../img/ico/id=arrow-r.svg" alt="">
                 </button>
+                
+                <img id="dude" src="./img/relics/pack/dude.png" style="width:198px;"></img>
             `
 
             let initialPack = this.currentPage * this.packsPerPage
             
             for(let i = initialPack; i < this.packsPerPage * (this.currentPage + 1); i++){
                 if(this.packs[i] !== undefined){
+
+                    //Buy button elem
                     let btn
                     let pack = this.packs[i]
 
+                    //Disable button if low lvl
                     if(g.plObj.lvl >= pack.lvlRequirement){
                         btn = `
-                            <button id="market-pack-${pack.packId}" class="light" onclick="g.plObj.pay('pack', '${pack.name}')">
+                            <button id="market-pack-${pack.packId}" class="light button" onclick="g.plObj.pay('pack', '${pack.name}')">
                                 Buy for ${config.cardCost * config.cardsInPack} 
                                 <img src="../img/ico/coin.svg">
                             </button>
@@ -626,15 +634,17 @@
                     }
                     else{
                         btn = `
-                            <button disabled id="market-pack-${pack.packId}" class="light" onclick="g.plObj.pay('pack', '${pack.name}')">
+                            <div id="market-pack-${pack.packId}" class="light button">
                                 Requers LVL ${pack.lvlRequirement}
-                            </button>
+                            </div>
                         `
                     }
 
+                    //Add Pack HTML
                     container.innerHTML += `
                         <div class="market-item">
-                            <img src="./img/research/pack=${pack.name}.png" alt="">
+                            <p>${upp(pack.name)}</p>
+                            <img src="./img/relics/pack/id=relic-pack-1.png" alt="" style="width:114px;">
                             ${btn}
                         </div>
                     `
@@ -802,9 +812,8 @@
 
 
             //Generate "get N cards" contract if not enough cards
-            if(g.cards.length < config.cardsToStartQuest){ 
-                el('contract-heading').classList.add('hide')
-                el('contract-description').innerHTML = `Get ${config.cardsToStartQuest} cards, to unlock research contracts.`
+            if(g.cards.length < config.cardsToStartQuest){
+                el('contract-description').innerHTML = `Get ${config.cardsToStartQuest} relics from Archeologist to unlock research.`
                 el('contract-controls').classList.add('hide')
             }
     
@@ -823,7 +832,6 @@
 
 
                 //Make button visible if reset from get N cards
-                el('contract-heading').classList.remove('hide')
                 el('contract-controls').classList.remove('hide')
             }
         }

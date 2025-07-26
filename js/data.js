@@ -33,6 +33,24 @@ let packsRef = [
 ]
 
 let buildingsRef = {
+    builders: {
+        description: "Allows to build buildings.",
+        modalId: 'builders',
+        durability: 10,
+        cost: 100,
+        time: 60,
+        width: 48,
+        height: 48,
+    },
+    mine: {
+        description: "Provides relics and resources per time interval.",
+        modalId: 'mine',
+        durability: 10,
+        cost: 100,
+        time: 60,
+        width: 72,
+        height: 72,
+    },
     archeologist: {
         description: "Provides relics",
         modalId: 'archeologist',
@@ -43,6 +61,7 @@ let buildingsRef = {
         height: 48,
     },
     house: {
+        hide: true,
         description: "Provides 1 worker in exchange for 1 food per day",
         modalId: undefined,
         durability: 5,
@@ -52,6 +71,7 @@ let buildingsRef = {
         height: 48,
     },
     farm: {
+        hide: true,
         description: "Provides 1 food per day",
         modalId: undefined,
         durability: 5,
@@ -61,6 +81,7 @@ let buildingsRef = {
         height: 24,
     },
     tower: {
+        hide: true,
         description: "Blocks intruders and provides protection for other buildings.",
         modalId: undefined,
         durability: 50,
@@ -70,21 +91,13 @@ let buildingsRef = {
         height: 48,
     },
     storage: {
+        hide: true,
         description: "Stores relics and resources.",
         modalId: undefined,
         durability: 10,
         cost: 100,
         time: 60,
         width: 120,
-        height: 72,
-    },
-    mine: {
-        description: "Provides relics and resources per time interval.",
-        modalId: 'mine',
-        durability: 10,
-        cost: 100,
-        time: 60,
-        width: 72,
         height: 72,
     },
     research: {
@@ -96,16 +109,8 @@ let buildingsRef = {
         width: 120,
         height: 72,
     },
-    builders: {
-        description: "Allows to build buildings.",
-        modalId: 'builders',
-        durability: 10,
-        cost: 100,
-        time: 60,
-        width: 48,
-        height: 48,
-    },
     demolishers: {
+        hide: true,
         description: "Allows to remove buildings.",
         modalId: 'demolishers',
         durability: 10,
@@ -117,16 +122,16 @@ let buildingsRef = {
 }
 
 let prebuiltBuildingsRef = [
-    {
-        type: 'builders',
-        x: 55,
-        y: 6,
-    },
-    {
-        type: 'research',
-        x: 45,
-        y: 5,
-    },
+    // {
+    //     type: 'builders',
+    //     x: 55,
+    //     y: 6,
+    // },
+    // {
+    //     type: 'research',
+    //     x: 45,
+    //     y: 5,
+    // },
 ]
 
 //Stores all types of environment decorations

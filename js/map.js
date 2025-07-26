@@ -5,16 +5,20 @@ class GameMap{
         this.buildMode = false
         this.focusedBuilding = null
 
-        //MAP css grid
+        //MAP css
         this.mapElem = el('map')
         this.cellSize = 24
-        this.gridWidth = 96
-        this.gridHeight = 14
+        this.gridWidth = 80
 
-        //Set map columns and rows based on vars above
+
+        //Set map width
         this.mapElem.setAttribute('style', `
-            grid-template-columns: repeat(${this.gridWidth},  ${this.cellSize}px);
-            grid-template-rows:    repeat(${this.gridHeight}, ${this.cellSize}px);
+            width: ${this.gridWidth * this.cellSize}px;
+        `)
+
+        //Set background layer width based on map width
+        el('map-environment').setAttribute('style', `
+            width: ${this.gridWidth * this.cellSize}px;
         `)
 
         this.scrollToMapCenter()
@@ -43,6 +47,7 @@ class GameMap{
 
     //Utility
     scrollToMapCenter(){
+        let wrapper = el('map-scroll-box')
         wrapper.scrollLeft = (wrapper.scrollWidth - window.innerWidth) / 2
         wrapper.scrollTop = (wrapper.scrollHeight - window.innerHeight) / 2
     }
@@ -263,7 +268,7 @@ function genBuildingHtmlElem(buildingObject, mode){
 
     let building = document.createElement('div')
 
-    building.setAttribute('class', `building`)
+    building.setAttribute('class', `building projection`)
     building.setAttribute('type', buildingObject.buildingType)
     building.setAttribute('id', buildingObject.id)
     building.innerHTML = `<img src="./img/structure/id=${buildingObject.buildingType}.png">`
@@ -273,11 +278,8 @@ function genBuildingHtmlElem(buildingObject, mode){
     //Add coordinates if building was loaded and has xy
     if(mode === 'load'){
         building.setAttribute('style', `
-            grid-column-start: ${buildingObject.x};
-            grid-column-end: ${buildingObject.x};    
-        
-            grid-row-start: ${buildingObject.y};
-            grid-row-end: ${buildingObject.y};
+            left: ${(buildingObject.x - 2) * g.gameMap.cellSize}px;
+            bottom: 50%;    
             
             width:${buildingObject.width}px; 
             height:${buildingObject.height}px;
@@ -290,6 +292,9 @@ function genBuildingHtmlElem(buildingObject, mode){
             building.setAttribute('onclick', `toggleModal('${buildingObject.modal}')`)
             building.classList.add('interactive')
         }
+
+        //Remove projection if you are loading a building
+        building.classList.remove('projection')
     }
 
     //Trigger build mode
@@ -302,6 +307,7 @@ function genBuildingHtmlElem(buildingObject, mode){
 
         //Add click exit event
         g.gameMap.mapElem.addEventListener('click', placeBuilding);
+        // el('body').addEventListener('click', placeBuilding);
     }
 }
 
@@ -314,24 +320,24 @@ function moveBuilding(){
     g.gameMap.focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
     // console.log(focusedBuildingObj)
 
-    if(y > 0 && y < g.gameMap.gridHeight && x > 0 && x < g.gameMap.gridWidth){
-        el(g.gameMap.focusedBuilding).setAttribute('style', `
-            grid-column-start: ${x};
-            grid-column-end: ${x};    
+    //Prevent placing building beyond the map border
+    if(x < 0){x = 0}
+    if(x > g.gameMap.gridWidth){x = g.gameMap.gridWidth}
+
+    //Update CSS
+    el(g.gameMap.focusedBuilding).setAttribute('style', `
+        left: ${(x - 2) * g.gameMap.cellSize}px;
+        bottom: 50%;
         
-            grid-row-start: ${y};
-            grid-row-end: ${y};
-            
-            width:${buildingsRef[el(g.gameMap.focusedBuilding).getAttribute('type')].width}px; 
-            height:${buildingsRef[el(g.gameMap.focusedBuilding).getAttribute('type')].height}px;
-        `)
+        width:${buildingsRef[el(g.gameMap.focusedBuilding).getAttribute('type')].width}px; 
+        height:${buildingsRef[el(g.gameMap.focusedBuilding).getAttribute('type')].height}px;
+    `)
 
-        //Update object coords
-        g.gameMap.focusedBuildingObj.x = x
-        g.gameMap.focusedBuildingObj.y = y
-    }
+    //Update object coords
+    g.gameMap.focusedBuildingObj.x = x
+    g.gameMap.focusedBuildingObj.y = 8
 
-    // console.log(x, y)
+    console.log(x, y)
 }
 
 //Clears event listeners when projection is placed on map
@@ -343,6 +349,7 @@ function placeBuilding(){
     //Clear event listeners for movement and placement
     g.gameMap.mapElem.removeEventListener('mousemove', moveBuilding);
     g.gameMap.mapElem.removeEventListener('click', placeBuilding);
+    // el('body').removeEventListener('click', placeBuilding);
 
     let focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
     // console.log(focusedBuildingObj.x, focusedBuildingObj.y)
@@ -350,6 +357,7 @@ function placeBuilding(){
     //Add on click after placing the building to avoid triggering the modal on placing
     // console.log('focusedBuilding:', g.gameMap.focusedBuildingObj)
     g.gameMap.focusedBuildingHtmlElem.setAttribute('onclick', `toggleModal('${g.gameMap.focusedBuilding.modal}')`)
+    g.gameMap.focusedBuildingHtmlElem.classList.remove('projection')
     if(g.gameMap.focusedBuildingObj.modal) {
         g.gameMap.focusedBuildingHtmlElem.setAttribute('onclick', `toggleModal('${g.gameMap.focusedBuildingObj.modal}')`)
         g.gameMap.focusedBuildingHtmlElem.classList.add('interactive')
