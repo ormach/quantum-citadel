@@ -128,7 +128,7 @@ button.x:hover{
         width: 100vw;
         height: 800px;
 
-        background-image: url(../img/landing/footer-spike.svg);
+        background-image: url(../03-IMG/landing/footer-spike.svg);
         background-repeat: no-repeat;
         background-size: 2762px 800px;
         background-position: center;
@@ -266,7 +266,7 @@ button.x:hover{
     transform: translateX(-50%);
     z-index: -1;
 
-    background-image: url(../img/landing/land.svg);
+    background-image: url(../03-IMG/landing/land.svg);
     background-repeat: no-repeat;
     background-size: 2229px 1447px;
     background-position: center;
@@ -301,7 +301,7 @@ button.x:hover{
         top: 0;
         left: 0; */
     
-        background: url("../img/landing/phyrary-key.jpg");
+        background: url("../03-IMG/landing/phyrary-key.jpg");
         background-repeat: no-repeat;
         background-size: cover;   
         background-position: center; 

@@ -1,110 +1,3 @@
-//Drag and drop 
-//Requires any ID for draggable elem
-    let draggedCard
-    let overlappingCard
-    let targetContainer
-
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
-    //Drag card
-    function drag(ev) {
-        //Record dragged card
-        draggedCard = ev.target //logs picked card
-
-        //Records dragged card (records id)
-        // ev.dataTransfer.setData("text/plain", ev.target.id);
-
-        //Make all cards not interactable?
-    }
-    //Drop card
-    function drop(ev) {
-        ev.preventDefault();
-
-        //Get data from drag() function (transefrs id)
-        // var data = ev.dataTransfer.getData("text/plain");
-
-        //Record target elem
-        //If target elem is card, change target to cards container
-        if(ev.target.classList.contains('card')){
-            overlappingCard = ev.target
-            targetContainer = ev.target.parentNode
-            // ev.target.parentNode.insertBefore(document.getElementById(data), ev.target);
-        }
-        // Duplicates per container in card
-        else if (ev.target.parentNode.parentNode.classList.contains('card')){
-            overlappingCard = ev.target.parentNode.parentNode
-            targetContainer = ev.target.parentNode.parentNode.parentNode
-        }
-        // If elem in card
-        else if (ev.target.parentNode.classList.contains('card')){
-            overlappingCard = ev.target.parentNode
-            targetContainer = ev.target.parentNode.parentNode
-        }
-        else{
-            targetContainer = ev.target
-        }
-        
-        //Add card to container
-        targetContainer.appendChild(draggedCard);
-
-        //Do stuff on card placement
-        //Update card location
-        findByProperty(g.cards, 'cardId', draggedCard.id).location = targetContainer.id
-
-        //Save game on card movement
-        g.saveGame()
-
-        //Calculate reward
-        // console.log(targetContainer);
-        g.calculateReward()
-        
-        // console.log(
-        //     findByProperty(g.cards, 'cardId', draggedCard.id)
-        // );   
-    }
-    
-
-//UI
-    //Manage pages
-    function viewScreen(page){
-      let pages = document.getElementById('wrapper').querySelectorAll('.page')
-
-      pages.forEach(page => {
-          page.classList.add('hide')
-      })
-
-      el(page).classList.remove('hide')
-    }
-
-    //Modals
-    function toggleModal(modalId){
-        let modals = document.getElementById('modal-wrapper').querySelectorAll('.modal')
-
-        // modals.forEach(modal => {
-        //     if(modal.id !== modalId) modal.classList.toggle('hide')
-        // })
-
-        el(modalId).classList.toggle('hide')
-    }
-    //Hide all modals on Esc
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' || event.keyCode === 27) {
-            let modals = document.querySelectorAll('.modal')
-
-            modals.forEach(modal => {
-                modal.classList.add('hide')
-            })
-        }
-    });
-
-
-//Show Nav
-    function toggleNav(){
-        el('nav').classList.toggle('hide')
-    }
-
-
 //GAME & UI
     class Game {
         constructor(){
@@ -271,53 +164,9 @@
             
         }
 
-        //Generate builders modal UI
-        generateUI(){
+        
 
-            //Create a button for each building in ref object
-            for(let key in buildingsRef){
-                if(buildingsRef[key].export !== 'y') continue;
-
-                //Button HTML
-                let btnContent = `
-                    <h2>${upp(key)}</h2>
-                    <p>${buildingsRef[key].cost} coins / ${buildingsRef[key].time} min</p>
-                    <div class="building-img-container building" style="width:${buildingsRef[key].width}px; height:${buildingsRef[key].height}px;">
-                        <img src="./img/structure/id=${key}, variant=1.png">
-                    </div>
-                `
-
-                //Create HTML element
-                let buildingBtn = document.createElement('button')
-                buildingBtn.classList = 'btn-structure'
-                buildingBtn.innerHTML = btnContent
-                buildingBtn.setAttribute('onclick', `g.plObj.pay('build', '${key}')`)
-
-                //Append
-                el('structure-container').append(buildingBtn)
-            }
-
-        }
-        //Regen html based on game state
-        updateUI(){
-            let coinIco = `<img src="../img/ico/coin.svg">`
-
-            //Navigation
-            el('coin-indicator').innerHTML = `${g.plObj.coins}`
-            el('lvl').innerHTML = `LVL: ${g.plObj.lvl}`
-            el('exp').innerHTML = `EXP: ${g.plObj.exp}/${g.plObj.lvlUpExp}`
-
-            //Inspection
-            el('inspectButton').innerHTML = `Inspect a card for ${config.inspectionCost + coinIco}`
-
-            //Research
-            el('contract-button-skip').innerHTML = `Skip (${config.researchSkip + coinIco})`
-
-            //Allocate cards
-            // g.cards.forEach(card => {
-            //     // console.log(cardElem);       
-            // })
-        }
+        
 
         //Creates card elements
         genCard(args){
@@ -432,19 +281,19 @@
             card.setAttribute('ondragstart','drag(event)')
             
             // console.log(this.cardRefObj);          
-            let imgSrc = "./img/relics/id=template.png"
+            let imgSrc = "./03-IMG/relics/id=template.png"
             if(this.cardRefObj.img === "y"){
-                imgSrc = `./img/relics/id=${this.name}.png`
+                imgSrc = `./03-IMG/relics/id=${this.name}.png`
             }
 
             card.innerHTML = `
                     <div class="card-data">
                         <img class="card-icon" draggable="false" src="${imgSrc}"/>
-                        <img class="" draggable="false" src="./img/misc/card-div.svg"/>
+                        <img class="" draggable="false" src="./03-IMG/misc/card-div.svg"/>
                         <p>${upp(this.name)}</p>
                     </div>
             `
-                        // <img class="card-rarity-icon" draggable="false" src="./img/rarity/id=${this.rarity}.png"/>
+                        // <img class="card-rarity-icon" draggable="false" src="./03-IMG/rarity/id=${this.rarity}.png"/>
 
             //On right click event
             card.addEventListener("contextmenu", (event) => {
@@ -503,7 +352,7 @@
         //Modify coin value
         changeCoins(value){
             this.coins += value
-            g.updateUI()
+            updateUI()
         }
 
         //Pay for something
@@ -573,7 +422,7 @@
             }
 
             g.saveGame()
-            g.updateUI()
+            updateUI()
         }
 
         levelUp(){
@@ -592,6 +441,7 @@
         }
     }
 
+
 //MARKET
     class Market {
         constructor(){
@@ -608,10 +458,10 @@
             //Container HTML
             container.innerHTML = `
                 <button class="page-btn light" onclick="g.market.nextPage()">
-                    <img src="../img/ico/id=arrow-r.svg" alt="">
+                    <img src="../03-IMG/ico/id=arrow-r.svg" alt="">
                 </button>
                 
-                <img id="dude" src="./img/relics/pack/dude.png" style="width:198px;"></img>
+                <img id="dude" src="./03-IMG/relics/pack/dude.png" style="width:198px;"></img>
             `
 
             let initialPack = this.currentPage * this.packsPerPage
@@ -628,7 +478,7 @@
                         btn = `
                             <button id="market-pack-${pack.packId}" class="light button" onclick="g.plObj.pay('pack', '${pack.name}')">
                                 Buy for ${config.cardCost * config.cardsInPack} 
-                                <img src="../img/ico/coin.svg">
+                                <img src="../03-IMG/ico/coin.svg">
                             </button>
                         `
                     }
@@ -644,7 +494,7 @@
                     container.innerHTML += `
                         <div class="market-item">
                             <p>${upp(pack.name)}</p>
-                            <img src="./img/relics/pack/id=relic-pack-1.png" alt="" style="width:114px;">
+                            <img src="./03-IMG/relics/pack/id=relic-pack-1.png" alt="" style="width:114px;">
                             ${btn}
                         </div>
                     `
@@ -660,6 +510,7 @@
             this.genPage()
         }
     }
+
 
 //INSPECTION TABLE
     //Takes N minutes to complete
@@ -680,13 +531,14 @@
                         <p id="description">${cardRef.description_1}</p>
                         <div id="year">Year: ${cardRef.year}</div>
                         <div id="tags">Tags: ${cardRef.tags}</div>
-                        <div id="rarity">Rarity: <img src="./img/rarity/${cardRef.rarity}.svg"> ${upp(cardRef.rarity)}</div>
+                        <div id="rarity">Rarity: <img src="./03-IMG/rarity/${cardRef.rarity}.svg"> ${upp(cardRef.rarity)}</div>
                         <div id="source">Source: <a href="${cardRef.source}" target='_blank'>${cardRef.source}</a> </div>
                     `
     
             }    
         }
     }
+
 
 // SELL AREA
     class SellArea {
@@ -713,10 +565,11 @@
             )
 
             g.saveGame()
-            g.updateUI()
+            updateUI()
         }
     }
 }
+
 
 //COLLECTION
     class Collection{
@@ -799,6 +652,7 @@
         //Add option to add new pages
     }
     
+
 //CONTRACT RESEARCH
     //If > 4 cards in album, generate a contract with card description, player has to pick the right card to win.
     class Research{
@@ -1019,111 +873,3 @@
             g.research = new Research()
         }
     }
-
-
-//START GAME
-    let g //global game variable
-    let cardsRef //required due to fetch
-    let buildingsRef
-
-    function startGame(){
-        g = new Game
-
-        //New collection
-        g.collection.genSlots()
-        
-        //Remove draft cards from the pool & add cards to game obj
-        for (let key in cardsRef){
-            if(cardsRef[key].export === "y"){
-                g.cardsRef.push(cardsRef[key])
-            }
-        }
-
-        cardsRef = g.cardsRef
-        
-        g.market = new Market
-        g.market.genPage()
-
-        //Generate UI
-        g.generateUI()
-
-        //Load/generate game
-        g.loadGame()
-        g.updateUI()
-
-        //Generate map decoration elements after g is assigned
-        g.gameMap.setMapDecoration()
-        
-        //Interval sync
-        setInterval(intervalSync, 1000)
-
-        //Save game on start
-        //Save was not set, don't remember why
-        g.saveGame()
-    }
-
-    //INTERVAL SYNC (not used atm)
-    //g per sec
-    function intervalSync(){
-        //Chek for interval coin reward
-        let remainingTime = g.enableRewardButton()
-
-        //Stop timer if reward is available, has to be here due to label update
-        if(!config.runTimer) return
-
-        //Converst seconds to hh:mm:ss format
-        let convertTime = new Date(remainingTime * 1000).toISOString().slice(11,19);
-
-        el('reward-timer').innerHTML = `${g.totalReward}c in ${convertTime}`
-
-        // Saves reward timer and reward button state every sec
-        g.saveGame()
-    }
-
-    function allCards(){
-        g.cardsRef.forEach(card => {
-            g.genCard(
-                {
-                    "number": 1,
-                    "location": "hand",
-                    "name": card.name
-                }
-            )
-        })
-    }
-
-    function toggleMenu(){
-        el('menu').classList.toggle('hide')
-    }
-
-
-//LOAD GAME DATA
-//Fetch csv file, parse to JSON, assing it to reg obj
-
-    // fetch('./library game cards [2024] - Sheet1.csv')
-    //     .then(response => response.text())
-    //     .then(
-    //         csvText  => {
-    //             cardsRef = JSON.parse(csvJSON(csvText))
-    //             return cardsRef
-    //         }
-    //     )
-    //     .then(
-    //         () => startGame()
-    //     )
-    //     .catch(error => console.error('Error:', error))
-
-// LOAD GAME DATA
-// Fetch both CSV files, parse to JSON, then start game
-
-Promise.all([
-    fetch('./library game cards [2024] - Sheet1.csv').then(response => response.text()),
-    fetch('./q-citadel - Buildings.csv').then(response => response.text())
-])
-    .then(([cardsData, secondData]) => {
-        cardsRef = JSON.parse(csvJSON(cardsData));
-        buildingsRef = JSON.parse(csvJSON(secondData)); // Store your second data
-        return { cardsRef, buildingsRef };
-    })
-    .then(() => startGame())
-    .catch(error => console.error('Error:', error));

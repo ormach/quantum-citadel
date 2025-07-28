@@ -1,0 +1,214 @@
+/*DEBUG LAYOUT*/
+/*#map-scroll-box{*/
+/*    box-shadow: inset 0 0 0 2px green;*/
+/*    background-color: rgba(0,255,0,0.05);*/
+/*}*/
+/*#map-container {*/
+/*    box-shadow: inset 0 0 0 4px red;*/
+/*    background-color: rgba(255,0,0,0.05);*/
+/*}*/
+/*#map {*/
+/*    box-shadow: inset 0 0 0 1px rgba(255,255,0,0.5);*/
+/*    background-color: rgba(255,255,0,0.05);*/
+/*}*/
+
+
+    #map-scroll-box{
+
+        width: 100vw;
+        height: 100vh;
+
+        overflow: auto;
+        /*overflowX: hidden;*/
+
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        /*justify-content: center;*/
+
+        background: linear-gradient(to bottom, var(--sky-color) 50%, var(--ground-color) 50%);
+    }
+
+    
+/*Map*/
+    #map-container {
+        /*width: 100%;*/
+        /*width: fit-content;*/
+        width: 2400px;
+
+        /*height: 100%; Removed due to FF bug*/
+        height: fit-content;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+
+
+        position: relative;
+    }
+        #map {
+            /*width: min-content;*/
+            height: calc(100vh - 0px);
+
+            position: relative;
+
+            z-index: 10;
+        }
+        #map-environment {
+            /*height: 100%;*/
+            height: 100vh;
+
+            min-width: 100%;
+            /*flex-grow: 1;*/
+
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    #map-marker{
+        height: 52px;
+        width: 2px;
+        background-color: yellow;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        z-index: 11;
+    }
+    #map-ground-line{
+        height: 2px;
+        width: 100%;
+        background-color: var(--b20);
+
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        z-index: 11;
+    }
+        .building{
+            height: 72px;
+            width: 120px;
+
+            position: absolute;
+
+            /*display: flex;*/
+            /*justify-content: flex-start;*/
+            /*align-items: flex-start;*/
+
+            z-index: 20;
+            /*overflow: hidden;*/
+        }
+        .projection{
+            opacity: 0.3;
+        }
+        .interactive:hover{
+            background: linear-gradient(to bottom, var(--w0), var(--w20));
+            box-shadow: 0 7px 0px white;
+            cursor: pointer;
+        }
+
+
+/*Environment*/
+    .envContainer{
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        z-index: 2;
+    }
+
+    .sun{
+        position: absolute;
+        top: 25%;
+        left: 50%;
+    }
+    .cloud{
+        position: absolute;
+        animation: cloud-shift 3s linear infinite;
+    }
+    @keyframes cloud-shift {
+        0% {
+            transform: translateX(0);
+        }
+        50% {
+            transform: translateX(calc(var(--map-width) * 1.5));
+        }
+        50.001% {
+            transform: translateX(calc(var(--map-width) * -1.5));
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+    #sky-container {
+        width: 100%;
+        height: 50%;
+
+        overflow: auto;
+
+        z-index: 1;
+    }
+    #groundS-container{
+        max-height: 24px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: calc(50% - 23px);
+
+        width: 2000px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        z-index: 3;
+    }
+    #groundM-container{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: calc(50% - 100px);
+
+        width: 2000px;
+        height: 200px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        z-index: 4;
+    }
+    #landscape-container{
+        position: absolute;
+        top: calc(50% - 100px);
+
+        width: 100%;
+        height: 200px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        z-index: 2;
+    }
+    #animals-container{
+        height: 50%;
+        overflow: hidden;
+        /*position: relative;*/
+    }

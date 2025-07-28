@@ -98,6 +98,18 @@ function clearLs(){
 }
 
 
+//CSS in js
+function css(cssText){
+
+    let style = document.createElement('style')
+
+    style.type = 'text/css'
+
+    //Add css to new elem
+    style.appendChild(document.createTextNode(cssText))
+    document.head.appendChild(style)
+}
+
 //Modify html
 function htmlFlipX(elem){
     let styleContent = elem.getAttribute('style')

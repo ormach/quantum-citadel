@@ -77,7 +77,7 @@ class GameMap{
                 if (key === 'sky') {
                     //Add sun
                     let sun = document.createElement('img');
-                    sun.setAttribute('src', './img/bg/sun-1.svg');
+                    sun.setAttribute('src', './03-IMG/bg/sun-1.svg');
                     sun.classList.add('sun')
                     envContainer.append(sun)
                 }
@@ -124,7 +124,7 @@ class GameMap{
                 if (key === 'sky') {
                     //Add sun
                     let sun = document.createElement('img');
-                    sun.setAttribute('src', './img/bg/sun-1.svg');
+                    sun.setAttribute('src', './03-IMG/bg/sun-1.svg');
                     sun.classList.add('sun')
                     envContainer.append(sun)
                 }
@@ -217,7 +217,7 @@ class GameMap{
         else {
             envElemHTML = document.createElement('img');
             //Img source
-            envElemHTML.setAttribute('src', `./img/bg/id=${envElemRef.id}, variant=${envElemRef.spriteType}.svg`);
+            envElemHTML.setAttribute('src', `./03-IMG/bg/id=${envElemRef.id}, variant=${envElemRef.spriteType}.svg`);
         }
 
         //Class
@@ -275,7 +275,7 @@ function genBuildingHtmlElem(buildingObject, mode){
     //Building image
     building.innerHTML = `
         <div class="sprite-container" style="height: ${buildingObject.height +2}px; width:${buildingObject.width +2}px;">
-            <img class="sprite" src="./img/structure/id=${buildingObject.buildingType}, variant=1.png" style="height: ${buildingObject.height +2}px;">
+            <img class="sprite" src="./03-IMG/structure/id=${buildingObject.buildingType}, variant=1.png" style="height: ${buildingObject.height +2}px;">
         </div>
     `
 

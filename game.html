@@ -2,6 +2,7 @@
 <html lang="en">
 
     <head>
+        <!-- Meta -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Quantum Citadel</title>
@@ -10,7 +11,7 @@
         <meta property="og:title" content="Quantum Citadel" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.gatesofmorr.com" />
-        <meta property="og:image:url" content="https://www.gatesofmorr.com/img/share-image.png" />
+        <meta property="og:image:url" content="https://www.gatesofmorr.com/03-IMG/share-image.png" />
         <meta property="og:image:type" content="image/png" >
         <meta property="og:image:width" content="1200" >
         <meta property="og:image:height" content="1200" >
@@ -19,12 +20,18 @@
         <meta property="og:description" content="A free web rougelike with unique dice based combat system, many interesting items and map events." />
         <meta name="description" content="A free web rougelike with unique dice based combat system, many interesting items and map events.">
 
+        <!-- Viewport -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
         <!-- CSS -->
-        <link rel="stylesheet" href="css/reset.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/sprite-anim.css">
+        <link rel="stylesheet" href="02-CSS/reset.css">
+        <link rel="stylesheet" href="02-CSS/01-primitives.css">
+        <link rel="stylesheet" href="02-CSS/02-modals.css">
+        <link rel="stylesheet" href="02-CSS/03-relics.css">
+        <link rel="stylesheet" href="02-CSS/04-environment.css">
+        <link rel="stylesheet" href="02-CSS/05-sprite-anim.css">
+
 
         <!-- Google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,21 +39,17 @@
 
         <!-- Mono -->
          <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
-
         <!-- Grenze -->
         <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-        <!-- "UnifrakturMaguntia" 'UnifrakturCook' -->
-        <!-- <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet"> -->
-
         <!-- Inter -->
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
 
         <!-- Favicon -->
         <link rel="apple-touch-icon"      sizes="180x180"    href="./favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32"      href="./favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16"      href="./favicon/favicon-16x16.png">
-    <!--    <link rel="manifest"                                 href="favicon/manifest.json">-->
+        <!-- <link rel="manifest"                                 href="favicon/manifest.json">-->
         <link rel="mask-icon"                                href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
@@ -58,7 +61,7 @@
         <div id="nav-wrapper">
             <div id="nav">
                 <div class="nav-container">
-                    <img id="logo" src="./img/logo.svg">
+                    <img id="logo" src="./03-IMG/logo.svg">
 
                     <div class="divider"></div>
 
@@ -69,11 +72,11 @@
                     </div>
                     <div class="stat-container" style="margin: 0 24px">
                         <div id="coins" class="stat">
-                            <img src="./img/ico/coin.svg" alt="">
+                            <img src="./03-IMG/ico/coin.svg" alt="">
                             <span id="coin-indicator"></span>
                         </div>
                         <div id="stone" class="stat">
-                            <img src="./img/ico/id=stone, variant=1.svg" alt="">
+                            <img src="./03-IMG/ico/id=stone, variant=1.svg" alt="">
                             <span id="stone-indicator">0</span>
                         </div>
                     </div>
@@ -83,14 +86,14 @@
 
                     <!-- Build btn-->
                     <button class="nav-button" onclick="toggleModal('builders')">
-                        <img src="./img/ico/id=repair, variant=1.svg">
+                        <img src="./03-IMG/ico/id=repair, variant=1.svg">
                     </button>
 
                         <div class="divider"></div>
 
                     <!-- Research btn-->
                     <button class="nav-button" onclick="toggleModal('research')">
-                        <img src="./img/ico/id=book, variant=1.svg">
+                        <img src="./03-IMG/ico/id=book, variant=1.svg">
                     </button>
 
                         <div class="divider"></div>
@@ -98,7 +101,7 @@
                     <!-- Menu -->
                     <div id="menu-container">
                         <button class="nav-button" onclick="toggleMenu()">
-                            <img src="./img/ico/id=context-menu, variant=2.svg">
+                            <img src="./03-IMG/ico/id=context-menu, variant=2.svg">
                         </button>
 
                         <div id="menu" class="hide">
@@ -106,7 +109,7 @@
                             <button class="light" onclick="window.open(`https://discord.gg/AT8KdVbcVT`, `_blank`), toggleMenu()";>Report an issue</button>
                             <button class="light" onclick="clearLs()">Reset the game</button>
                             <!--                            <button class="light" onclick="toggleMenu()">-->
-                            <!--                                <img src="./img/ico/tab-hide.svg">-->
+                            <!--                                <img src="./03-IMG/ico/tab-hide.svg">-->
                             <!--                            </button>-->
                         </div>
                     </div>
@@ -129,7 +132,7 @@
 
                         <!-- Close button -->
                         <button class="secondary-btn" onclick="el('mine').classList.add('hide')">
-                            <img src="./img/ico/item-x.svg" alt="">
+                            <img src="./03-IMG/ico/item-x.svg" alt="">
                         </button>
                     </div>
 
@@ -151,7 +154,7 @@
 
                     <!-- Close button -->
                     <button class="secondary-btn close-btn" onclick="el('archeologist').classList.add('hide')">
-                        <img src="./img/ico/item-x.svg" alt="">
+                        <img src="./03-IMG/ico/item-x.svg" alt="">
                     </button>
                 </div>
 
@@ -165,67 +168,10 @@
                 <div id="collection-page" class=" page">
                     <div class="collection-container">
 
-                        <!--                            <div class="subtab-group">-->
-                        <!--                                &lt;!&ndash; Craft album &ndash;&gt;-->
-                        <!--                                <button  class="tab" onclick="toggleModal('crafting-modal')">-->
-                        <!--                                    <img src="./img/ico/repair.svg" alt="">-->
-                        <!--                                </button>-->
-                        <!--                            </div>-->
-
-                        <!-- Config modal -->
-                        <div id="crafting-modal" class="hide">
-                            <button onclick="toggleModal('crafting-modal')">
-                                <img src="./img/ico/item-x.svg" alt="">
-                            </button>
-
-                            <h1>Crafting</h1>
-                            <p>Modify your album properties</p>
-
-                            <div>
-                                <p>Modify pages</p>
-                                <button onclick="toggleModal('crafting-modal')">
-                                    <img src="./img/ico/add.svg" alt="">
-                                    Add page
-                                </button>
-                            </div>
-
-                            <div>
-                                <p>Add card slots</p>
-                                <button onclick="toggleModal('crafting-modal')">
-                                    <img src="./img/ico/add.svg" alt="">
-                                    Add card slot
-                                </button>
-                            </div>
-
-                            <div>
-                                <p>Modify rows</p>
-                                <button onclick="toggleModal('crafting-modal')">
-                                    <img src="./img/ico/add.svg" alt="">
-                                    Add card row
-                                </button>
-                                <button onclick="toggleModal('crafting-modal')">
-                                    <img src="./img/ico/add.svg" alt="">
-                                    Remove card row
-                                </button>
-                            </div>
-
-                            <div>
-                                <p>Modify columns</p>
-                                <button onclick="toggleModal('crafting-modal')">
-                                    <img src="./img/ico/add.svg" alt="">
-                                    Add card slot
-                                </button>
-                                <button onclick="toggleModal('crafting-modal')">
-                                    <img src="./img/ico/add.svg" alt="">
-                                    Remove card column
-                                </button>
-                            </div>
-                        </div>
-
                         <div class="tab-group">
                             <!-- Prev page btn -->
                             <button class="secondary-btn" onclick="g.collection.loadPage('previous')">
-                                <img src="./img/ico/id=arrow-l.svg" alt="">
+                                <img src="./03-IMG/ico/id=arrow-l.svg" alt="">
                             </button>
 
                             <button id="page-1_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-1')">I</button>
@@ -236,12 +182,12 @@
 
                             <!-- Next page btn -->
                             <button class="secondary-btn" onclick="g.collection.loadPage('next')">
-                                <img src="./img/ico/id=arrow-r.svg" alt="">
+                                <img src="./03-IMG/ico/id=arrow-r.svg" alt="">
                             </button>
 
                             <!-- Close button -->
                             <button class="secondary-btn" onclick="el('research').classList.add('hide')">
-                                <img src="./img/ico/item-x.svg" alt="">
+                                <img src="./03-IMG/ico/item-x.svg" alt="">
                             </button>
                         </div>
 
@@ -253,15 +199,15 @@
 
                 <!-- Contract -->
                 <div id="contract" class="contract-container">
-<!--                    <img src="./img/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">-->
-<!--                    <img src="./img/bg/pen.svg"          style="position: absolute; bottom: -48px; right: -120px;">-->
+<!--                    <img src="./03-IMG/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">-->
+<!--                    <img src="./03-IMG/bg/pen.svg"          style="position: absolute; bottom: -48px; right: -120px;">-->
 
                     <div class="modal-nav">
                         <h2 id="contract-heading" class="modal-heading">Research</h2>
 
                         <!-- Close button -->
                         <button class="secondary-btn close-btn" onclick="el('research').classList.add('hide')">
-                            <img src="./img/ico/item-x.svg" alt="">
+                            <img src="./03-IMG/ico/item-x.svg" alt="">
                         </button>
                     </div>
 
@@ -288,7 +234,7 @@
                 <div class="table-container">
                     <!-- Close button -->
                     <button class="secondary-btn" onclick="el('table-page').classList.add('hide')">
-                        <img src="./img/ico/item-x.svg" alt="">
+                        <img src="./03-IMG/ico/item-x.svg" alt="">
                     </button>
 
                     <h1>Inspection table</h1>
@@ -311,7 +257,7 @@
                 <div class="table-container">
                     <!-- Close button -->
                     <button class="secondary-btn" onclick="el('sell-card').classList.add('hide')">
-                        <img src="./img/ico/item-x.svg" alt="">
+                        <img src="./03-IMG/ico/item-x.svg" alt="">
                     </button>
 
                     <h1>Sell a card</h1>
@@ -335,7 +281,7 @@
 
                         <!-- Close button -->
                         <button class="secondary-btn close-btn" onclick="el('builders').classList.add('hide')">
-                            <img src="./img/ico/item-x.svg" alt="">
+                            <img src="./03-IMG/ico/item-x.svg" alt="">
                         </button>
                     </div>
 
@@ -354,7 +300,7 @@
 
                         <!-- Close button -->
                         <button class="secondary-btn close-btn" onclick="el('demolishers').classList.add('hide')">
-                            <img src="./img/ico/item-x.svg" alt="">
+                            <img src="./03-IMG/ico/item-x.svg" alt="">
                         </button>
                     </div>
 
@@ -386,17 +332,20 @@
     <!-- ALERT -->
         <div id="alert" class="hide" onclick="this.classList.add('hide')">
             <p id="alert-note">Message.</p>
-            <img src="./img/ico/item-x.svg" alt="">
+            <img src="./03-IMG/ico/item-x.svg" alt="">
         </div>
 
     </body>
 
 </html>
 
+
 <!--JS files-->
-<script src="js/utility.js"></script>
-<script src="js/config.js"></script>
-<script src="js/data.js"></script>
-<script src="js/main.js"></script>
-<script src="js/map.js"></script>
-<script src="js/keyboard-shortcuts.js"></script>
+<script src="01-JS/02-utility.js"></script>
+<script src="01-JS/06-ui.js"></script>
+<script src="01-JS/05-config.js"></script>
+<script src="01-JS/04-data.js"></script>
+<script src="01-JS/01-main.js"></script>
+<script src="01-JS/07-start-game.js"></script>
+<script src="01-JS/03-map.js"></script>
+<script src="01-JS/keyboard-shortcuts.js"></script>

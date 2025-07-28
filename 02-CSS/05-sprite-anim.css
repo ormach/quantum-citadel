@@ -11,17 +11,13 @@
     position: relative;
     transform: translateY(-1px) translateX(-1px);
 }
-.sprite{
-
-}
-
 
 /*Human*/
 .unit-walk{
     width: var(--sprite-size);
     height: var(--sprite-size);
 
-    background-image: url(../img/misc/unit-walk-6f.png);
+    background-image: url(../03-IMG/misc/unit-walk-6f.png);
     background-position: 0px;
     background-repeat: no-repeat;
 
@@ -86,7 +82,7 @@
     width: 74px;
     height: 74px;
 
-    background-image: url(../img/structure/id=builders-3f.png);
+    background-image: url(../03-IMG/structure/id=builders-3f.png);
     background-position: 0px;
     background-repeat: no-repeat;
 
@@ -121,7 +117,7 @@
     width: 32px;
     height: 32px;
 
-    background-image: url('../img/bg/id=bird, variant=1.svg');
+    background-image: url('../03-IMG/bg/id=bird, variant=1.svg');
     background-position: 0px;
     background-repeat: no-repeat;
 

@@ -12,3 +12,14 @@ document.addEventListener('keydown', (event) => {
         })
     }
 });
+
+//Hide all modals on Esc
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' || event.keyCode === 27) {
+        let modals = document.querySelectorAll('.modal')
+
+        modals.forEach(modal => {
+            modal.classList.add('hide')
+        })
+    }
+});
