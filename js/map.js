@@ -242,10 +242,12 @@ class Building{
         this.buildingType = type
         this.cost = buildingsRef[type].cost
         this.time = buildingsRef[type].time
-        this.modal = buildingsRef[type].modalId
+        this.event = buildingsRef[type].event
 
         this.width = buildingsRef[type].width
         this.height = buildingsRef[type].height
+
+        this.onclick = genOnClick(buildingsRef[type].event)
 
         if(buildingRefObj){
             this.x = buildingRefObj.x
@@ -264,14 +266,18 @@ class Building{
 //Generate HTML elem for building
 function genBuildingHtmlElem(buildingObject, mode){
 
-    // console.log('Generating building html elem.')
-
     let building = document.createElement('div')
 
     building.setAttribute('class', `building projection`)
     building.setAttribute('type', buildingObject.buildingType)
     building.setAttribute('id', buildingObject.id)
-    building.innerHTML = `<img src="./img/structure/id=${buildingObject.buildingType}.png">`
+
+    //Building image
+    building.innerHTML = `
+        <div class="sprite-container" style="height: ${buildingObject.height +2}px; width:${buildingObject.width +2}px;">
+            <img class="sprite" src="./img/structure/id=${buildingObject.buildingType}, variant=1.png" style="height: ${buildingObject.height +2}px;">
+        </div>
+    `
 
     el('map').appendChild(building)
 
@@ -288,8 +294,8 @@ function genBuildingHtmlElem(buildingObject, mode){
         // console.log('Loading:', buildingObject, buildingObject.x, buildingObject.y)
 
         //Add onclick event if modal is defined
-        if(buildingObject.modal){
-            building.setAttribute('onclick', `toggleModal('${buildingObject.modal}')`)
+        if(buildingObject.onclick != undefined){
+            building.setAttribute('onclick', buildingObject.onclick)
             building.classList.add('interactive')
         }
 
@@ -309,6 +315,21 @@ function genBuildingHtmlElem(buildingObject, mode){
         g.gameMap.mapElem.addEventListener('click', placeBuilding);
         // el('body').addEventListener('click', placeBuilding);
     }
+}
+
+function genOnClick(event){
+    let onclick
+
+    if(event){
+        if(event.includes('modal')){
+           onclick = `toggleModal('${event.split('-')[1]}')`
+        }
+        else if(event.includes('click')){
+            onclick = `clickEvent("${event.split('-')[1]}")`
+        }
+    }
+
+    return onclick
 }
 
 //Handles hover building projection while placing
@@ -337,7 +358,7 @@ function moveBuilding(){
     g.gameMap.focusedBuildingObj.x = x
     g.gameMap.focusedBuildingObj.y = 8
 
-    console.log(x, y)
+    // console.log(x, y)
 }
 
 //Clears event listeners when projection is placed on map
@@ -355,15 +376,14 @@ function placeBuilding(){
     // console.log(focusedBuildingObj.x, focusedBuildingObj.y)
 
     //Add on click after placing the building to avoid triggering the modal on placing
-    // console.log('focusedBuilding:', g.gameMap.focusedBuildingObj)
-    g.gameMap.focusedBuildingHtmlElem.setAttribute('onclick', `toggleModal('${g.gameMap.focusedBuilding.modal}')`)
-    g.gameMap.focusedBuildingHtmlElem.classList.remove('projection')
-    if(g.gameMap.focusedBuildingObj.modal) {
-        g.gameMap.focusedBuildingHtmlElem.setAttribute('onclick', `toggleModal('${g.gameMap.focusedBuildingObj.modal}')`)
+    if(focusedBuildingObj.onclick != undefined){
+        g.gameMap.focusedBuildingHtmlElem.setAttribute('onclick', focusedBuildingObj.onclick)
         g.gameMap.focusedBuildingHtmlElem.classList.add('interactive')
     }
 
-    // console.log(el(g.gameMap.focusedBuilding).getAttribute('style'))
+    g.gameMap.focusedBuildingHtmlElem.classList.remove('projection')
+
+    // console.log(focusedBuildingObj)
     g.saveGame()
 }
 
@@ -377,5 +397,13 @@ function relativeCoords(event , mode) {
         return {x: x, y: y};
     }else{
         return {x: Math.floor(x / g.gameMap.cellSize), y: Math.floor(y / g.gameMap.cellSize)};
+    }
+}
+
+//Get stone
+function clickEvent(mode){
+    if(mode === 'stone'){
+        showAlert('+3 coins')
+        g.plObj.changeCoins(3)
     }
 }

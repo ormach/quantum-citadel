@@ -188,33 +188,35 @@ function genId(prefix){
 //var csv is the CSV file with headers
 function csvJSON(csv){
 
-    var lines=csv.split("\n");
+    let parentObj = {};
+    let lines = csv.split("\n");
 
-    var result = [];
-
-    // console.table(lines);
-    
     // NOTE: If your columns contain commas in their values, you'll need
-    // to deal with those before doing the next step 
+    // to deal with those before doing the next step
     // (you might convert them to &&& or something, then covert them back later)
-    var headers=lines[0].split(",");
+    let headers = lines[0].split(",");
 
-    //i=2 to skip two 1st rows
-    for(var i=2;i<lines.length;i++){
+    //Iterate CSV lines (i=2 to skip two 1st rows)
+    for(let i= 2; i < lines.length; i++){
 
-        var obj = {};
-        var currentline=lines[i].split(",");
+        let obj = {};
+        let currentLineValuesArr = lines[i].split(",");
 
-        for(var j=0;j<headers.length;j++){
-            obj[headers[j]] = currentline[j];
+        //Iterate CSV line column values
+        //Creates key value pairs
+        for(let j= 0; j < headers.length; j++){
+
+            // Initialize this entry in the parent object if it doesn't exist
+            let itemObj = parentObj[currentLineValuesArr[0]] = {};
+            itemObj[headers[j]] = currentLineValuesArr[j]
         }
 
-        result.push(obj);
-    } 
+    }
     
     //Replaces chars because fucking google sheet cant export with custom dilimiter
-    let resultFix = findReplace(result, "|", ",")
-    // console.table(resultFix);
+    let resultFix = findReplace(parentObj, "|", ",")
+
+    console.log(resultFix)
 
     //return result; //JavaScript object
     return JSON.stringify(resultFix); //JSON

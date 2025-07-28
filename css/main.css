@@ -198,11 +198,12 @@ h3{
 
             position: absolute;
 
-            z-index: 20;
+            /*display: flex;*/
+            /*justify-content: flex-start;*/
+            /*align-items: flex-start;*/
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            z-index: 20;
+            /*overflow: hidden;*/
         }
         .projection{
             opacity: 0.3;
@@ -213,7 +214,7 @@ h3{
             cursor: pointer;
         }
         .building img{
-            scale: 0.5;
+
         }
 
 /*Environment*/

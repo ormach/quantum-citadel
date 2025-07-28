@@ -276,14 +276,14 @@
 
             //Create a button for each building in ref object
             for(let key in buildingsRef){
-                if(buildingsRef[key].hide) continue;
+                if(buildingsRef[key].export !== 'y') continue;
 
                 //Button HTML
                 let btnContent = `
                     <h2>${upp(key)}</h2>
                     <p>${buildingsRef[key].cost} coins / ${buildingsRef[key].time} min</p>
                     <div class="building-img-container building" style="width:${buildingsRef[key].width}px; height:${buildingsRef[key].height}px;">
-                        <img src="./img/structure/id=${key}.png">
+                        <img src="./img/structure/id=${key}, variant=1.png">
                     </div>
                 `
 
@@ -1024,6 +1024,7 @@
 //START GAME
     let g //global game variable
     let cardsRef //required due to fetch
+    let buildingsRef
 
     function startGame(){
         g = new Game
@@ -1032,11 +1033,11 @@
         g.collection.genSlots()
         
         //Remove draft cards from the pool & add cards to game obj
-        cardsRef.forEach(card =>{
-            if(card.export === "y"){
-                g.cardsRef.push(card)
+        for (let key in cardsRef){
+            if(cardsRef[key].export === "y"){
+                g.cardsRef.push(cardsRef[key])
             }
-        })
+        }
 
         cardsRef = g.cardsRef
         
@@ -1099,15 +1100,30 @@
 //LOAD GAME DATA
 //Fetch csv file, parse to JSON, assing it to reg obj
 
-    fetch('./library game cards [2024] - Sheet1.csv')
-        .then(response => response.text())
-        .then(
-            csvText  => {
-                cardsRef = JSON.parse(csvJSON(csvText))
-                return cardsRef
-            }
-        )
-        .then(
-            () => startGame()
-        )
-        .catch(error => console.error('Error:', error))
+    // fetch('./library game cards [2024] - Sheet1.csv')
+    //     .then(response => response.text())
+    //     .then(
+    //         csvText  => {
+    //             cardsRef = JSON.parse(csvJSON(csvText))
+    //             return cardsRef
+    //         }
+    //     )
+    //     .then(
+    //         () => startGame()
+    //     )
+    //     .catch(error => console.error('Error:', error))
+
+// LOAD GAME DATA
+// Fetch both CSV files, parse to JSON, then start game
+
+Promise.all([
+    fetch('./library game cards [2024] - Sheet1.csv').then(response => response.text()),
+    fetch('./q-citadel - Buildings.csv').then(response => response.text())
+])
+    .then(([cardsData, secondData]) => {
+        cardsRef = JSON.parse(csvJSON(cardsData));
+        buildingsRef = JSON.parse(csvJSON(secondData)); // Store your second data
+        return { cardsRef, buildingsRef };
+    })
+    .then(() => startGame())
+    .catch(error => console.error('Error:', error));
