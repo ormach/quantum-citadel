@@ -244,8 +244,8 @@ class Building{
         this.time = buildingsRef[type].time
         this.event = buildingsRef[type].event
 
-        this.width = buildingsRef[type].width
-        this.height = buildingsRef[type].height
+        this.width = buildingsRef[type].width * 1
+        this.height = buildingsRef[type].height * 1
 
         this.onclick = genOnClick(buildingsRef[type].event)
 

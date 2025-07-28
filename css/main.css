@@ -966,7 +966,7 @@ h3{
         min-height: 62px;
         
         border-radius: 4px;
-        z-index: 10;
+        z-index: 10000;
 
         background-color: black;
         color: var(--w70);

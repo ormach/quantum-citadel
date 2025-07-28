@@ -128,35 +128,6 @@ function findByProperty(dataArr, propertyName, propertyValue, mode){
     return foundItem
 }
 
-//var csv is the CSV file with headers
-function csvJSON(csv){
-
-    var lines=csv.split("\n");
-  
-    var result = [];
-  
-    // NOTE: If your columns contain commas in their values, you'll need
-    // to deal with those before doing the next step 
-    // (you might convert them to &&& or something, then covert them back later)
-    var headers=lines[0].split(",");
-  
-    for(var i=1;i<lines.length;i++){
-  
-        var obj = {};
-        var currentline=lines[i].split(",");
-  
-        for(var j=0;j<headers.length;j++){
-            obj[headers[j]] = currentline[j];
-        }
-  
-        result.push(obj);
-  
-    }
-  
-    //return result; //JavaScript object
-    return JSON.stringify(result); //JSON
-}
-
 function countDuplicatesInArr(arr, type){
     const counts = {};
 
@@ -195,20 +166,28 @@ function csvJSON(csv){
     // to deal with those before doing the next step
     // (you might convert them to &&& or something, then covert them back later)
     let headers = lines[0].split(",");
+    
 
     //Iterate CSV lines (i=2 to skip two 1st rows)
     for(let i= 2; i < lines.length; i++){
 
-        let obj = {};
-        let currentLineValuesArr = lines[i].split(",");
+        // Get array of values for the current line
+        let currentLineValuesArr = lines[i].split(",")
+        
+        // Initiate parent object
+        let entityObj = parentObj[currentLineValuesArr[0]] = {}; //First column is the key
+
 
         //Iterate CSV line column values
         //Creates key value pairs
         for(let j= 0; j < headers.length; j++){
 
-            // Initialize this entry in the parent object if it doesn't exist
-            let itemObj = parentObj[currentLineValuesArr[0]] = {};
-            itemObj[headers[j]] = currentLineValuesArr[j]
+            // Initiate headers for each value
+            entityObj[headers[j]] = {}; //Create object for each header
+
+            // Add values
+            entityObj[headers[j]] = currentLineValuesArr[j]
+            
         }
 
     }
@@ -216,7 +195,7 @@ function csvJSON(csv){
     //Replaces chars because fucking google sheet cant export with custom dilimiter
     let resultFix = findReplace(parentObj, "|", ",")
 
-    console.log(resultFix)
+    // console.log(resultFix)
 
     //return result; //JavaScript object
     return JSON.stringify(resultFix); //JSON
