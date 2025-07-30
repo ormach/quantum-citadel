@@ -1,7 +1,11 @@
 //START GAME
-let g //global game variable
-let cardsRef //required due to fetch
+let g
+
+//Required here due to fetch
+let cardsRef 
 let buildingsRef
+
+
 
 function startGame(){
     g = new Game
@@ -9,6 +13,7 @@ function startGame(){
     //New collection
     g.collection.genSlots()
     
+
     //Remove draft cards from the pool & add cards to game obj
     for (let key in cardsRef){
         if(cardsRef[key].export === "y"){
@@ -18,51 +23,90 @@ function startGame(){
 
     cardsRef = g.cardsRef
 
+
     //Parse building resources
     convertResources()
     
     g.market = new Market
     g.market.genPage()
 
+
     //Generate UI
     generateUI()
+
 
     //Load/generate game
     g.loadGame()
     updateUI()
 
+
     //Generate map decoration elements after g is assigned
     g.gameMap.setMapDecoration()
     
+
     //Interval sync
-    setInterval(intervalSync, 1000)
+    setInterval(intervalSync, 3000)
+
 
     //Save game on start
     //Save was not set, don't remember why
+    console.log('Saving game on start.');
     g.saveGame()
 }
 
-//INTERVAL SYNC (not used atm)
-//g per sec
+//INTERVAL SYNC: Runs every second.
 let treeCounter = 0
 function intervalSync(){
 
-    // Add tree every N seconds
-    // Add tree also if website is closed using the last recorder time and current time.
-    treeCounter++
+
+    //Get time diff between now and last event or game start
+    let treeTimeDifference = Date.now() - g.treeIntervalStartTime
+
+    //If diff is greater than treeSpawnInterval, and there are less trees than treeCap
     if(
-        treeCounter >= config.treeInterval 
-    &&  Object.keys(g.gameMap.environmentObjects).length < config.treeCap) 
-    {
-        new Tree()
-        treeCounter = 0
+        treeTimeDifference >= config.treeSpawnInterval
+    ){
+
+
+        //Define current number of trees
+        let currentTreeCount = 0
+        if(el('.tree-sprite', 'all') !== null){
+            // console.log('TREE-1: Tree sprites found.')
+            currentTreeCount = el('.tree-sprite', 'all').length
+        }
+
+        if(currentTreeCount >= config.treeCap) {
+            // console.log('TREE-2:Tree cap reached.')
+            return
+        }
+
+
+        //Add tree equal to diff/treeSpawnInterval
+        let treesToAdd = Math.round(treeTimeDifference / config.treeSpawnInterval)
+        // console.log(`TREE-3: Trees to add: ${treesToAdd}, current tree count: ${currentTreeCount}.`)
+
+
+        //If there are more trees than treeCap - current trees, set value to the difference
+        if(treesToAdd + currentTreeCount > config.treeCap){
+            treesToAdd = config.treeCap - currentTreeCount
+        }
+
+        for (let i = 0; i < treesToAdd; i++) {
+            // console.log(`TREE-4: Tree added.`);
+            new Tree()
+        }
+
+        //Set treeIntervalStartTime to now
+        g.treeIntervalStartTime = Date.now()
+
         //Save if tree was added
+        console.log('Saving game on interval sync.');
         g.saveGame()
     }
 
-    //Check for interval coin reward
-    let remainingTime = g.enableRewardButton()
 
+    //Coin reward: Check for interval coin reward
+    let remainingTime = g.enableRewardButton()
 
     //Stop timer if reward is available, has to be here due to label update
     if(!config.runTimer) return
@@ -72,6 +116,7 @@ function intervalSync(){
 
     //Display remaining time in UI
     el('reward-timer').innerHTML = `${g.totalReward}c in ${convertTime}`
+
 
     // Saves reward timer and reward button state every sec
     g.saveGame()

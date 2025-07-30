@@ -43,9 +43,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-
-
+        
         position: relative;
     }
         #map {
@@ -55,6 +53,7 @@
             position: relative;
 
             z-index: 10;
+
         }
     
         #map-environment {

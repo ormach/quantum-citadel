@@ -15,7 +15,7 @@
         }
 
         saveGame(){
-            console.log("Game saved.");
+            console.log("---> GAME SAVED");
             localStorage.setItem('gameData', JSON.stringify(g))
         }
 
@@ -25,7 +25,7 @@
 
             //Load game
             if(typeof data === 'string'){
-                console.log('Game loaded');
+                console.log('<--- GAME LOADED');
     
                 //Store loaded data
                 g.ref = JSON.parse(data)
@@ -60,8 +60,14 @@
                     new Tree(key, g.ref.gameMap.environmentObjects[key])
                 }
                 
-                //Load time from g.ref to g, because we don't add it in constructor
-                this.rewardTime = g.ref.rewardTime
+
+
+                //TIME: Load time, it's not added in constructor
+                this.rewardTime = g.ref.rewardTime //Coins
+                this.treeIntervalStartTime = g.ref.treeIntervalStartTime //Trees
+                // console.log(`Game: Reward time loaded: ${this.treeIntervalStartTime}`);
+
+
 
                 //Check interval reward
                 this.enableRewardButton()
@@ -76,8 +82,13 @@
             else{
                 console.log('Game: No saved game found.');
                 
-                //Save the game initiation time for reward calc
-                this.rewardTime = Date.now()
+
+
+                //TIME: Save the game initiation time for reward calc
+                this.rewardTime = Date.now()       //Coins
+                this.treeIntervalStartTime = Date.now() //Trees
+
+
 
                 //New research
                 g.research = new Research
@@ -91,13 +102,11 @@
                     // genBuildingHtmlElem(newBuildingRef, "load")
                 })
             }
-
-            // this.saveGame()
         }
 
         enableRewardButton(){
-
-            //Previous load date - New load date
+            
+            //Enable reward button: Previous load date - New load date
             if(Date.now() - g.rewardTime > config.rewardInterval){
                 
                 //Enable reward button
@@ -109,7 +118,6 @@
                 //Disable timer
                 config.runTimer = false
 
-                // console.log("Reward button enabled");
             }
 
             //Return time until reward
@@ -123,7 +131,7 @@
             //Display alert
             showAlert(`Daily reward! You get ${this.totalReward} coins.`)
 
-            //Update previous load date
+            //TIME: Update coin timer
             this.rewardTime = Date.now()
 
             //Disable button
@@ -344,7 +352,7 @@
         }
 
         //Pay for something
-        pay(operation, spriteType){
+        pay(operation, type){
             //Pack
             if (operation === 'pack'){
                 let totalCost = config.cardCost * config.cardsInPack
@@ -384,14 +392,14 @@
             //Build
             else if (operation === 'build'){
                 
-                let refObj = buildingsRef[spriteType];
+                let refObj = buildingsRef[type];
 
                 for (let resourceKey in refObj.cost) {
                     if(this.enoughResource(resourceKey, refObj.cost[resourceKey]) !== true) return
                     this.changeResource(resourceKey, -Math.abs(refObj.cost[resourceKey]))
                 }
 
-                g.gameMap.build(spriteType)
+                g.gameMap.build(type)
             }
 
             g.saveGame()

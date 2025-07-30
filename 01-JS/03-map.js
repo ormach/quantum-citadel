@@ -295,9 +295,6 @@ class Tree{
 
         //Gen html
         this.genTreeHtmlElem(this)
-
-        //Save
-        g.saveGame()
     }
 
     genTreeHtmlElem(refObj){

@@ -33,7 +33,7 @@
     --map-width: 2304px;
     --perim-border: inset 0 0 0 2px black;
 }
-
+  
 /*body *{*/
 /*    box-shadow: inset 0 0 0 1px rgba(255,255,0,0.5);*/
 /*}*/
@@ -56,7 +56,7 @@
     box-sizing: border-box;
 }
 body{
-    font-family: sans-serif;
+    font-family: 'Arial', sans-serif;
     line-height: 150%;
     font-size: 16px;
     color: var(--font-color);
@@ -70,26 +70,22 @@ body{
     min-width: min-content;
     /*overflow: hidden;*/
 }
+
+/*Text*/
 h1{
     font-size: 32px;
-    font-weight: 400;
-    font-family: 'Grenze', sans-serif;
 }
 h2{
     font-size: 26px;
-    font-weight: 400;
     letter-spacing: 0.1px;
-    font-family: 'Grenze', sans-serif;
 }
 h3{
     font-size: 18px;
-    font-weight: 400;
     letter-spacing: 0.1px;
-    font-family: 'Grenze', sans-serif;
 }
 
 
-/*UI ELEMENTS */
+/*Common classes */
 .hide {
     display: none !important;
 }
@@ -168,7 +164,14 @@ button.fill-bg:hover{
     gap: 8px;
 
     /* filter: drop-shadow(0px 0px 12px rgba(0,0,0,0.8)); */
-
+    .btn-group{
+        display: flex;
+        gap: 4px;
+    }
+}
+#logo {
+    height: min-content;
+    margin: 0 18px 1px 18px;
 }
 .nav-container{
     display: flex;
@@ -180,6 +183,10 @@ button.fill-bg:hover{
     background-color: rgb(36, 36, 36);
     border: 2px solid black;
     height: calc(var(--card-height) + 8px);
+
+    button:hover{
+        background-color: var(--w10);
+    }
 }
 .divider{
     background-color: black;
@@ -194,18 +201,7 @@ button.fill-bg:hover{
     padding: 0 14px;
     min-width: 0;
 }
-.nav-container button:hover{
-    background-color: var(--w10);
-}
 
-#nav #logo {
-    height: min-content;
-    margin: 0 18px 1px 18px;
-}
-#nav .btn-group{
-    display: flex;
-    gap: 4px;
-}
 .stat {
     height: 16px;
 
@@ -214,10 +210,7 @@ button.fill-bg:hover{
     align-items: center;
     justify-content: flex-start;
 
-    /*font-size: 20px;*/
-    /*font-family: 'Grenze', sans-serif;*/
-
-    font-family: 'JetBrains Mono', sans-serif;
+    font-family: monospace;
     font-size: 14px;
 
     color: var(--font-color-light);
@@ -236,6 +229,7 @@ button.fill-bg:hover{
 #coin-indicator{
     color: #FBC327;
 }
+
 #hand {
     flex-grow: 1;
     flex-shrink: 1;
@@ -262,10 +256,6 @@ button.fill-bg:hover{
 
     /* transition: all 0.4s; */
 }
-/* #hand:hover{
-    transition: all 0.2s;
-    height: calc(var(--card-height) + 8px );;
-} */
 .hand-shrink{
     height: calc(var(--card-height) - 24px) !important;
 }
@@ -288,8 +278,6 @@ button.fill-bg:hover{
     flex-direction: column;
     gap: 4px;
 }
-
-
 
 
 /* Alert notification */

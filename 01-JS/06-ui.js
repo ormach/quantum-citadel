@@ -90,7 +90,6 @@
             //Cost
             let cost = ""
             for (let res in buildingsRef[key].cost){
-                console.log(res);
                 cost += `<p>${res}: ${buildingsRef[key].cost[res]}</p>`
             }
 

@@ -25,24 +25,40 @@
 
 
         <!-- CSS -->
-        <link rel="stylesheet" href="02-CSS/reset.css">
-        <link rel="stylesheet" href="02-CSS/01-primitives.css">
-        <link rel="stylesheet" href="02-CSS/02-modals.css">
-        <link rel="stylesheet" href="02-CSS/03-relics.css">
-        <link rel="stylesheet" href="02-CSS/04-environment.css">
-        <link rel="stylesheet" href="02-CSS/05-sprite-anim.css">
+        <!-- Reset above font -->
+        <link rel="preload"" href="02-CSS/reset.css" as="style" onload="this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="02-CSS/reset.css"></noscript>
+
+        <!-- Preload fonts -->
+        <style>
+            /* Fonts */
+            @font-face {
+                font-family: 'Grenze';
+                src: url('/04-DATA/Grenze-Regular.ttf') format('truetype');
+                font-weight: 400;
+                font-style: normal;
+                font-display: swap;
+            }
+            h1, h2, h3{
+                font-family: 'Grenze', serif;
+            }
+        </style>
 
 
-        <!-- Google fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload"" href="02-CSS/04-environment.css" as="style" onload="this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="02-CSS/04-environment.css"></noscript>
 
-        <!-- Mono -->
-         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
-        <!-- Grenze -->
-        <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@300;400;600;700&display=swap" rel="stylesheet">
-        <!-- Inter -->
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+        <link rel="preload"" href="02-CSS/01-primitives.css" as="style" onload="this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="02-CSS/01-primitives.css"></noscript>
+
+        <link rel="preload"" href="02-CSS/02-modals.css" as="style" onload="this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="02-CSS/02-modals.css"></noscript>
+
+        <link rel="preload"" href="02-CSS/03-relics.css" as="style" onload="this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="02-CSS/03-relics.css"></noscript>
+
+        <link rel="preload"" href="02-CSS/05-sprite-anim.css" as="style" onload="this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="02-CSS/05-sprite-anim.css"></noscript>
 
 
         <!-- Favicon -->
@@ -131,22 +147,22 @@
     <!-- Modal wrapper-->
         <div id="modal-wrapper">
             <!-- MINE -->
-            <div id="mine" class="modal hide">
+            <div id="tavern" class="modal hide">
                 <div class="modal-container">
 
                     <!--Nav-->
                     <div class="modal-nav">
-                        <p>Mine</p>
+                        <h2 class="modal-heading">Tavern</h2>
 
                         <!-- Close button -->
-                        <button class="secondary-btn" onclick="el('mine').classList.add('hide')">
+                        <button class="secondary-btn close-btn" onclick="el('tavern').classList.add('hide')">
                             <img src="./03-IMG/ico/item-x.svg" alt="">
                         </button>
                     </div>
 
                     <!-- Body-->
                     <div class="btn-container">
-                        <p>Get mined coins.<br><br></p>
+                        <p>Get coins.<br><br></p>
 
                         <button id="reward-btn" class="secondary-btn" onclick="g.getReward()">
                             <div id="reward-timer"></div>
@@ -361,7 +377,7 @@
 <script src="01-JS/06-ui.js"></script>
 <script src="01-JS/05-config.js"></script>
 <script src="01-JS/04-data.js"></script>
-<script src="01-JS/01-main.js"></script>
-<script src="01-JS/07-start-game.js"></script>
 <script src="01-JS/03-map.js"></script>
+<script src="01-JS/01-main.js"></script>
+<script src="01-JS/00-start-game.js"></script>
 <script src="01-JS/keyboard-shortcuts.js"></script>

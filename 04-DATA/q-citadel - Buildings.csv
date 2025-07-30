@@ -9,6 +9,7 @@ demolisher,Allows to demolish buildings.,y,60,84,T0,buildings,,modal-demolisher,
 relic storage,Provides stores for relics.,,,,T1,resources,,,stone:1; wood:1;,,,,,,,
 research center,Provides research tasks and tech tree.,y,120,72,T1,relics,,modal-research,stone:1; wood:1;,,60,5,,,,
 library,Provides more information on relics.,y,72,48,T1,relics,,modal-library,stone:1; wood:1;,,,,,,,
+tavern,Generates coins per period of time.,y,48,48,T2,resources,,modal-tavern,stone:1; wood:1;,,,,3,,5000,
 market,Allows to trade resources.,,,,T1,resources,market tech,,stone:1; wood:1;,,,,,,,
 farm,Provides 1 food per day.,,48,24,T1,resources,,,stone:1; wood:1;,1,60,5,1,,,
 house,Provides 1 worker in exchange for 1 food per day.,,24,48,T1,population,,,stone:1; wood:1;,,60,5,1,,,Humans will be used for automation.

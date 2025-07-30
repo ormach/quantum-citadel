@@ -1,9 +1,9 @@
 let config = {
 
     //Resources
-        coins: 5,
-        stone: 5,
-        wood:  5,
+        coins: 500,
+        stone: 500,
+        wood:  500,
 
     //Progression exp lvl
         playerLvl: 12,
@@ -25,12 +25,12 @@ let config = {
     //Coin reward per time
         rewardInterval: 60 * 60, //N x 1min
         runTimer: true,
-        rewardsValue: 85,
+        rewardsValue: 3,
     
         cardsToStartQuest: 4,
     
-    //Tree spawn frequency
-        treeInterval: 3, //N x 1sec
+    //TREES: spawn frequency
+        treeSpawnInterval: 10000, //Interval in ms
         treeCap: 5,
 
     //Collection
