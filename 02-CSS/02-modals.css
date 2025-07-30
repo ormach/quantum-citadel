@@ -85,33 +85,47 @@
         flex-wrap: wrap;
         max-width: 800px;
     }
-        .btn-structure{
-            flex-direction: column;
-            justify-content: flex-start;
-            height: 140px;
-            width: 140px;
+    .btn-structure{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
 
-            padding: 20px 0px;
-            gap: 12px;
+        height: 112px;
+        width: 240px;
 
-            position: relative;
-            background: linear-gradient(to bottom, #50514f, #646562);
+        padding: 16px;
+        gap: 12px;
 
-            border: 2px solid black;
-            color: white;
+        position: relative;
+        background-color: #676866;
+        /* background: linear-gradient(to bottom, #50514f, #646562); */
 
-            overflow: hidden;
-        }
-        .btn-structure:hover{
-            background: linear-gradient(to bottom, #676866, #646562);
-        }
-        .btn-structure .btn-text{
-            font-size: 18px;
-        }
-        .btn-structure .sprite-container{
-            position: absolute;
-            bottom: -5px;
-        }
+        border: 2px solid var(--b20);
+        color: white;
+
+        /* overflow: hidden; */
+    }
+    .btn-structure .data-container{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+    .btn-structure:hover{
+        background: linear-gradient(to bottom, #676866, #646562);
+    }
+    .btn-structure .btn-text{
+        font-size: 18px;
+    }
+    .btn-structure .sprite-container{
+        position: absolute;
+        right: 0px;
+        bottom: -6px;
+    }
+    .building-cost-container{
+        display: flex;
+        flex-direction: column;
+    }
 
 
 /* Collection modal */

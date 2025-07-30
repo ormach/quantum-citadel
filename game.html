@@ -124,6 +124,8 @@
                 <!-- Hand -->
                 <div id="hand" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             </div>
+
+            <button id="exit-demolisher" class="fill-bg hide" onclick="destroyBuilding('exit')">Exit demolisher mode</button>
         </div>
 
     <!-- Modal wrapper-->
@@ -321,7 +323,7 @@
                     <div class="btn-container">
                         <p>Click "Demolish" button below, then <br> click the building you want to remove on the map.<br><br></p>
 
-                        <button onclick="">Demolish</button>
+                        <button onclick="removeBuilding()">Demolish</button>
                     </div>
                 </div>
             </div>

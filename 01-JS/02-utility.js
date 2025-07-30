@@ -53,6 +53,35 @@ function findObj(data, prop, val){ //Don't remember what this did / Data is obj.
     return data.find(x => x[prop] === val) 
 }
 
+//Used to find items by id in array
+function findByProperty(dataArr, propertyName, propertyValue, mode){
+    let foundItem
+
+    //Returns array of items
+    if(mode === 'includes'){
+        foundItem = dataArr.filter(        
+            (item) => item[propertyName].includes(propertyValue)
+        )
+    }
+    //Returns one item
+    else{
+        dataArr.forEach(item => {
+            if(item[propertyName] === propertyValue){
+                // log(item)
+                foundItem = item
+            }
+        })
+    }
+
+    return foundItem
+}  
+
+//Returns true if obj contains a prop
+function objContainsByPropValue(object, property, value){// See if obj contains element with a particular value of a particular property.
+    return Object.values(object).some(obj => obj[property] === value)
+}
+
+
 function removeFromArr(data, elem){ //Removes elem from array
         let index = data.indexOf(elem);
             if (index > -1) { // only splice array when item is found
@@ -84,9 +113,6 @@ function removeDuplicatesArr(arr){
     return [...new Set(arr)];
 }
 
-function objContainsByPropValue(object, propery, value){// See if obj contains element with a particular value of a particular property.
-    return Object.values(object).some(obj => obj[propery] === value)
-}
 
 function upp(string){//Sets 1st letter to uppercase
     return string.charAt(0).toUpperCase() + string.slice(1)
@@ -114,30 +140,6 @@ function css(cssText){
 function htmlFlipX(elem){
     let styleContent = elem.getAttribute('style')
     elem.setAttribute('style', `transform:scaleX(-1); ${styleContent} `)
-}
-
-
-//Used to find items by id in array
-function findByProperty(dataArr, propertyName, propertyValue, mode){
-    let foundItem
-
-    //Returns array of items
-    if(mode === 'includes'){
-        foundItem = dataArr.filter(        
-            (item) => item[propertyName].includes(propertyValue)
-        )
-    }
-    //Returns one item
-    else{
-        dataArr.forEach(item => {
-            if(item[propertyName] === propertyValue){
-                // log(item)
-                foundItem = item
-            }
-        })
-    }
-
-    return foundItem
 }
 
 function countDuplicatesInArr(arr, type){

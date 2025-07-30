@@ -1,8 +1,9 @@
 let config = {
 
     //Resources
-        coins: 200,
-        stone: 51,
+        coins: 5,
+        stone: 5,
+        wood:  5,
 
     //Progression exp lvl
         playerLvl: 12,
@@ -29,7 +30,7 @@ let config = {
         cardsToStartQuest: 4,
     
     //Tree spawn frequency
-        treeInterval: 50, //N x 1sec
+        treeInterval: 3, //N x 1sec
         treeCap: 5,
 
     //Collection
@@ -43,6 +44,6 @@ let config = {
         totalMarketPacks: 5
 }
 
-if(1 === 1){
-        config.coins = 950
+if(1 === 2){
+        config.coins = 500
 }

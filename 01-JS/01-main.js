@@ -39,9 +39,7 @@
                     })
                 })
 
-                //Override values of new objects
-                //g.ref is objet from LS
-                //!!! DON'T do g.plObj = g.ref.plObj it removes methods.
+                //Override values of new objects !!! DON'T do g.plObj = g.ref.plObj it removes methods.
                 g.plObj.resources = g.ref.plObj.resources
                 
                 g.plObj.exp = g.ref.plObj.exp
@@ -53,19 +51,14 @@
                 g.gameMap.envDecorations = g.ref.gameMap.envDecorations
 
                 //Load buildings
-                g.ref.gameMap.buildings.forEach(building => {
-                    g.gameMap.build(building.buildingType, building)
-                })
+                for(let building in g.ref.gameMap.buildings){
+                    g.gameMap.build(g.ref.gameMap.buildings[building].buildingType, g.ref.gameMap.buildings[building])
+                }
 
                 //Load trees
                 for (let key in g.ref.gameMap.environmentObjects){
                     new Tree(key, g.ref.gameMap.environmentObjects[key])
                 }
-
-                //Add building html element to map
-                g.gameMap.buildings.forEach(building => {
-                    genBuildingHtmlElem(building, 'load')
-                })
                 
                 //Load time from g.ref to g, because we don't add it in constructor
                 this.rewardTime = g.ref.rewardTime
@@ -75,7 +68,8 @@
 
                 //Load previous research 
                 g.research = new Research(g.ref.research.contractCard)
-                g.research.researchCardPool = g.ref.research.researchCardPool //load card pool for card frequency roll calculation
+                //Load card pool for card frequency roll calculation
+                g.research.researchCardPool = g.ref.research.researchCardPool 
             }
 
             //New game
@@ -350,7 +344,7 @@
         }
 
         //Pay for something
-        pay(operation, type){
+        pay(operation, spriteType){
             //Pack
             if (operation === 'pack'){
                 let totalCost = config.cardCost * config.cardsInPack
@@ -389,13 +383,15 @@
             }
             //Build
             else if (operation === 'build'){
-                let totalCost = buildingsRef[type].cost
-                let resource = 'stone'
+                
+                let refObj = buildingsRef[spriteType];
 
-                if(this.enoughResource(resource, totalCost)){
-                    this.changeResource(resource, -Math.abs(totalCost))
-                    g.gameMap.build(type)
+                for (let resourceKey in refObj.cost) {
+                    if(this.enoughResource(resourceKey, refObj.cost[resourceKey]) !== true) return
+                    this.changeResource(resourceKey, -Math.abs(refObj.cost[resourceKey]))
                 }
+
+                g.gameMap.build(spriteType)
             }
 
             g.saveGame()

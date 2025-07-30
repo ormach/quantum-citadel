@@ -1,4 +1,5 @@
 let cardRarityRef = ['common', 'rare', 'epic', 'legendary', 'set']
+
 let packsRef = [
     {
         name:"objects",
@@ -90,6 +91,32 @@ let envDecorationsRef = {
         },
         elementQuantity: [20,10]
     },
+    groundM:{
+        sprites: {
+            tree: {
+                id: 'tree',
+                quantity: 2,
+                spacing:[20,0],
+                flipXPercentChance: 50,
+                permanent: true,
+            },
+            treeWinter: {
+                id: 'tree-winter',
+                quantity: 2,
+                spacing:[20,0],
+                flipXPercentChance: 50,
+                permanent: true,
+            },
+            bush: {
+                id: 'bush',
+                quantity: 2,
+                spacing:[20,0],
+                flipXPercentChance: 50,
+                permanent: true,
+            },
+        },
+        elementQuantity: [20,10]
+    },
     landscape: {
         sprites: {
             valley: {
@@ -136,11 +163,33 @@ let treesRef = {
     },
 }
 
-
 let modalsRef = {
     archeologist:{id: 'archeologist'},
     mine:{id: 'mine'},
     research:{id: 'research'},
     builders:{id: 'builders'},
     demolisher:{id: 'demolisher'},
+}
+
+
+//Convert resource string "wood: 1; coins: 2;" to object
+function convertResources(){
+
+    for(let building in buildingsRef){
+        let costObj = {}
+
+        let costArr = buildingsRef[building].cost.slice(0, -1).split('; ')
+        costArr.forEach(object => {
+            costObj[object.split(':')[0]] = parseInt(object.split(':')[1])
+        })
+
+        buildingsRef[building].cost = costObj
+
+    }
+
+    //Remove last character and split by resource type
+    // buildingsRef.forEach()
+    // let costRef = buildingsRef[type].cost.slice(0, -1).split('; ')
+                
+    // console.log(buildingsRef);
 }

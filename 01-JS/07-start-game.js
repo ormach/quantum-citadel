@@ -17,6 +17,9 @@ function startGame(){
     }
 
     cardsRef = g.cardsRef
+
+    //Parse building resources
+    convertResources()
     
     g.market = new Market
     g.market.genPage()
@@ -53,6 +56,8 @@ function intervalSync(){
     {
         new Tree()
         treeCounter = 0
+        //Save if tree was added
+        g.saveGame()
     }
 
     //Check for interval coin reward
@@ -74,14 +79,13 @@ function intervalSync(){
 
 
 // LOAD GAME DATA
-
 Promise.all([
     fetch('./04-DATA/q-citadel - Relics.csv').then(response => response.text()),
     fetch('./04-DATA/q-citadel - Buildings.csv').then(response => response.text())
 ])
     .then(([cardsData, secondData]) => {
         cardsRef = JSON.parse(csvJSON(cardsData));
-        buildingsRef = JSON.parse(csvJSON(secondData)); // Store your second data
+        buildingsRef = JSON.parse(csvJSON(secondData));
         return { cardsRef, buildingsRef };
     })
     .then(() => startGame())

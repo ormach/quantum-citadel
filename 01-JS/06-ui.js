@@ -80,17 +80,27 @@
 //Generate builders modal UI
     function generateUI(){
 
-        //Create a button for each building in ref object
+        //Button for building
         for(let key in buildingsRef){
             if(buildingsRef[key].export !== 'y') continue;
 
             //Gen building sprite
-            let img = genBuildingSprite(buildingsRef[key])            
+            let img = genBuildingSprite(buildingsRef[key])     
+            
+            //Cost
+            let cost = ""
+            for (let res in buildingsRef[key].cost){
+                console.log(res);
+                cost += `<p>${res}: ${buildingsRef[key].cost[res]}</p>`
+            }
 
             //Button HTML
             let btnContent = `
-                <h2>${upp(key)}</h2>
-                <p>${buildingsRef[key].cost} coins / ${buildingsRef[key].time} min</p>
+                <div class="data-container">
+                    <h2>${upp(key)}</h2>
+                    <div class="building-cost-container">${cost}</div>
+                </div>
+
                 ${img}
             `
 

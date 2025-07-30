@@ -115,6 +115,10 @@
         .projection{
             opacity: 0.3;
         }
+        .projection:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
         .interactive{
             z-index: 1000;
         }
@@ -197,6 +201,8 @@
         justify-content: center;
 
         z-index: 4;
+
+        opacity: 0.8;
     }
     #landscape-container{
         position: absolute;
@@ -215,4 +221,12 @@
         height: 50%;
         overflow: hidden;
         /*position: relative;*/
+    }
+
+
+/* Tree */
+
+    .tree-container {
+        position: absolute;
+        bottom: calc(50% - 48px);
     }

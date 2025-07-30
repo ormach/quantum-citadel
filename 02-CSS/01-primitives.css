@@ -115,11 +115,18 @@ h3{
     text-align: center;
     z-index: 2;
 }
+.fill-bg{
+    background-color: white;
+}
 button img {
     padding-bottom: 3px;
 }
 button:hover{
     background-color: var(--b10) !important;
+    cursor: pointer;
+}
+button.fill-bg:hover{
+    background-color: rgb(240,240,240) !important;
     cursor: pointer;
 }
 #nav button:hover{

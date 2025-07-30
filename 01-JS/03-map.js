@@ -1,7 +1,7 @@
 //MAP
 class GameMap{
     constructor(){
-        this.buildings = []
+        this.buildings = {}
         this.buildMode = false
         this.focusedBuilding = null
 
@@ -43,7 +43,9 @@ class GameMap{
             genBuildingHtmlElem(newBuildingObj)
         }
 
-        this.buildings.push(newBuildingObj)
+
+        //Add building to map obj
+        this.buildings[newBuildingObj.id] = newBuildingObj
 
         // console.log('Building added:', newBuildingObj);
         
@@ -302,14 +304,13 @@ class Tree{
         let tree = document.createElement('div')
 
         tree.setAttribute('id', refObj.id)
-        tree.classList.add('interactive')
-        tree.setAttribute('style', `
-                position: absolute;
-                bottom: ${50}%;
-                left: ${refObj.leftPosition}px;
+        tree.classList.add('interactive', 'tree-container')
 
+        tree.setAttribute('style', `
+                left: ${refObj.leftPosition}px;
                 height: ${refObj.height/2}px;
             `)
+            
         tree.setAttribute('onclick', genOnClick(refObj.event))
 
         //Tree image
@@ -341,7 +342,10 @@ class Building{
     constructor(type, buildingRefObj){
         this.id = genId('building-')
         this.buildingType = type
-        this.cost = buildingsRef[type].cost
+        this.cost = {
+            stone: buildingsRef[type].costStone, 
+            wood: buildingsRef[type].costWood
+        }
         this.time = buildingsRef[type].time
         this.event = buildingsRef[type].event
 
@@ -381,6 +385,20 @@ class Building{
     checkResources(){
         console.log(this.resources)
     }
+
+    destroy() {
+
+        // Remove HTML element
+        console.log('Building removed:', el(this.id));
+        el(this.id).remove()
+        
+        // Remove self from parent object
+        // delete findObj(g.gameMap.buildings, 'id', this.id)
+        delete g.gameMap.buildings[this.id]
+        
+        g.saveGame()
+
+    }
 }
 
 //Not methods because on load building class is not initiated
@@ -389,9 +407,9 @@ function genBuildingHtmlElem(buildingObject, mode){
 
     let building = document.createElement('div')
 
+    building.setAttribute('id', buildingObject.id)
     building.setAttribute('class', `building projection`)
     building.setAttribute('type', buildingObject.buildingType)
-    building.setAttribute('id', buildingObject.id)
 
     //Building image
     building.innerHTML = genBuildingSprite(buildingObject)    
@@ -400,6 +418,8 @@ function genBuildingHtmlElem(buildingObject, mode){
 
     //Add coordinates if building was loaded and has xy
     if(mode === 'load'){
+        // console.log("LOAD-OBJ:", buildingObject)
+
         building.setAttribute('style', `
             left: ${(buildingObject.x - 2) * g.gameMap.cellSize}px;
             bottom: 50%;    
@@ -449,8 +469,10 @@ function moveBuilding(){
     let x = relativeCoords(event).x + 1
     let y = relativeCoords(event).y + 1
 
-    g.gameMap.focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
-    // console.log(focusedBuildingObj)
+    //UNDEFINED
+    g.gameMap.focusedBuildingObj = g.gameMap.buildings[g.gameMap.focusedBuilding]
+    // console.log('FOCUS:', g.gameMap.focusedBuildingObj)
+    // g.gameMap.focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
 
     //Prevent placing building beyond the map border
     if(x < 0){x = 0}
@@ -483,7 +505,8 @@ function placeBuilding(){
     g.gameMap.mapElem.removeEventListener('click', placeBuilding);
     // el('body').removeEventListener('click', placeBuilding);
 
-    let focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
+    let focusedBuildingObj = g.gameMap.buildings[g.gameMap.focusedBuilding]
+    // let focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
     // console.log(focusedBuildingObj.x, focusedBuildingObj.y)
 
     //Add on click after placing the building to avoid triggering the modal on placing
@@ -520,7 +543,7 @@ function genOnClick(event){
 
     if(event){
         if(event.includes('modal')){
-           onclick = `toggleModal('${event.split('-')[1]}')`
+            onclick = `toggleModal('${event.split('-')[1]}')`
         }
         else if(event.includes('click')){
             onclick = `clickEvent("${event.split('-')[1]}", this)`
@@ -551,5 +574,47 @@ function clickEvent(mode, htmlElem){
         g.gameMap.environmentObjects[htmlElem.id].destroy()
     }
 
+    g.saveGame()
+}
+
+
+//Demolisher
+function removeBuilding(){
+
+    //Update all building sprites
+    el('.building', 'all').forEach(building => {
+        building.classList.add('projection')
+        building.setAttribute('onclick', 'destroyBuilding(this.id)')
+    })
+
+    //Hide demo modal when you enter the mode
+    el('demolisher').classList.add('hide')
+
+    console.log('Before:', g.gameMap.buildings);
+
+    //Show exit button
+    el('exit-demolisher').classList.remove('hide')
+    el('nav').classList.add('hide')
+}
+
+function destroyBuilding(buildingId){
+
+    //Clear building states
+    el('.building', 'all').forEach(building => {
+        building.classList.remove('projection')
+        building.setAttribute('onclick', genOnClick(g.gameMap.buildings[building.id].event))
+    })
+
+      //Hide exit button
+      el('exit-demolisher').classList.add('hide')
+      el('nav').classList.remove('hide')
+
+    //Exit mode
+    if(buildingId === 'exit') return
+
+    //Trigger destroy method, clears html and obj
+    g.gameMap.buildings[buildingId].destroy()
+    
+    //Save game
     g.saveGame()
 }
