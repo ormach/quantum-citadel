@@ -1,10 +1,11 @@
 let config = {
 
-    //Starting coins
+    //Resources
         coins: 200,
+        stone: 51,
 
     //Progression exp lvl
-        playerLvl: 1,
+        playerLvl: 12,
         expPerResearch: 1,
         expBase: 4,
         expMult: 1,
@@ -26,6 +27,10 @@ let config = {
         rewardsValue: 85,
     
         cardsToStartQuest: 4,
+    
+    //Tree spawn frequency
+        treeInterval: 50, //N x 1sec
+        treeCap: 5,
 
     //Collection
         albumRows: 3,

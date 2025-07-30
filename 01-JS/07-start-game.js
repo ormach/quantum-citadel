@@ -41,16 +41,31 @@ function startGame(){
 
 //INTERVAL SYNC (not used atm)
 //g per sec
+let treeCounter = 0
 function intervalSync(){
-    //Chek for interval coin reward
+
+    // Add tree every N seconds
+    // Add tree also if website is closed using the last recorder time and current time.
+    treeCounter++
+    if(
+        treeCounter >= config.treeInterval 
+    &&  Object.keys(g.gameMap.environmentObjects).length < config.treeCap) 
+    {
+        new Tree()
+        treeCounter = 0
+    }
+
+    //Check for interval coin reward
     let remainingTime = g.enableRewardButton()
+
 
     //Stop timer if reward is available, has to be here due to label update
     if(!config.runTimer) return
 
-    //Converst seconds to hh:mm:ss format
+    //Convert seconds to hh:mm:ss format for UI indicator
     let convertTime = new Date(remainingTime * 1000).toISOString().slice(11,19);
 
+    //Display remaining time in UI
     el('reward-timer').innerHTML = `${g.totalReward}c in ${convertTime}`
 
     // Saves reward timer and reward button state every sec
@@ -61,7 +76,7 @@ function intervalSync(){
 // LOAD GAME DATA
 
 Promise.all([
-    fetch('./04-DATA/library game cards [2024] - Sheet1.csv').then(response => response.text()),
+    fetch('./04-DATA/q-citadel - Relics.csv').then(response => response.text()),
     fetch('./04-DATA/q-citadel - Buildings.csv').then(response => response.text())
 ])
     .then(([cardsData, secondData]) => {

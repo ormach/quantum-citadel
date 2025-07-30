@@ -53,12 +53,11 @@
     padding: 4px 4px 4px 4px;
     color: rgb(0, 0, 0);
     width: 100%;
-
-    /* outline: 2px solid black; */
 }
 .card-data p{
     padding: 2px 0 0 6px;
     line-height: 20px;
+    flex-shrink: 1; /* Allow text to shrink */
 }
 
 /* .card-frame{

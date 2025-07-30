@@ -1,10 +1,13 @@
-//MAP CLASS
+//MAP
 class GameMap{
     constructor(){
         this.buildings = []
         this.buildMode = false
         this.focusedBuilding = null
 
+        //Stores trees
+        this.environmentObjects = {}
+        
         //MAP css
         this.mapElem = el('map')
         this.cellSize = 24
@@ -32,7 +35,6 @@ class GameMap{
         //Prebuild
         if(buildingRefObj){
             newBuildingObj = new Building(buildingType, buildingRefObj)
-            genBuildingHtmlElem(newBuildingObj, 'load')
         }
 
         //New building
@@ -42,6 +44,9 @@ class GameMap{
         }
 
         this.buildings.push(newBuildingObj)
+
+        // console.log('Building added:', newBuildingObj);
+        
     }
 
 
@@ -61,9 +66,12 @@ class GameMap{
 
         //LOAD decorations
         if(g.gameMap.envDecorations != undefined &&  Object.keys(g.gameMap.envDecorations).length !== 0) {
+            
+            //Set reference object
             rootRefObj = g.gameMap.envDecorations
-            console.log('Saved env ref:', rootRefObj)
+            // console.log('Saved env ref:', rootRefObj)
 
+            //Per sprite group
             for(let key in rootRefObj) {
 
                 //Create containers.
@@ -220,6 +228,9 @@ class GameMap{
             envElemHTML.setAttribute('src', `./03-IMG/bg/id=${envElemRef.id}, variant=${envElemRef.spriteType}.svg`);
         }
 
+        //Id
+        envElemHTML.setAttribute('id', envElemRef.elemId)
+
         //Class
         envElemHTML.classList.add(envElemRef.id)
         //Animation
@@ -230,28 +241,134 @@ class GameMap{
         //Style
         envElemHTML.setAttribute('style', envElemRef.style)
 
+        //Onclick event
+        if( envElemRef.event != undefined){
+            envElemHTML.setAttribute('onclick', genOnClick(envElemRef.event))
+            envElemHTML.classList.add('interactive')
+        }
+
         return envElemHTML
     }
 }
 
 
-//BUILDINGS CLASS
+//TREES
+class Tree{
+    constructor(treeId, treeRefObj){
+        //Pick random tree
+        let type = rArr(Object.keys(treesRef))
+
+        if(treeId !== undefined){
+            this.id = treeId
+        }else{
+            this.id = genId('tree-')
+        }
+
+        this.spriteType = treesRef[type].spriteType
+        this.cost  = treesRef[type].cost
+        this.time  = treesRef[type].time
+        this.event = treesRef[type].event
+
+        //Manage sprite size
+        this.width  = treesRef[type].width * 1
+        this.height = treesRef[type].height * 1
+
+        //Position
+        this.leftPosition = rng(1800,40)
+
+        //If ref exists => load from reference object
+        if(treeRefObj){
+            
+            //Copy id
+            this.id = treeRefObj.id 
+            this.spriteType = treeRefObj.spriteType
+            this.height = treeRefObj.height * 1
+
+            //Copy position
+            this.leftPosition = treeRefObj.leftPosition
+        }
+
+        //Add object to map
+        g.gameMap.environmentObjects[this.id] = this
+
+        //Gen html
+        this.genTreeHtmlElem(this)
+
+        //Save
+        g.saveGame()
+    }
+
+    genTreeHtmlElem(refObj){
+        let tree = document.createElement('div')
+
+        tree.setAttribute('id', refObj.id)
+        tree.classList.add('interactive')
+        tree.setAttribute('style', `
+                position: absolute;
+                bottom: ${50}%;
+                left: ${refObj.leftPosition}px;
+
+                height: ${refObj.height/2}px;
+            `)
+        tree.setAttribute('onclick', genOnClick(refObj.event))
+
+        //Tree image
+        tree.innerHTML = `<img 
+                class="tree-sprite" 
+                src="./03-IMG/bg/id=${refObj.spriteType}, variant=1.png" 
+                style="
+                    height: ${refObj.height}px; 
+                "
+            >`
+
+        el('map').appendChild(tree)
+    }
+
+    destroy() {
+        // Remove HTML element
+        el(this.id).remove()
+        
+        // Remove self from parent object
+        delete g.gameMap.environmentObjects[this.id]
+        
+        g.saveGame()
+    }
+}
+
+
+//BUILDINGS
 class Building{
     constructor(type, buildingRefObj){
-        this.id = genId('building')
+        this.id = genId('building-')
         this.buildingType = type
         this.cost = buildingsRef[type].cost
         this.time = buildingsRef[type].time
         this.event = buildingsRef[type].event
 
+        //Manage capacity and production
+        this.resources = 0                                       //Amount of resources produced
+        this.capacity = buildingsRef[type].capacity         || 0 //Max amount of resources produced
+        this.production = buildingsRef[type].productionTime || 0 //Amount of resources produced per time interval
+
+        //Manage sprite size
         this.width = buildingsRef[type].width * 1
         this.height = buildingsRef[type].height * 1
 
         this.onclick = genOnClick(buildingsRef[type].event)
 
+        //If ref exists => load from reference object
         if(buildingRefObj){
+            if(buildingRefObj.id !== undefined){
+                this.id = buildingRefObj.id 
+            }
+            this.resources = buildingRefObj.resources || 0
+
+            //Placement on the map for predefined buildings
             this.x = buildingRefObj.x
             this.y = buildingRefObj.y
+
+            //If loaded, place html
+            genBuildingHtmlElem(this, "load")
         }
 
         //Store id for allocation
@@ -259,6 +376,10 @@ class Building{
 
         //Hide builder modal
         el('builders').classList.add('hide')
+    }
+
+    checkResources(){
+        console.log(this.resources)
     }
 }
 
@@ -273,11 +394,7 @@ function genBuildingHtmlElem(buildingObject, mode){
     building.setAttribute('id', buildingObject.id)
 
     //Building image
-    building.innerHTML = `
-        <div class="sprite-container" style="height: ${buildingObject.height +2}px; width:${buildingObject.width +2}px;">
-            <img class="sprite" src="./03-IMG/structure/id=${buildingObject.buildingType}, variant=1.png" style="height: ${buildingObject.height +2}px;">
-        </div>
-    `
+    building.innerHTML = genBuildingSprite(buildingObject)    
 
     el('map').appendChild(building)
 
@@ -290,8 +407,6 @@ function genBuildingHtmlElem(buildingObject, mode){
             width:${buildingObject.width}px; 
             height:${buildingObject.height}px;
         `)
-
-        // console.log('Loading:', buildingObject, buildingObject.x, buildingObject.y)
 
         //Add onclick event if modal is defined
         if(buildingObject.onclick != undefined){
@@ -317,20 +432,16 @@ function genBuildingHtmlElem(buildingObject, mode){
     }
 }
 
-function genOnClick(event){
-    let onclick
+function genBuildingSprite (buildingRefObj){
+    let innerHTML = `
+        <div class="sprite-container" style="height: ${parseInt(buildingRefObj.height) +2}px; width:${parseInt(buildingRefObj.width) +2}px;">
+            <img class="sprite" src="./03-IMG/structure/id=${buildingRefObj.buildingType}, variant=1.png" style="height: ${parseInt(buildingRefObj.height) +2}px;">
+        </div>
+    `
 
-    if(event){
-        if(event.includes('modal')){
-           onclick = `toggleModal('${event.split('-')[1]}')`
-        }
-        else if(event.includes('click')){
-            onclick = `clickEvent("${event.split('-')[1]}")`
-        }
-    }
-
-    return onclick
+    return innerHTML
 }
+
 
 //Handles hover building projection while placing
 function moveBuilding(){
@@ -400,10 +511,45 @@ function relativeCoords(event , mode) {
     }
 }
 
-//Get stone
-function clickEvent(mode){
-    if(mode === 'stone'){
-        showAlert('+3 coins')
-        g.plObj.changeCoins(3)
+
+
+
+//Creates building onclick event
+function genOnClick(event){
+    let onclick
+
+    if(event){
+        if(event.includes('modal')){
+           onclick = `toggleModal('${event.split('-')[1]}')`
+        }
+        else if(event.includes('click')){
+            onclick = `clickEvent("${event.split('-')[1]}", this)`
+        }
     }
+
+    return onclick
+}
+//Get stone
+function clickEvent(mode, htmlElem){
+    if(mode === 'stone'){
+        //Check if mined blocks > 0
+            //Generate one block per time interval (similar to gold)
+
+        //Reduce stone blocks
+
+        //Update sprite
+
+        showAlert('+3 stone')
+        g.plObj.changeResource('stone', 3)
+    }
+
+    if(mode === 'wood'){
+        showAlert('+3 wood')
+        g.plObj.changeResource('wood', 3)
+
+        //Remove tree after clicking        
+        g.gameMap.environmentObjects[htmlElem.id].destroy()
+    }
+
+    g.saveGame()
 }

@@ -33,15 +33,13 @@ let packsRef = [
 ]
 
 let prebuiltBuildingsRef = [
+    {
+        type: 'mine',
+        x: 55,
+    },
     // {
-    //     type: 'builders',
-    //     x: 55,
-    //     y: 6,
-    // },
-    // {
-    //     type: 'research',
+    //     type: 'research center',
     //     x: 45,
-    //     y: 5,
     // },
 ]
 
@@ -92,32 +90,6 @@ let envDecorationsRef = {
         },
         elementQuantity: [20,10]
     },
-    groundM: {
-        sprites: {
-            tree: {
-                id: 'tree',
-                quantity: 2,
-                flipXPercentChance: 50,
-                spacing:[20,0],
-                permanent: true,
-            },
-            treeWinter: {
-                id: 'treeWinter',
-                quantity: 3,
-                flipXPercentChance: 50,
-                spacing:[20,0],
-                permanent: true,
-            },
-            bush: {
-                id: 'bush',
-                quantity: 2,
-                flipXPercentChance: 50,
-                spacing:[20,0],
-                permanent: true,
-            },
-        },
-        elementQuantity: [10,10]
-    },
     landscape: {
         sprites: {
             valley: {
@@ -137,10 +109,38 @@ let envDecorationsRef = {
     },
 }
 
+let treesRef = {
+    tree: {
+        spriteType: 'tree',
+        spriteVariants: 2,
+        width: 48,
+        height: 144,
+        flipXPercentChance: 50,
+        event: "click-wood"
+    },
+    treeWinter: {
+        spriteType: 'tree-winter',
+        spriteVariants: 2,
+        width: 24,
+        height: 96,
+        flipXPercentChance: 50,
+        event: "click-wood"
+    },
+    bush: {
+        spriteType: 'bush',
+        spriteVariants: 2,
+        width: 72,
+        height: 96,
+        flipXPercentChance: 50,
+        event: "click-wood"
+    },
+}
+
+
 let modalsRef = {
     archeologist:{id: 'archeologist'},
     mine:{id: 'mine'},
     research:{id: 'research'},
     builders:{id: 'builders'},
-    demolishers:{id: 'demolishers'},
+    demolisher:{id: 'demolisher'},
 }

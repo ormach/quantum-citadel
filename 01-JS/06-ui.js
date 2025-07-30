@@ -84,13 +84,14 @@
         for(let key in buildingsRef){
             if(buildingsRef[key].export !== 'y') continue;
 
+            //Gen building sprite
+            let img = genBuildingSprite(buildingsRef[key])            
+
             //Button HTML
             let btnContent = `
                 <h2>${upp(key)}</h2>
                 <p>${buildingsRef[key].cost} coins / ${buildingsRef[key].time} min</p>
-                <div class="building-img-container building" style="width:${buildingsRef[key].width}px; height:${buildingsRef[key].height}px;">
-                    <img src="./03-IMG/structure/id=${key}, variant=1.png">
-                </div>
+                ${img}
             `
 
             //Create HTML element
@@ -110,8 +111,12 @@
     function updateUI(){
         let coinIco = `<img src="../03-IMG/ico/coin.svg">`
 
+        //Resources
+        el('wood-indicator').innerHTML = `${g.plObj.resources.wood}`
+        el('stone-indicator').innerHTML = `${g.plObj.resources.stone}`
+        el('coin-indicator').innerHTML = `${g.plObj.resources.coins}`
+
         //Navigation
-        el('coin-indicator').innerHTML = `${g.plObj.coins}`
         el('lvl').innerHTML = `LVL: ${g.plObj.lvl}`
         el('exp').innerHTML = `EXP: ${g.plObj.exp}/${g.plObj.lvlUpExp}`
 

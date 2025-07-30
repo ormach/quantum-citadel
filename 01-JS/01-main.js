@@ -16,9 +16,7 @@
 
         saveGame(){
             console.log("Game saved.");
-
             localStorage.setItem('gameData', JSON.stringify(g))
-            // console.log(g.gameMap.buildings)
         }
 
         //Check if game state available and override stuff
@@ -44,31 +42,32 @@
                 //Override values of new objects
                 //g.ref is objet from LS
                 //!!! DON'T do g.plObj = g.ref.plObj it removes methods.
-                g.plObj.coins = g.ref.plObj.coins
+                g.plObj.resources = g.ref.plObj.resources
+                
                 g.plObj.exp = g.ref.plObj.exp
                 g.plObj.lvl = g.ref.plObj.lvl
                 g.totalReward = g.ref.totalReward
-                g.cardsRef = g.ref.cardsRef //Load card ref to kepp card frequency ranges
+                g.cardsRef = g.ref.cardsRef //Load card ref to keep card frequency ranges
 
                 //Load map decorations
                 g.gameMap.envDecorations = g.ref.gameMap.envDecorations
 
                 //Load buildings
-                g.gameMap.buildings = g.ref.gameMap.buildings
-                // console.log(g.gameMap.buildings)
+                g.ref.gameMap.buildings.forEach(building => {
+                    g.gameMap.build(building.buildingType, building)
+                })
+
+                //Load trees
+                for (let key in g.ref.gameMap.environmentObjects){
+                    new Tree(key, g.ref.gameMap.environmentObjects[key])
+                }
 
                 //Add building html element to map
                 g.gameMap.buildings.forEach(building => {
                     genBuildingHtmlElem(building, 'load')
                 })
-
-                // console.log("New game:");
-                // console.log(g);
-                //
-                // console.log("Loaded game:");
-                // console.log(g.ref);
                 
-                //Load time from g.ref to g, brause we don't add it in constructor
+                //Load time from g.ref to g, because we don't add it in constructor
                 this.rewardTime = g.ref.rewardTime
 
                 //Check interval reward
@@ -77,9 +76,6 @@
                 //Load previous research 
                 g.research = new Research(g.ref.research.contractCard)
                 g.research.researchCardPool = g.ref.research.researchCardPool //load card pool for card frequency roll calculation
-
-                // console.log(g.ref.gameMap.envDecorations)
-                // console.log(g.gameMap.envDecorations)
             }
 
             //New game
@@ -94,7 +90,11 @@
 
                 //Prebuild buildings once at the start of a new game
                 prebuiltBuildingsRef.forEach(building => {
-                    g.gameMap.build(building.type, building)
+                    let newBuildingRef = buildingsRef[building.type]
+                    newBuildingRef.x = building.x //Set x coord from ref
+
+                    g.gameMap.build(building.type, newBuildingRef)
+                    // genBuildingHtmlElem(newBuildingRef, "load")
                 })
             }
 
@@ -124,7 +124,7 @@
 
         getReward(){
             //Add coins to player
-            this.plObj.changeCoins(this.totalReward)
+            this.plObj.changeResource('coins', this.totalReward)
 
             //Display alert
             showAlert(`Daily reward! You get ${this.totalReward} coins.`)
@@ -164,10 +164,6 @@
             
         }
 
-        
-
-        
-
         //Creates card elements
         genCard(args){
             for(let i = 0; i < args.number; i++){
@@ -196,7 +192,7 @@
     }
 
 
-//CARD
+//CARD RELIC
     class Card {
         //constructor(cardRef, location, mode)
         constructor(args){
@@ -273,7 +269,7 @@
         //Used for LS regen
         genHtml(){
             let card = document.createElement('div')
-            // let cardImg = this.name used to assign image lnked with name
+            // let cardImg = this.name used to assign image linked with name
             
             card.id = this.cardId
             card.classList = 'card'
@@ -281,7 +277,7 @@
             card.setAttribute('ondragstart','drag(event)')
             
             // console.log(this.cardRefObj);          
-            let imgSrc = "./03-IMG/relics/id=template.png"
+            let imgSrc = "./03-IMG/relics/id=placeholder.png"
             if(this.cardRefObj.img === "y"){
                 imgSrc = `./03-IMG/relics/id=${this.name}.png`
             }
@@ -342,17 +338,15 @@
 //PLAYER & SHOP
     class PlayerObj{
         constructor(){
-            this.coins = config.coins 
+            this.resources = {
+                "coins": config.coins || 0,
+                "stone": config.stone || 0,
+                "wood":  config.wood  || 0,
+            }
             this.exp = 0
             this.lvl = config.playerLvl
             this.lvlUpExp = Math.ceil(config.expBase * (this.lvl * config.expMult) ** config.expExpo)
             // this.coinsCap = config.coinsCap
-        }
-
-        //Modify coin value
-        changeCoins(value){
-            this.coins += value
-            updateUI()
         }
 
         //Pay for something
@@ -360,9 +354,10 @@
             //Pack
             if (operation === 'pack'){
                 let totalCost = config.cardCost * config.cardsInPack
-                
-                if(this.checkIfEnoughCoins(totalCost)){
-                    this.changeCoins(-Math.abs(totalCost))
+                let resource = 'coins'
+
+                if(this.enoughResource(resource, totalCost)){
+                    this.changeResource(resource, -Math.abs(totalCost))
                     g.genCard({
                         "number": config.cardsInPack,
                         "location": "hand",
@@ -374,9 +369,10 @@
             else if(operation === 'inspect'){
 
                 let totalCost = config.inspectionCost
+                let resource = 'coins'
 
-                if(this.checkIfEnoughCoins(totalCost)){
-                    this.changeCoins(-Math.abs(totalCost))
+                if(this.enoughResource(resource, totalCost)){
+                    this.changeResource(resource, -Math.abs(totalCost))
                     g.inspectionTable.inspect()
                 }
             }
@@ -384,18 +380,20 @@
             else if (operation === 'skip research'){
 
                 let totalCost = config.researchSkip
+                let resource = 'coins'
 
-                if(this.checkIfEnoughCoins(totalCost)){
-                    this.changeCoins(-Math.abs(totalCost))
+                if(this.enoughResource(resource, totalCost)){
+                    this.changeResource(resource, -Math.abs(totalCost))
                     g.research = new Research
                 }
             }
             //Build
             else if (operation === 'build'){
                 let totalCost = buildingsRef[type].cost
+                let resource = 'stone'
 
-                if(this.checkIfEnoughCoins(totalCost)){
-                    this.changeCoins(-Math.abs(totalCost))
+                if(this.enoughResource(resource, totalCost)){
+                    this.changeResource(resource, -Math.abs(totalCost))
                     g.gameMap.build(type)
                 }
             }
@@ -403,13 +401,24 @@
             g.saveGame()
         }
 
-        checkIfEnoughCoins(cost){
-            if(this.coins >= cost){
+        //Check if player has resources to pay
+        enoughResource(resource, cost){
+            if(this.resources[resource] >= cost){
                 return true
             }
             else{
-                showAlert(`Not enough coins. Need ${cost} coins.`)
+                showAlert(`Not enough ${resource}. Need ${cost} coins.`)
             }
+        }
+
+        changeResource(resource, value){
+            if(this.resources[resource] !== undefined){
+                this.resources[resource] += value
+            }
+            else{
+                console.warn(`Resource ${resource} not found in player resources.`)
+            }
+            updateUI()
         }
 
         gainExp(val){
@@ -457,11 +466,7 @@
 
             //Container HTML
             container.innerHTML = `
-                <button class="page-btn light" onclick="g.market.nextPage()">
-                    <img src="../03-IMG/ico/id=arrow-r.svg" alt="">
-                </button>
-                
-                <img id="dude" src="./03-IMG/relics/pack/dude.png" style="width:198px;"></img>
+                             
             `
 
             let initialPack = this.currentPage * this.packsPerPage
@@ -561,7 +566,7 @@
             g.cards = g.cards.filter(card => card.location !== 'sell-area');
 
             //Give player 10c
-            g.plObj.changeCoins(numberOfCards * 10
+            g.plObj.changeResource('coins', numberOfCards * 10
             )
 
             g.saveGame()
@@ -576,7 +581,7 @@
         constructor(){
             this.width = config.albumColumns
             this.height = config.albumRows
-            this.pageIdArr = ['page-1', 'page-2', 'page-3', 'page-4', 'page-5']
+            this.pageIdArr = ['page-1', 'page-2', 'page-3', 'page-4']
 
             //Update id to default page
             this.page = this.pageIdArr[0]        
@@ -846,7 +851,7 @@
 
 
                 //Misc
-                g.plObj.changeCoins(coinsReward)
+                g.plObj.changeResource('coins', coinsReward)
                 g.plObj.gainExp(expReward)
                 showAlert(`Correct!<br> You win ${coinsReward} coins, and gain ${expReward} exp.`)
             } 
@@ -855,8 +860,7 @@
             //Lose
             else{
                 showAlert(`Incorrect!<br> You lost ${config.researchReward} coins.`)
-                g.plObj.changeCoins(-config.researchReward)
-
+                g.plObj.changeResource('coins', -config.researchReward)
             }
 
 

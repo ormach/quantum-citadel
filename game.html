@@ -70,14 +70,20 @@
                         <div id="lvl" class="stat"></div>
                         <div id="exp" class="stat"></div>
                     </div>
+                    <div class="stat-container">
+                        <div id="wood" class="stat">
+                            <img src="./03-IMG/ico/id=wood, variant=1.svg" alt="">
+                            <span id="wood-indicator"></span>
+                        </div>
+                        <div id="stone" class="stat">
+                            <img src="./03-IMG/ico/id=stone, variant=1.svg" alt="">
+                            <span id="stone-indicator"></span>
+                        </div>
+                    </div>
                     <div class="stat-container" style="margin: 0 24px">
                         <div id="coins" class="stat">
                             <img src="./03-IMG/ico/coin.svg" alt="">
                             <span id="coin-indicator"></span>
-                        </div>
-                        <div id="stone" class="stat">
-                            <img src="./03-IMG/ico/id=stone, variant=1.svg" alt="">
-                            <span id="stone-indicator">0</span>
                         </div>
                     </div>
 
@@ -122,7 +128,7 @@
 
     <!-- Modal wrapper-->
         <div id="modal-wrapper">
-            <!-- Mine -->
+            <!-- MINE -->
             <div id="mine" class="modal hide">
                 <div class="modal-container">
 
@@ -147,7 +153,7 @@
                 </div>
             </div>
 
-            <!-- Archeologist -->
+            <!-- ARCHEOLOGIST -->
             <div id="archeologist" class="modal hide perim-border">
                 <div class="modal-nav">
                     <h2 class="modal-heading">Archeologist</h2>
@@ -159,9 +165,15 @@
                 </div>
 
                 <div id="market-container"></div>
+
+                <button class="page-btn light" onclick="g.market.nextPage()">
+                    <img src="../03-IMG/ico/id=arrow-r.svg" alt="">
+                </button>   
+
+                <img id="dude" src="./03-IMG/relics/pack/dude.png" style="width:198px;"></img>
             </div>
 
-            <!-- Collection & Research contract -->
+            <!-- RESEARCH -->
             <div id="research" class="modal hide">
 
                 <!-- Collection -->
@@ -221,6 +233,8 @@
                                 <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
                                 <div class="divider"></div>
                                 <button id="contract-button-skip" onclick="g.plObj.pay('skip research')">Skip</button>
+                                <div class="divider"></div>
+                                <button id="" onclick="g.plObj.pay('skip research')">See answer</button>
                             </div>
                         </div>
                     </div>
@@ -229,11 +243,11 @@
 
             </div>
 
-            <!-- Inspection table -->
-            <div id="table-page" class="modal hide">
+            <!-- LIBRARY -->
+            <div id="library" class="modal hide">
                 <div class="table-container">
                     <!-- Close button -->
-                    <button class="secondary-btn" onclick="el('table-page').classList.add('hide')">
+                    <button class="secondary-btn" onclick="el('library').classList.add('hide')">
                         <img src="./03-IMG/ico/item-x.svg" alt="">
                     </button>
 
@@ -252,27 +266,27 @@
                 </div>
             </div>
 
-            <!-- Sell cards -->
-            <div id="sell-card" class="modal hide">
-                <div class="table-container">
-                    <!-- Close button -->
-                    <button class="secondary-btn" onclick="el('sell-card').classList.add('hide')">
-                        <img src="./03-IMG/ico/item-x.svg" alt="">
-                    </button>
+            <!-- ALCHEMIST -->
+            <div id="alchemist" class="modal hide">
+                <div class="modal-container">
 
-                    <h1>Sell a card</h1>
-                    <p>Add card into the slot, then press Sell to get 10c.</p>
+                    <div class="modal-nav">
+                        <h2 class="modal-heading">Alchemist</h2>
+    
+                        <!-- Close button -->
+                        <button class="secondary-btn close-btn" onclick="el('alchemist').classList.add('hide')">
+                            <img src="./03-IMG/ico/item-x.svg" alt="">
+                        </button>
+                    </div>
 
-                    <div class="row">
-                        <div>
-                            <div id="sell-area" class="card-container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            <button id="sellButton" onclick="g.sellArea.sell()">Sell for 10c</button>
-                        </div>
+                    <div class="modal-body">
+                        <div id="sell-area" class="card-container on-light" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <button id="sellButton" onclick="g.sellArea.sell()">Transmute relic</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Build -->
+            <!-- ARCHITECT -->
             <div id="builders" class=" hide modal ">
                 <div class="modal-container">
 
@@ -291,15 +305,15 @@
                 </div>
             </div>
 
-            <!-- Demolish -->
-            <div id="demolishers" class="modal hide">
+            <!-- DEMOLISHER -->
+            <div id="demolisher" class="modal hide">
                 <div class="modal-container">
 
                     <div class="modal-nav">
                         <p>Demolish</p>
 
                         <!-- Close button -->
-                        <button class="secondary-btn close-btn" onclick="el('demolishers').classList.add('hide')">
+                        <button class="secondary-btn close-btn" onclick="el('demolisher').classList.add('hide')">
                             <img src="./03-IMG/ico/item-x.svg" alt="">
                         </button>
                     </div>
