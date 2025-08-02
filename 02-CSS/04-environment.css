@@ -222,10 +222,16 @@
         /*position: relative;*/
     }
 
+/*Building*/
+.flipX {transform: scaleX(-1);}
 
 /* Tree */
-
     .tree-container {
         position: absolute;
         bottom: calc(50% - 48px);
+    }
+
+/*Mine*/
+    .emptyMine{
+        transform: translateX(calc((-48px - 12px) * 3));
     }

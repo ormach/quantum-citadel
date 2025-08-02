@@ -45,7 +45,7 @@ function startGame(){
     
 
     //Interval sync
-    setInterval(intervalSync, 3000)
+    setInterval(intervalSync, 1000)
 
 
     //Save game on start
@@ -55,18 +55,30 @@ function startGame(){
 }
 
 //INTERVAL SYNC: Runs every second.
-let treeCounter = 0
 function intervalSync(){
+    //STONE:
+    //Update mine sprite based on timers
+    let mines = document.querySelectorAll('div[type="mine"]');
+    mines.forEach(mine => {
+
+        let mineSprite = mine.childNodes[1].childNodes[1]
+
+        if(Date.now() - g.gameMap.buildings[mine.id].eventTime >= config.stoneSpawnInterval){
+            mineSprite.classList.remove('emptyMine')
+        }
+    })
 
 
-    //Get time diff between now and last event or game start
+    //TREES:
+    // Get time diff between now and last event or game start
     let treeTimeDifference = Date.now() - g.treeIntervalStartTime
 
     //If diff is greater than treeSpawnInterval, and there are less trees than treeCap
     if(
         treeTimeDifference >= config.treeSpawnInterval
     ){
-
+        //Set treeIntervalStartTime to now
+        g.treeIntervalStartTime = Date.now()
 
         //Define current number of trees
         let currentTreeCount = 0
@@ -96,16 +108,14 @@ function intervalSync(){
             new Tree()
         }
 
-        //Set treeIntervalStartTime to now
-        g.treeIntervalStartTime = Date.now()
-
         //Save if tree was added
         console.log('Saving game on interval sync.');
         g.saveGame()
     }
 
 
-    //Coin reward: Check for interval coin reward
+    //COINS reward:
+    // Check for interval coin reward
     let remainingTime = g.enableRewardButton()
 
     //Stop timer if reward is available, has to be here due to label update

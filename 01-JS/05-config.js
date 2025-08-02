@@ -29,9 +29,12 @@ let config = {
     
         cardsToStartQuest: 4,
     
-    //TREES: spawn frequency
+//TREES: spawn frequency
         treeSpawnInterval: 10000, //Interval in ms
-        treeCap: 5,
+        treeCap: 10,
+//STONE
+        stoneSpawnInterval: 3000,
+
 
     //Collection
         albumRows: 3,

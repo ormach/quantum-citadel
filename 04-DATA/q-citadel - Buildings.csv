@@ -13,4 +13,11 @@ tavern,Generates coins per period of time.,y,48,48,T2,resources,,modal-tavern,st
 market,Allows to trade resources.,,,,T1,resources,market tech,,stone:1; wood:1;,,,,,,,
 farm,Provides 1 food per day.,,48,24,T1,resources,,,stone:1; wood:1;,1,60,5,1,,,
 house,Provides 1 worker in exchange for 1 food per day.,,24,48,T1,population,,,stone:1; wood:1;,,60,5,1,,,Humans will be used for automation.
-tower,Provides protection to other buildings by blocking the way of enemy soldiers.,y,48,84,T2,decoration,,,stone:1; wood:1;,,60,50,,,,
+tower,Provides protection to other buildings by blocking the way of enemy soldiers.,y,48,84,T3,decoration,,,stone:1; wood:1;,,60,50,,,,
+stairs,,y,24,24,T3,decoration,,,stone:1; wood:1;,,,,,,,
+wall,,y,48,48,T3,decoration,,,stone:1; wood:1;,,,,,,,
+sign-1,,y,24,48,T3,decoration,,,stone:1; wood:1;,,,,,,,
+sign-2,,y,24,48,T3,decoration,,,stone:1; wood:1;,,,,,,,
+sign-3,,y,24,48,T3,decoration,,,stone:1; wood:1;,,,,,,,
+sign-4,,y,24,48,T3,decoration,,,stone:1; wood:1;,,,,,,,
+fence,,y,24,24,T3,decoration,,,stone:1; wood:1;,,,,,,,

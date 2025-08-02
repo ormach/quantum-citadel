@@ -52,6 +52,7 @@
 
                 //Load buildings
                 for(let building in g.ref.gameMap.buildings){
+                    console.log(g.ref.gameMap.buildings[building])
                     g.gameMap.build(g.ref.gameMap.buildings[building].buildingType, g.ref.gameMap.buildings[building])
                 }
 

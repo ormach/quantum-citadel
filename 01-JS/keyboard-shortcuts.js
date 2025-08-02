@@ -11,15 +11,19 @@ document.addEventListener('keydown', (event) => {
             }
         })
     }
-});
 
-//Hide all modals on Esc
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'q' || event.keyCode === 27) {
+    //Hide all on 'Q'
+    else if (event.key === 'q' || event.keyCode === 27) {
         let modals = document.querySelectorAll('.modal')
 
         modals.forEach(modal => {
             modal.classList.add('hide')
         })
+    }
+
+    //Flip projection
+    else if (event.key === 'f' && g.gameMap.buildMode) {
+        g.gameMap.buildings[g.gameMap.focusedBuilding].flipX = true
+        g.gameMap.focusedBuildingHtmlElem.classList.toggle('flipX')
     }
 });

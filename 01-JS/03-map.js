@@ -46,9 +46,6 @@ class GameMap{
 
         //Add building to map obj
         this.buildings[newBuildingObj.id] = newBuildingObj
-
-        // console.log('Building added:', newBuildingObj);
-        
     }
 
 
@@ -345,6 +342,7 @@ class Building{
         }
         this.time = buildingsRef[type].time
         this.event = buildingsRef[type].event
+        this.flipX = false
 
         //Manage capacity and production
         this.resources = 0                                       //Amount of resources produced
@@ -363,6 +361,7 @@ class Building{
                 this.id = buildingRefObj.id 
             }
             this.resources = buildingRefObj.resources || 0
+            this.flipX = buildingRefObj.flipX
 
             //Placement on the map for predefined buildings
             this.x = buildingRefObj.x
@@ -407,6 +406,11 @@ function genBuildingHtmlElem(buildingObject, mode){
     building.setAttribute('id', buildingObject.id)
     building.setAttribute('class', `building projection`)
     building.setAttribute('type', buildingObject.buildingType)
+
+    //Check it was flip
+    if(buildingObject.flipX){
+        building.classList.add('flipX')
+    }
 
     //Building image
     building.innerHTML = genBuildingSprite(buildingObject)    
@@ -552,15 +556,26 @@ function genOnClick(event){
 //Get stone
 function clickEvent(mode, htmlElem){
     if(mode === 'stone'){
-        //Check if mined blocks > 0
-            //Generate one block per time interval (similar to gold)
+        let mineObj = g.gameMap.buildings[htmlElem.id]
 
-        //Reduce stone blocks
+        //Record event time
+        if(mineObj.eventTime === undefined){
+            g.gameMap.buildings[htmlElem.id].eventTime = Date.now() - config.stoneSpawnInterval
+        }
 
-        //Update sprite
+        if(Date.now() - mineObj.eventTime >= config.stoneSpawnInterval){
+            g.gameMap.buildings[htmlElem.id].eventTime = Date.now()
+            showAlert('+3 stone')
+            g.plObj.changeResource('stone', 3)
 
-        showAlert('+3 stone')
-        g.plObj.changeResource('stone', 3)
+            let mineSprite = el(mineObj.id).childNodes[1].childNodes[1]
+            mineSprite.classList.add('emptyMine')
+        }
+        else{
+            let remainingTime = Math.round((config.stoneSpawnInterval - (Date.now() - mineObj.eventTime))/1000)
+
+            showAlert(`No stone mined. ${remainingTime} seconds left.`)
+        }
     }
 
     if(mode === 'wood'){
