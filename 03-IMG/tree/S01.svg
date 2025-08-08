@@ -1,0 +1,38 @@
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_4699_143526)">
+<rect width="44" height="44" fill="#585858"/>
+<path d="M8.14286 60H7V39H55V60H8.14286Z" fill="#46464A"/>
+<path d="M8.14286 60H7V39H55V60H8.14286Z" fill="black" fill-opacity="0.2"/>
+<path d="M8.14286 60H7V39H55V60H8.14286Z" stroke="black" stroke-width="2"/>
+<path d="M9.00001 23L9 39H53V23H9.00001Z" fill="#5F5555" stroke="black" stroke-width="2"/>
+<path d="M7 19V23H55V19H52L31 5L10 19H7Z" fill="#4E6A81" stroke="black" stroke-width="2"/>
+<rect width="2" height="2" transform="matrix(-1 0 0 1 40 20)" fill="black"/>
+<rect width="2" height="2" transform="matrix(-1 0 0 1 16 20)" fill="black"/>
+<rect width="2" height="2" transform="matrix(-1 0 0 1 24 20)" fill="black"/>
+<rect x="10" y="34" width="42" height="2" fill="#212020"/>
+<rect x="10" y="26" width="42" height="2" fill="#212020"/>
+<rect x="24" y="24" width="16" height="2" transform="rotate(90 24 24)" fill="#212020"/>
+<rect opacity="0.2" x="24" y="36" width="2" height="2" transform="rotate(90 24 36)" fill="black"/>
+<rect opacity="0.2" x="24" y="28" width="2" height="2" transform="rotate(90 24 28)" fill="black"/>
+<rect x="16" y="24" width="16" height="2" transform="rotate(90 16 24)" fill="#212020"/>
+<path d="M14 27H15.3846L23 35" stroke="#212020" stroke-width="2"/>
+<rect x="40" y="24" width="16" height="2" transform="rotate(90 40 24)" fill="#212020"/>
+<rect opacity="0.2" x="40" y="28" width="4" height="2" transform="rotate(90 40 28)" fill="black"/>
+<rect x="27" y="27" width="8" height="8" fill="#EFB36E" stroke="black" stroke-width="2"/>
+<rect x="30" y="28" width="2" height="6" fill="black"/>
+<rect x="34" y="30" width="2" height="6" transform="rotate(90 34 30)" fill="black"/>
+<path d="M31 19L22 24H40L31 19Z" fill="#5F5555"/>
+<path d="M21 23H24L31 19L38 23H41" stroke="black" stroke-width="2"/>
+<rect x="39" y="43" width="8" height="17" stroke="#1B1B1D" stroke-width="2"/>
+<rect x="15" y="43" width="8" height="8" fill="#4C4748" stroke="#1B1B1D" stroke-width="2"/>
+<rect x="7" y="39" width="4" height="12" fill="#38383B" stroke="black" stroke-width="2"/>
+<rect opacity="0.3" x="23" y="39" width="24" height="4" fill="#5F5555" stroke="black" stroke-width="2"/>
+<rect opacity="0.3" x="15" y="39" width="24" height="4" fill="#5F5555" stroke="black" stroke-width="2"/>
+</g>
+<rect x="1" y="1" width="42" height="42" stroke="black" stroke-opacity="0.4" stroke-width="2"/>
+<defs>
+<clipPath id="clip0_4699_143526">
+<rect width="44" height="44" fill="white"/>
+</clipPath>
+</defs>
+</svg>

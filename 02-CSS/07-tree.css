@@ -1,0 +1,166 @@
+:root {
+    /* TREE */
+    --tree-rows:      5;
+    --tree-columns:   5;
+    --tree-cell:      64px;
+}
+
+/*tree modal*/
+#tree .modal-body{
+    width: 520px;
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: auto;
+    margin: 0;
+}
+
+/*Tree node button styling*/
+.btn-frame{
+    border: 2px solid black;
+    outline: 2px solid var(--btn-border);
+    box-shadow: 0px 4px 4px 0px var(--b20);
+}
+
+
+/* tree */
+#tree, #tree *{
+    touch-action: auto !important;
+    /* height: auto; */
+}
+#skill-tree{
+    height:            calc(var(--tree-cell) * var(--tree-rows));
+    width:             calc(var(--tree-cell) * var(--tree-columns));
+
+    display:               grid;
+    grid-template-columns: repeat(var(--tree-columns),1fr);
+    grid-template-rows:    repeat(var(--tree-rows),   1fr);
+
+    margin: 24px 24px 24px 24px;
+    /*cursor: url(/img/ico/cursor-move.svg), auto;*/
+}
+
+#tree-node-popup{
+    width: calc(100% - 16px);
+    max-width: 400px;
+    min-height: 72px;
+
+    background-color: black;
+    padding: 4px 8px;
+    color: var(--w80);
+
+    position: absolute;
+    bottom:  102px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    z-index: 6;
+
+    border-bottom: 1px solid var(--w20);
+
+}
+#tree-node-popup button{
+    margin-top: 4px;
+}
+
+/* Tree rendering */
+.tree-tile{
+    width:  var(--tree-cell);
+    height: var(--tree-cell);
+
+    font-size: 10px;
+    line-height: 100%;
+
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--w0);
+
+    border: none;
+    padding: 0;
+    box-shadow: none;
+
+}
+.tree-tile img {
+    /* background-color: var(--tree-node); */
+    z-index: 1;
+    padding: 0;
+    height: 48px;
+    width: 48px;
+    border-radius: 0px;
+}
+.compact-node img{
+    height: 32px;
+    width:  32px;
+    outline: 2px solid var(--btn-border);
+    border: 2px solid var(--btn-bg);
+    background-color: black;
+}
+.tree-tile p{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    z-index: 3;
+    color: red;
+}
+
+.tree-path{
+    height: 100%;
+    width: 2px;
+    background-color: var(--btn-border);
+}
+
+.R, .L, .T, .D, .RD, .LD, .RT, .LT{
+    position: absolute;
+    height: 2px;
+    width: 50%;
+    transform: translateX(50%);
+    background-color: var(--btn-border);
+}
+.L{
+    transform: translateX(-50%);
+}
+.T, .D{
+    height: 50%;
+    width: 2px;
+    transform: translateY(-50%);
+    background-color: var(--btn-border);
+}
+.D{
+    transform: translateY(50%);
+}
+.LD{
+    transform: rotate(-45deg) translate(-92%);
+}
+.RD{
+    transform: rotate(45deg)  translate(92%);
+}
+.LT{
+    transform: rotate(45deg)  translate(-92%);
+}
+.RT{
+    transform: rotate(-45deg) translate(92%);
+}
+
+.node-allocated img{
+    border: 2px solid var(--heading-yellow);
+    box-shadow: 0px 0px 6px 0px var(--heading-yellow);
+    transition: all 300ms;
+    outline: none;
+}
+.compact-node.node-allocated img{
+    outline: none;
+    border: 2px solid var(--heading-yellow);
+    box-shadow: 0px 0px 6px 0px var(--heading-yellow);
+}
+.node-allocated div, .active-path div{
+    background-color: var(--heading-yellow);
+    box-shadow: 0px 0px 6px 0px var(--heading-yellow);
+    transition: all 300ms;
+}
