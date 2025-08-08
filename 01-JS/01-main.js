@@ -3,13 +3,19 @@
         constructor(){
             //Store per game section, place in LS and build board state from this obj.
             this.plObj = new PlayerObj()
+
             this.cards = [] //Stores all card objects
             this.cardsRef = []
-            this.inspectionTable = new InspectionTable()
             this.collection = new Collection
             this.totalReward = config.rewardsValue
+
+            this.inspectionTable = new InspectionTable()
             this.sellArea = new SellArea()
+
             this.gameMap = new GameMap()
+
+            //Skill tree
+            this.treeObj = {}
 
             console.log('Generating new game obj.')
         }
@@ -44,19 +50,21 @@
                 
                 g.plObj.exp = g.ref.plObj.exp
                 g.plObj.lvl = g.ref.plObj.lvl
+                g.plObj.treeNodes = g.ref.plObj.treeNodes
                 g.totalReward = g.ref.totalReward
                 g.cardsRef = g.ref.cardsRef //Load card ref to keep card frequency ranges
+                g.treeObj = g.ref.treeObj //Load tech tree
 
                 //Load map decorations
                 g.gameMap.envDecorations = g.ref.gameMap.envDecorations
 
                 //Load buildings
                 for(let building in g.ref.gameMap.buildings){
-                    console.log(g.ref.gameMap.buildings[building])
+                    // console.log(g.ref.gameMap.buildings[building])
                     g.gameMap.build(g.ref.gameMap.buildings[building].buildingType, g.ref.gameMap.buildings[building])
                 }
 
-                //Load trees
+                //Load env tree sprites
                 for (let key in g.ref.gameMap.environmentObjects){
                     new Tree(key, g.ref.gameMap.environmentObjects[key])
                 }
@@ -169,9 +177,21 @@
 
         //Creates card elements
         genCard(args){
+
+            let dropChance = args.number * 20
+            let relicQuant = 0
+
             for(let i = 0; i < args.number; i++){
-                new Card(args)           
+
+                let dropRoll = rng(100)
+
+                if(dropRoll < dropChance){
+                    new Card(args)
+                    relicQuant++
+                }
             }
+
+            showAlert(`You discovered: ${relicQuant} relic(s).`)
         }
 
         //Creates card slot elements for the game board
@@ -350,19 +370,27 @@
             this.lvl = config.playerLvl
             this.lvlUpExp = Math.ceil(config.expBase * (this.lvl * config.expMult) ** config.expExpo)
             // this.coinsCap = config.coinsCap
+
+            //Tree
+            this.treeNodes      = []
+            this.treePoints     = config.basePassieSkillPoints
         }
 
         //Pay for something
         pay(operation, type){
             //Pack
             if (operation === 'pack'){
-                let totalCost = config.cardCost * config.cardsInPack
-                let resource = 'coins'
+                // let totalCost = config.cardCost * config.cardsInPack
+                let totalCost = 3
+                let resource = 'stone'
 
                 if(this.enoughResource(resource, totalCost)){
                     this.changeResource(resource, -Math.abs(totalCost))
+
+
                     g.genCard({
-                        "number": config.cardsInPack,
+                        // "number": config.cardsInPack,
+                        "number": totalCost,
                         "location": "hand",
                         "setName": type,
                     })
@@ -392,15 +420,26 @@
             }
             //Build
             else if (operation === 'build'){
-                
+
+                let enoughResources
                 let refObj = buildingsRef[type];
 
-                for (let resourceKey in refObj.cost) {
-                    if(this.enoughResource(resourceKey, refObj.cost[resourceKey]) !== true) return
-                    this.changeResource(resourceKey, -Math.abs(refObj.cost[resourceKey]))
-                }
+                // console.log(refObj)
 
-                g.gameMap.build(type)
+                resourcesRef.forEach(res => {
+                    let resValue = refObj[`cost${upp(res)}`] * 1
+
+                    if(this.enoughResource(res, resValue) !== true) {
+                        enoughResources = false
+                        return
+                    }
+
+                    this.changeResource(res, -Math.abs(resValue))
+                })
+
+                if(enoughResources !== false){
+                    g.gameMap.build(type)
+                }
             }
 
             g.saveGame()
@@ -412,7 +451,8 @@
                 return true
             }
             else{
-                showAlert(`Not enough ${resource}. Need ${cost} coins.`)
+                showAlert(`Not enough ${resource}. Need ${cost} ${resource}.`)
+                return false
             }
         }
 
@@ -442,7 +482,7 @@
         levelUp(){
 
             this.lvl++
-            g.market.genPage() //Updates button labels based on pl lvl
+            // g.market.genPage() //Updates button labels based on pl lvl
         
             //Reduce exp by elp required to lvl up
             this.exp = this.exp - this.lvlUpExp
@@ -456,7 +496,7 @@
     }
 
 
-//MARKET
+//MARKET (DISABLED)
     class Market {
         constructor(){
             this.packs = packsRef
@@ -555,20 +595,23 @@
     constructor(){
     }
 
-    sell(){
-        if(el('sell-area').childNodes.length > 0){
+    sell(containerId){
+        if(containerId === undefined){containerId = 'sell-area'}
+        let containerElem = el(containerId)
+
+        if(containerElem.childNodes.length > 0){
             // console.log(el('table').childNodes[0]);
 
-            // Count the number of cards in the 'sell-area' before deletion
-            const numberOfCards = el('sell-area').childNodes.length;
+            // Count the number of cards in the containerId before deletion
+            const numberOfCards = containerElem.childNodes.length;
 
-            // Remove all child nodes within 'sell-area'
-            while (el('sell-area').firstChild) {
-                el('sell-area').removeChild(el('sell-area').firstChild);
+            // Remove all child nodes within containerId
+            while (containerElem.firstChild) {
+                containerElem.removeChild(containerElem.firstChild);
             }
 
-            // Find and remove all card references from g.cards connected to 'sell-area'
-            g.cards = g.cards.filter(card => card.location !== 'sell-area');
+            // Find and remove all card references from g.cards connected to containerId
+            g.cards = g.cards.filter(card => card.location !== containerId);
 
             //Give player 10c
             g.plObj.changeResource('coins', numberOfCards * 10

@@ -336,10 +336,12 @@ class Building{
     constructor(type, buildingRefObj){
         this.id = genId('building-')
         this.buildingType = type
-        this.cost = {
-            stone: buildingsRef[type].costStone, 
-            wood: buildingsRef[type].costWood
-        }
+
+        this.cost = {}
+        this.cost.stone = buildingsRef[type].costStone * 1
+        this.cost.wood = buildingsRef[type].costWood * 1
+        this.cost.coins = buildingsRef[type].costCoins * 1
+
         this.time = buildingsRef[type].time
         this.event = buildingsRef[type].event
         this.flipX = false
@@ -376,6 +378,7 @@ class Building{
 
         //Hide builder modal
         el('builders').classList.add('hide')
+
     }
 
     checkResources(){
@@ -517,6 +520,11 @@ function placeBuilding(){
     }
 
     g.gameMap.focusedBuildingHtmlElem.classList.remove('projection')
+
+    //Update cost if it was a mine
+    if(focusedBuildingObj.buildingType === 'mine'){
+        generateUI()
+    }
 
     // console.log(focusedBuildingObj)
     g.saveGame()

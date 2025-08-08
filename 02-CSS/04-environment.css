@@ -16,6 +16,7 @@
     #map-scroll-box{
 
         width: 100vw;
+        max-width: fit-content;
         height: 100vh;
 
         overflow: auto;
@@ -26,8 +27,6 @@
         display: flex;
         align-items: center;
         /*justify-content: center;*/
-
-        background: linear-gradient(to bottom, var(--sky-color) 50%, var(--ground-color) 50%);
     }
 
 

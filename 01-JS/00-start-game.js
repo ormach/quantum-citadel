@@ -22,30 +22,28 @@ function startGame(){
     }
 
     cardsRef = g.cardsRef
-
-
-    //Parse building resources
-    convertResources()
     
-    g.market = new Market
-    g.market.genPage()
-
-
-    //Generate UI
-    generateUI()
+    // g.market = new Market
+    // g.market.genPage()
 
 
     //Load/generate game
     g.loadGame()
     updateUI()
 
+    //Initiate skill tree
+    generateSkillTree()
 
     //Generate map decoration elements after g is assigned
     g.gameMap.setMapDecoration()
-    
+
+
+    //Generate UI
+    generateUI()
+
 
     //Interval sync
-    setInterval(intervalSync, 1000)
+    setInterval(intervalSync, config.intervalSyncTime)
 
 
     //Save game on start
@@ -56,6 +54,7 @@ function startGame(){
 
 //INTERVAL SYNC: Runs every second.
 function intervalSync(){
+
     //STONE:
     //Update mine sprite based on timers
     let mines = document.querySelectorAll('div[type="mine"]');
@@ -73,10 +72,8 @@ function intervalSync(){
     // Get time diff between now and last event or game start
     let treeTimeDifference = Date.now() - g.treeIntervalStartTime
 
-    //If diff is greater than treeSpawnInterval, and there are less trees than treeCap
-    if(
-        treeTimeDifference >= config.treeSpawnInterval
-    ){
+    //If diff is greater than treeSpawnInterval, and there are fewer trees than treeCap
+    if(treeTimeDifference >= config.treeSpawnInterval){
         //Set treeIntervalStartTime to now
         g.treeIntervalStartTime = Date.now()
 
@@ -114,7 +111,7 @@ function intervalSync(){
     }
 
 
-    //COINS reward:
+    //COINS:
     // Check for interval coin reward
     let remainingTime = g.enableRewardButton()
 

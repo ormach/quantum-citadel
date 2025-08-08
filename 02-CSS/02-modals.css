@@ -82,7 +82,12 @@
         padding: 24px 24px 24px 24px;
     }
 
-    /* Builder */
+    .modal-dark{
+        background-color: #1D1D1D;
+        color: var(--w70);
+    }
+
+/* Builder */
     .modal .structures-container{
         flex-direction: row;
         flex-wrap: wrap;
@@ -97,14 +102,14 @@
         justify-content: space-between;
         align-items: flex-start;
 
-        height: 112px;
+        height: 192px;
         width: 240px;
 
         padding: 16px;
         gap: 12px;
 
         position: relative;
-        background-color: rgb(145, 155, 142);
+        background-color: rgb(77, 77, 77);
 
         border: 2px solid var(--b20);
         color: white;
@@ -114,8 +119,16 @@
     .btn-structure .data-container{
         display: flex;
         flex-direction: column;
-        gap: 16px;
         align-items: flex-start;
+        gap: 12px;
+
+        width: 100%;
+        height: 100%;
+        text-align: left;
+    }
+    .data-container .description{
+        font-size: 14px;
+        opacity: 0.7;
     }
     .btn-structure:hover{
         background: linear-gradient(to bottom, #676866, #646562);

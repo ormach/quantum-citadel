@@ -34,10 +34,10 @@ let packsRef = [
 ]
 
 let prebuiltBuildingsRef = [
-    {
-        type: 'mine',
-        x: 55,
-    },
+    // {
+    //     type: 'mine',
+    //     x: 55,
+    // },
     // {
     //     type: 'research center',
     //     x: 45,
@@ -164,32 +164,12 @@ let treesRef = {
 }
 
 let modalsRef = {
-    archeologist:{id: 'archeologist'},
+    lab:{id: 'lab'},
     mine:{id: 'mine'},
     research:{id: 'research'},
     builders:{id: 'builders'},
     demolisher:{id: 'demolisher'},
+    tree:{id: 'tree'},
 }
 
-
-//Convert resource string "wood: 1; coins: 2;" to object
-function convertResources(){
-
-    for(let building in buildingsRef){
-        let costObj = {}
-
-        let costArr = buildingsRef[building].cost.slice(0, -1).split('; ')
-        costArr.forEach(object => {
-            costObj[object.split(':')[0]] = parseInt(object.split(':')[1])
-        })
-
-        buildingsRef[building].cost = costObj
-
-    }
-
-    //Remove last character and split by resource type
-    // buildingsRef.forEach()
-    // let costRef = buildingsRef[type].cost.slice(0, -1).split('; ')
-                
-    // console.log(buildingsRef);
-}
+let resourcesRef = ['wood', 'stone', 'coins']

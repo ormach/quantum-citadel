@@ -79,24 +79,78 @@
     
 //Generate builders modal UI
     function generateUI(){
+        console.log('Generating UI.');
 
-        //Button for building
+        //Clear shop
+        el('structure-container').innerHTML = ""
+
+        //BUILDINGS: buttons
+        //Calculate total number of mines for dynamic cost
+        let minesQuant = 1
+        for( let building in g.gameMap.buildings ) {
+            if(g.gameMap.buildings[building].buildingType === 'mine'){
+                minesQuant++
+            }
+        }
+
+        //Add button per building
+
+        //If building type is not included in tree nodes > continue
+        let unlockedBuildings = []
+        g.plObj.treeNodes.forEach(node => {
+            if(node.buildingType !== undefined){
+                unlockedBuildings.push(node.buildingType)
+            }
+        })
+
+
+        //Mark buildings to exclude from shop
+        treeRef.forEach(node => {
+            if(
+                node.buildingType !== undefined
+            &&  unlockedBuildings.includes(node.buildingType) === false
+            ){
+                buildingsRef[node.buildingType].passiveLock = true
+            }
+            else if(node.buildingType !== undefined){
+                buildingsRef[node.buildingType].passiveLock = false
+            }
+        })
+
         for(let key in buildingsRef){
             if(buildingsRef[key].export !== 'y') continue;
+            if(buildingsRef[key].passiveLock === true) continue;
 
             //Gen building sprite
-            let img = genBuildingSprite(buildingsRef[key])     
-            
+            let img = genBuildingSprite(buildingsRef[key])
+
+            //Resolve MINE cost
+            if(key === 'mine'){
+                buildingsRef['mine'].costWood = config.mineCostScaleBase * (minesQuant)
+            }
+
             //Cost
             let cost = ""
-            for (let res in buildingsRef[key].cost){
-                cost += `<p>${res}: ${buildingsRef[key].cost[res]}</p>`
-            }
+            resourcesRef.forEach(res => {
+                let resValue = buildingsRef[key][`cost${upp(res)}`]
+
+                if(
+                    resValue !== undefined
+                 && resValue * 1 > 0
+                ){
+                    cost += `
+                        <div class="flex center">
+                            <img src="../03-IMG/ico/id=${res}, variant=1.svg"></img>
+                            ${resValue}
+                        </div>`
+                }
+            })
 
             //Button HTML
             let btnContent = `
                 <div class="data-container">
                     <h2>${upp(key)}</h2>
+                    <p class="description">${buildingsRef[key].description}</p>
                     <div class="building-cost-container">${cost}</div>
                 </div>
 
@@ -112,7 +166,6 @@
             //Append
             el('structure-container').append(buildingBtn)
         }
-
     }
 
 

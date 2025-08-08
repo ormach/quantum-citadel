@@ -1,9 +1,11 @@
 let config = {
+    //Interval sync in ms
+        intervalSyncTime: 5000,
 
     //Resources
-        coins: 500,
-        stone: 500,
         wood:  500,
+        stone: 500,
+        coins: 500,
 
     //Progression exp lvl
         playerLvl: 12,
@@ -11,6 +13,7 @@ let config = {
         expBase: 4,
         expMult: 1,
         expExpo: 0.3,
+        basePassieSkillPoints: 10, //tree
 
     //Costs
         cardCost:       20,
@@ -18,12 +21,13 @@ let config = {
         researchReward: 25,
         researchSkip: 10,
         cardsInPack: 4,
-    
+        mineCostScaleBase: 20,
+
     //Coin reward per second (off)
         coinInc: 1,
 
     //Coin reward per time
-        rewardInterval: 60 * 60, //N x 1min
+        rewardInterval: 50000, //N x 1min
         runTimer: true,
         rewardsValue: 3,
     
@@ -33,7 +37,7 @@ let config = {
         treeSpawnInterval: 10000, //Interval in ms
         treeCap: 10,
 //STONE
-        stoneSpawnInterval: 3000,
+        stoneSpawnInterval: 5000,
 
 
     //Collection
