@@ -14,7 +14,7 @@ let packsRef = [
         lvlUnlockResearch: 5,
     },
     {
-        name:"planetary motion",
+        name:"orbit",
         packId:"pl-motion",
         lvlRequirement: 6,
         lvlUnlockResearch: 8,
@@ -170,6 +170,9 @@ let modalsRef = {
     builders:{id: 'builders'},
     demolisher:{id: 'demolisher'},
     tree:{id: 'tree'},
+    collectionModal:{id: 'collectionModal'},
 }
+
+let labRef = ['objects','gravitation','orbit']
 
 let resourcesRef = ['wood', 'stone', 'coins']

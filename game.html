@@ -34,8 +34,8 @@
             /* Fonts */
             @font-face {
                 font-family: 'Grenze';
-                src: url('/04-DATA/Grenze-Regular.ttf') format('truetype');
-                font-weight: 400;
+                src: url('/04-DATA/Grenze-Medium.ttf') format('truetype');
+                font-weight: 500;
                 font-style: normal;
                 font-display: swap;
             }
@@ -150,6 +150,49 @@
     <!-- Modal wrapper-->
         <div id="modal-wrapper">
 
+            <!-- Collection -->
+            <div id="collectionModal" class="modal hide">
+                <div class="collection-container">
+
+                    <div class="modal-nav">
+                        <h2 class="modal-heading">Relic collection</h2>
+
+                        <!-- Close button -->
+                        <button class="secondary-btn" onclick="el('collectionModal').classList.add('hide')">
+                            <img src="./03-IMG/ico/item-x.svg" alt="">
+                        </button>
+                    </div>
+
+                    <div class="modal-body flex">
+
+                        <div class="tab-group">
+
+                            <!-- Prev page btn -->
+                            <button class="secondary-btn" onclick="g.collection.loadPage('previous')">
+                                <img src="./03-IMG/ico/id=arrow-u.svg" alt="">
+                            </button>
+
+                            <div id="collection-tabs"></div>
+
+                            <!-- Next page btn -->
+                            <button class="secondary-btn" onclick="g.collection.loadPage('next')">
+                                <img src="./03-IMG/ico/id=arrow-d.svg" alt="">
+                            </button>
+                        </div>
+
+
+                        <!-- Cards -->
+                        <div 
+                            id="collection" 
+                            class="collection card-slot-grid" 
+                            ondrop = "drop(event)"
+                            ondragover = 'allowDrop(event)'
+                        ></div>
+                    </div>
+
+                </div>
+            </div>
+
             <!-- TREE-->
             <div id="tree" class="modal hide">
                 <div class="modal-container modal-dark perim-border">
@@ -205,16 +248,21 @@
             </div>
 
             <!-- LABs -->
-
             <!-- Objects-->
-            <div id="objects" class="modal hide">
+            <div id="objectsModal" class="modal hide">
                 <div class="modal-container">
 
                     <div class="modal-nav">
                         <h2 class="modal-heading">LAB: Objects</h2>
 
                         <!-- Close button -->
-                        <button class="secondary-btn close-btn" onclick="el('objects').classList.add('hide')">
+                        <button 
+                            class="secondary-btn close-btn" 
+                            onclick="
+                                el('objectsModal').classList.add('hide')
+                                el('collectionModal').classList.add('hide')
+                            "
+                        >
                             <img src="./03-IMG/ico/item-x.svg" alt="">
                         </button>
                     </div>
@@ -233,20 +281,25 @@
             </div>
 
             <!--Gravitation-->
-            <div id="gravitation" class="modal hide">
+            <div id="gravitationModal" class="modal hide">
                 <div class="modal-container">
 
-<!--                    Nav-->
+                    <!-- Nav-->
                     <div class="modal-nav">
                     <h2 class="modal-heading">LAB: Gravitation</h2>
 
                     <!-- Close button -->
-                    <button class="secondary-btn close-btn" onclick="el('gravitation').classList.add('hide')">
+                    <button 
+                        class="secondary-btn close-btn" 
+                        onclick="
+                            el('gravitationModal').classList.add('hide')
+                            el('collectionModal').classList.add('hide')
+                        ">
                         <img src="./03-IMG/ico/item-x.svg" alt="">
                     </button>
                 </div>
 
-<!--                    Body-->
+                    <!-- Body-->
                     <div class="modal-body space-between">
 
                         <p>Crush 3 <img src="03-IMG/ico/id=stone,%20variant=1.svg">, each has 50% chance to provide a relic.</p>
@@ -260,27 +313,32 @@
                 </div>
             </div>
 
-            <!-- Planetary motion-->
-            <div id="planetary motion" class="modal hide">
+            <!-- Orbit-->
+            <div id="orbitModal" class="modal hide">
 
                 <div class="modal-container">
 
-<!--                    Nav-->
+                    <!-- Nav-->
                     <div class="modal-nav">
-                        <h2 class="modal-heading">LAB: Planetary motion</h2>
+                        <h2 class="modal-heading">LAB: orbit</h2>
 
                         <!-- Close button -->
-                        <button class="secondary-btn close-btn" onclick="el('planetary motion').classList.add('hide')">
+                        <button 
+                            class="secondary-btn close-btn" 
+                            onclick="
+                                el('orbitModal').classList.add('hide')
+                                el('collectionModal').classList.add('hide')
+                            ">
                             <img src="./03-IMG/ico/item-x.svg" alt="">
                         </button>
                     </div>
 
-<!--                    Body-->
+                    <!-- Body-->
                     <div class="modal-body space-between">
 
                         <p>Crush 3 <img src="03-IMG/ico/id=stone,%20variant=1.svg">, each has 50% chance to provide a relic.</p>
 
-                        <button class="button" onclick="g.plObj.pay('pack', 'planetary motion')">
+                        <button class="button" onclick="g.plObj.pay('pack', 'orbit')">
                             Crush &amp; analyze!
                         </button>
 
@@ -292,41 +350,8 @@
 
 
             <!-- RESEARCH -->
+
             <div id="research" class="modal hide">
-
-                <!-- Collection -->
-                <div id="collection-page" class=" page">
-                    <div class="collection-container">
-
-                        <div class="tab-group">
-                            <!-- Prev page btn -->
-                            <button class="secondary-btn" onclick="g.collection.loadPage('previous')">
-                                <img src="./03-IMG/ico/id=arrow-l.svg" alt="">
-                            </button>
-
-                            <button id="page-1_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-1')">I</button>
-                            <button id="page-2_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-2')">II</button>
-                            <button id="page-3_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-3')">III</button>
-                            <button id="page-4_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-4')">IV</button>
-                            <!--                            <button id="page-5_tab" class="tab collection-tab" onclick="g.collection.loadPage('page-5')">V</button>-->
-
-                            <!-- Next page btn -->
-                            <button class="secondary-btn" onclick="g.collection.loadPage('next')">
-                                <img src="./03-IMG/ico/id=arrow-r.svg" alt="">
-                            </button>
-
-                            <!-- Close button -->
-                            <button class="secondary-btn" onclick="el('research').classList.add('hide')">
-                                <img src="./03-IMG/ico/item-x.svg" alt="">
-                            </button>
-                        </div>
-
-                        <!-- Cards -->
-                        <div id="collection" class="card-container-grid collection"></div>
-
-                    </div>
-                </div>
-
                 <!-- Contract -->
                 <div id="contract" class="contract-container">
 <!--                    <img src="./03-IMG/bg/paper-corner.svg" style="position: absolute; top: 0; left: 0;">-->
@@ -345,7 +370,7 @@
                         <p id="contract-description"></p>
 
                         <div class="contract-card-container">
-                            <div id="contract-content" class="card-container-grid"></div>
+                            <div id="contract-content" class=""></div>
 
                             <div id="contract-controls">
                                 <button id="contract-button" onclick="g.research.sellResearch()">Submit</button>
@@ -358,7 +383,6 @@
                     </div>
 
                 </div>
-
             </div>
 
             <!-- LIBRARY -->
@@ -481,7 +505,8 @@
 <script src="01-JS/04-data.js"></script>
 
 <script src="01-JS/03-map.js"></script>
-<script src="01-JS/01-main.js"></script>
+<script src="01-JS/01-player-game.js"></script>
+<script src="01-JS/08-relics.js"></script>
 <script src="01-JS/07-tree.js"></script>
 <script src="01-JS/00-start-game.js"></script>
 

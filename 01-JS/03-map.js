@@ -433,10 +433,7 @@ function genBuildingHtmlElem(buildingObject, mode){
         `)
 
         //Add onclick event if modal is defined
-        if(buildingObject.onclick != undefined){
-            building.setAttribute('onclick', buildingObject.onclick)
-            building.classList.add('interactive')
-        }
+        setOnClickEvent(buildingObject, building)
 
         //Remove projection if you are loading a building
         building.classList.remove('projection')
@@ -458,8 +455,16 @@ function genBuildingHtmlElem(buildingObject, mode){
 
 function genBuildingSprite (buildingRefObj){
     let innerHTML = `
-        <div class="sprite-container" style="height: ${parseInt(buildingRefObj.height) +2}px; width:${parseInt(buildingRefObj.width) +2}px;">
-            <img class="sprite" src="./03-IMG/structure/id=${buildingRefObj.buildingType}, variant=1.png" style="height: ${parseInt(buildingRefObj.height) +2}px;">
+        <div 
+            class="sprite-container" 
+            style="height: ${parseInt(buildingRefObj.height) +2}px; 
+            width:${parseInt(buildingRefObj.width) +2}px;"
+        >
+            <img 
+                class="sprite" 
+                src="./03-IMG/structure/id=${buildingRefObj.buildingType}, variant=1.png" 
+                style="height: ${parseInt(buildingRefObj.height) +2}px;"
+            >
         </div>
     `
 
@@ -513,11 +518,8 @@ function placeBuilding(){
     // let focusedBuildingObj = findByProperty(g.gameMap.buildings, 'id', g.gameMap.focusedBuilding)
     // console.log(focusedBuildingObj.x, focusedBuildingObj.y)
 
-    //Add on click after placing the building to avoid triggering the modal on placing
-    if(focusedBuildingObj.onclick != undefined){
-        g.gameMap.focusedBuildingHtmlElem.setAttribute('onclick', focusedBuildingObj.onclick)
-        g.gameMap.focusedBuildingHtmlElem.classList.add('interactive')
-    }
+    //Add after placing > avoid triggering the modal on placing
+    setOnClickEvent(g.gameMap.focusedBuildingObj, g.gameMap.focusedBuildingHtmlElem)
 
     g.gameMap.focusedBuildingHtmlElem.classList.remove('projection')
 
@@ -544,9 +546,22 @@ function relativeCoords(event , mode) {
 }
 
 
+//Sets onclick to html element
+function setOnClickEvent(buildingObject, building){
+    if(buildingObject.onclick !== undefined){
+        building.classList.add('interactive')
 
+        // Also opens collection for labs
+        if( buildingObject.buildingType.includes('lab') || buildingObject.buildingType.includes('research') ){
+            building.setAttribute('onclick', `toggleModal('collectionModal'), ${buildingObject.onclick}`)
+        }
+        else{
+            building.setAttribute('onclick', buildingObject.onclick)
+        }
+    }
+}
 
-//Creates building onclick event
+//Creates on click string
 function genOnClick(event){
     let onclick
 

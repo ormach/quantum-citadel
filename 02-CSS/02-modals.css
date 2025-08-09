@@ -58,7 +58,7 @@
         background-color: var(--w20);
     }
     .modal-heading{
-        margin-bottom: 4px;
+        margin-bottom: 2px;
     }
     .close-btn{
         width: 64px;
@@ -87,129 +87,114 @@
         color: var(--w70);
     }
 
+
+
 /* Builder */
+    #builders .modal-container{
+            display: flex;
+            flex-direction: column;
+
+            height: 480px;
+            max-width: 728px;
+
+            background-color: black;
+    }
+    #builders .modal-nav {
+        background-color: #000;
+        color: var(--yellow-accent);
+
+        width: 100%;
+    }
     .modal .structures-container{
         flex-direction: row;
         flex-wrap: wrap;
-        max-width: 800px;
+        gap: 2px;
+
+        flex-shrink: 1;
+       
         height: 100%;
+
         overflow-y: auto;
 
-        padding-bottom: 120px;
+        margin: 2px;
+        padding: 0;
     }
+
     .btn-structure{
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
 
-        height: 192px;
+        height: 124px;
         width: 240px;
 
-        padding: 16px;
-        gap: 12px;
-
         position: relative;
-        background-color: rgb(77, 77, 77);
-
-        border: 2px solid var(--b20);
+        background-color: #333333;
         color: white;
 
-        /* overflow: hidden; */
+        overflow: hidden;
+        border-radius: 0px;
+        border: none;
+
+        padding: 0;
+    }
+    .btn-structure:hover{
+        background: linear-gradient(to bottom, #676866, #646562);
     }
     .btn-structure .data-container{
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: 0px;
 
         width: 100%;
+        max-width: 200px;
         height: 100%;
         text-align: left;
+
+        padding: 12px;
     }
-    .data-container .description{
+    .btn-structure .data-container .description{
         font-size: 14px;
+        line-height: 20px;
         opacity: 0.7;
+
+        flex-grow: 1;
     }
-    .btn-structure:hover{
-        background: linear-gradient(to bottom, #676866, #646562);
+    .btn-structure .data-container h3{
+    
+        font-family: 'Arial', sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 600;
     }
+    
     .btn-structure .btn-text{
         font-size: 18px;
     }
     .btn-structure .sprite-container{
         position: absolute;
-        right: 0px;
-        bottom: -6px;
+        left: 192px;
+        bottom: -3px;
+
+        img{
+            padding-bottom: 0;
+        }
     }
+
     .building-cost-container{
         display: flex;
-        flex-direction: column;
+        height: 24px;
     }
-
-
-/* Collection modal */
-    #collection-page{
-        width: min-content;
+    .building-cost-container p{
+        width: 25px;
+        font-size: 14px;
+       
     }
-    .collection-container{
-        display: flex;
-        flex-direction: column;
-        padding: 8px;
-        background-color: #5F544E;
-        border: 2px solid black;
-
-        position: relative;
+    .building-cost-container .sprite-container img{
+        padding: 3px;   
     }
-    .collection-container .tab-group{
-        display: flex;
-        gap: 4px;
-        justify-content: flex-start;
-    }
-    .collection-container .tab-group .active {
-        background-color: #1D1D1D;
-        color: wheat;
-    }
-    .collection-container .row {
-        gap: 0px;
-    }
-    .collection-container .tab-group button{
-        background-color: #4B443F;
-
-        height: 48px;
-
-        font-family: 'Grenze', sans-serif;
-        font-size: 24px;
-    }
-    .secondary-btn{
-        border: none !important;
-        background-color: var(--w0) !important;
-    }
-    .collection{
-        background-color: #1D1D1D;
-
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-auto-rows: max-content;
-        /*column-gap: 4px;*/
-        /*row-gap: 4px;*/
-
-        padding: 12px;
-    }
-    .tab{
-        border: 2px solid black;
-        border-bottom: none;
-        border-radius: 0 !important;
-    }
-    /* Subtab */
-    .subtab-group{
-        display: flex;
-        position: absolute;
-        top: -38px;
-    }
-    .subtab-group button{
-        background-color: #1F1F1F;
-        height: 38px;
-    }
+    
 
 
 /* Research modal */

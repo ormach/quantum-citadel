@@ -10,11 +10,8 @@ let buildingsRef
 function startGame(){
     g = new Game
 
-    //New collection
-    g.collection.genSlots()
-    
-
-    //Remove draft cards from the pool & add cards to game obj
+    //Clears CSV
+    //Remove unfinished cards from the pool & add cards to game obj
     for (let key in cardsRef){
         if(cardsRef[key].export === "y"){
             g.cardsRef.push(cardsRef[key])
@@ -22,10 +19,6 @@ function startGame(){
     }
 
     cardsRef = g.cardsRef
-    
-    // g.market = new Market
-    // g.market.genPage()
-
 
     //Load/generate game
     g.loadGame()
@@ -37,20 +30,18 @@ function startGame(){
     //Generate map decoration elements after g is assigned
     g.gameMap.setMapDecoration()
 
-
     //Generate UI
     generateUI()
-
 
     //Interval sync
     setInterval(intervalSync, config.intervalSyncTime)
 
-
     //Save game on start
-    //Save was not set, don't remember why
     console.log('Saving game on start.');
     g.saveGame()
 }
+
+
 
 //INTERVAL SYNC: Runs every second.
 function intervalSync(){

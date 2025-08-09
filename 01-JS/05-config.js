@@ -3,17 +3,21 @@ let config = {
         intervalSyncTime: 5000,
 
     //Resources
-        wood:  500,
-        stone: 500,
-        coins: 500,
+        wood:  35,
+        stone: 15,
+        coins: 0,
 
     //Progression exp lvl
-        playerLvl: 12,
+        playerLvl: 1,
         expPerResearch: 1,
         expBase: 4,
         expMult: 1,
         expExpo: 0.3,
-        basePassieSkillPoints: 10, //tree
+        basePassiveSkillPoints: 0, //tree
+
+    //Research tree
+        treeRows: 9,
+        treeColumns: 5,
 
     //Costs
         cardCost:       20,
@@ -36,13 +40,14 @@ let config = {
 //TREES: spawn frequency
         treeSpawnInterval: 10000, //Interval in ms
         treeCap: 10,
+    
 //STONE
         stoneSpawnInterval: 5000,
 
 
     //Collection
-        albumRows: 3,
-        albumColumns: 4,
+        albumRows: 5,
+        albumColumns: 2,
 
     //Testing
         rClickEvent: false,
@@ -51,6 +56,11 @@ let config = {
         totalMarketPacks: 5
 }
 
-if(1 === 2){
-        config.coins = 500
+if(1 === 1){
+        //Resources
+        config.wood =  999,
+        config.stone = 999,
+        config.coins = 999,
+        config.basePassiveSkillPoints = 999 //tree
+
 }

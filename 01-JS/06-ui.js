@@ -141,7 +141,7 @@
                     cost += `
                         <div class="flex center">
                             <img src="../03-IMG/ico/id=${res}, variant=1.svg"></img>
-                            ${resValue}
+                            <p>${resValue}</p>
                         </div>`
                 }
             })
@@ -149,7 +149,7 @@
             //Button HTML
             let btnContent = `
                 <div class="data-container">
-                    <h2>${upp(key)}</h2>
+                    <h3>${upp(key)}</h3>
                     <p class="description">${buildingsRef[key].description}</p>
                     <div class="building-cost-container">${cost}</div>
                 </div>

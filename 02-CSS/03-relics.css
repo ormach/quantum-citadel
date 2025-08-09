@@ -78,7 +78,8 @@
     justify-content: center;
 
     align-items: center;
-    /*background-color: var(--w5);*/
+    background-color: var(--w5);
+    border: 2px solid var(--b20);
 
     height: calc(var(--card-height) + 8px);
     width: calc(var(--card-width) + 8px);
@@ -94,9 +95,72 @@
     margin-top: 0;
     filter: drop-shadow(0px 0px 0px rgba(0,0,0,0.0));
 }
-.card-container-grid{
-    /*display: flex;*/
-    /*gap: 4px;*/
-    /* width: calc((var(--card-width) + 4px) * 2); */
-    flex-wrap: wrap;
-}
+
+
+
+
+/* Collection modal */
+    .card-slot-grid{
+        background-color: #1D1D1D;
+        display: grid;
+        gap: 2px;
+        padding: 8px;
+    }
+    #collection-modal{
+        width: min-content;
+    }
+    .collection-container{
+        display: flex;
+        flex-direction: column;
+        padding: 8px;
+        background-color: #5F544E;
+        border: 2px solid black;
+
+        position: relative;
+    }
+    #collection-tabs{
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+    }
+    .collection-container .tab-group{
+        display: flex;
+        gap: 4px;
+        justify-content: flex-start;
+    }
+    .collection-container .tab-group .active {
+        background-color: #1D1D1D;
+        color: wheat;
+    }
+    .collection-container .row {
+        gap: 0px;
+    }
+    .collection-container .tab-group button{
+        background-color: #4B443F;
+
+        height: 48px;
+
+        font-family: 'Grenze', sans-serif;
+        font-size: 24px;
+    }
+
+    .secondary-btn{
+        border: none !important;
+        background-color: var(--w0) !important;
+    }
+    
+    .tab{
+        border: 2px solid black;
+        border-bottom: none;
+        border-radius: 0 !important;
+    }
+    /* Subtab */
+    .subtab-group{
+        display: flex;
+        position: absolute;
+        top: -38px;
+    }
+    .subtab-group button{
+        background-color: #1F1F1F;
+        height: 38px;
+    }

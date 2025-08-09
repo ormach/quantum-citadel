@@ -90,8 +90,6 @@ let prefix = 'treenode_'
         
         el('skill-tree').innerHTML = ``
 
-        let treeRows      = 5
-        let treeColumns   = 5
         let column        = 0
         let row           = 0
         let nodeType
@@ -131,21 +129,21 @@ let prefix = 'treenode_'
             }
 
         //Build base tree
-            for( let i = 0; i < treeRows * treeColumns; i++){
+            for( let i = 0; i < config.treeRows * config.treeColumns; i++){
 
                 //Cell creation trigger
                 let createCell = false
 
                 //Set row Y id
                 column++
-                if(column > treeColumns){column = 1}
+                if(column > config.treeColumns){column = 1}
 
                 //Set column X id
-                if(i % treeColumns == 0){row ++}
+                if(i % config.treeColumns == 0){row ++}
 
                 //Set tile images
                 //Rows 
-                let refRows = [1,5,9] //add 13 to extend
+                let refRows = [1, 9] //add 13 to add row connectors
 
                 if(
                        refRows.includes(row)
@@ -155,8 +153,8 @@ let prefix = 'treenode_'
                     nodeType = 'horizontal-path'
                 }
 
-                //Columns 
-                let refColumns = [1,5,9,13,17,21]
+                //COLUMNS 
+                let refColumns = [1,3,5,9,13,17,21]
                 if(
                         refColumns.includes(column) 
                     // || [2,4].includes(column) && [3].includes(row) 
@@ -169,7 +167,7 @@ let prefix = 'treenode_'
                 //Clears
                 if(
                        [6,7,8, 14,15,16, 22,23,24,  27].includes(column) && row == 1 //1st row
-                    // || [2,3,4].includes(column) && row == 5                          //Guardian 2nd row
+                    || column == 3 && row == 8                                 //Cita break
                     // || [17,21].includes(column) && [1,2,3].includes(row)             //Wanderer
                     // || [24].includes(column) && [5].includes(row)
                 ){
@@ -192,7 +190,7 @@ let prefix = 'treenode_'
                 tileColumn: 3,
                 tileRow: 1,
                 tileType: 'sta',
-                tileConnectors: ['R','L'],
+                tileConnectors: ['D', 'R', 'L'],
                 allocated: true,
                 imgPath:'sta'
             }
@@ -214,7 +212,8 @@ let prefix = 'treenode_'
                                 <div class="tree-path" style="transform: rotate(90deg)"></div>
                             </div>
                         `
-                    } else {
+                    }
+                    else {
                         el('skill-tree').innerHTML += `
                             <div id="${prefix}${column}-${row}" class='tree-tile path'>
                                 <div class="tree-path"></div>
@@ -536,16 +535,16 @@ let prefix = 'treenode_'
         // MAP
         // Tree needs corner nodes to be built
         //      1                          2                          3                          4                          5
-        /* 1*/ '1-1_S04_R-D-RD'          , /*----------------------*/ /*----------------------*/ /*----------------------*/ '5-1_S05_D-L-LD'         ,
-        /* 2*/ /*----------------------*/ '2-2_S07_LT'              , /*----------------------*/ '4-2_S08_RT'             , /*----------------------*/
-        /* 3*/ '1-3_tra_T-D'            , /*----------------------*/ '3-3_S03_D'              ,  /*----------------------*/ '5-3_tra_T-D'            ,
-        /* 4*/ /*----------------------*/ /*----------------------*/ '3-4_tra_T-D'            ,  /*----------------------*/ /*----------------------*/
-        /* 5*/ '1-5_S01_T-R'            , /*----------------------*/ '3-5_S02_T-L-R'          ,  /*----------------------*/ '5-5_S06_T-L'            ,
+        /* 1*/ '1-1_S04_R-D'            , /*----------------------*/ /*----------------------*/ /*----------------------*/ '5-1_S05_D-L'            ,
+        /* 2*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/
+        /* 3*/ '1-3_S07_T-D'            , /*----------------------*/ '3-3_S01_T-D'            , /*----------------------*/ '5-3_S08_T-D'            ,
+        /* 4*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/
+        /* 5*/ '1-5_tra_T-D'            , /*----------------------*/ '3-5_S02_T-D'            , /*----------------------*/ '5-5_S06_T-D'            ,
         
         /* 6*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/
-        /* 7*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/
+        /* 7*/ /*----------------------*/ /*----------------------*/ '3-7_S03_T'              , /*----------------------*/ /*----------------------*/
         /* 8*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/
-        /* 9*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/ /*----------------------*/
+        /* 9*/ '1-9_tra_T-R'            , /*----------------------*/ '3-9_tra_L-R'            , /*----------------------*/ '5-9_tra_T-L'            ,
         ]
 
 //Tree node references
@@ -559,10 +558,10 @@ let prefix = 'treenode_'
             val:1,
             buildingType: "lab gravitation"
         },
-        {  id:'S02', name:`Unlock: "Lab: Planetary motion"`,
-            desc:`Produces relics related to Planetary motion.`,
+        {  id:'S02', name:`Unlock: "Lab: orbit"`,
+            desc:`Produces relics related to orbit.`,
             val:1,
-            buildingType: "lab planetary motion"
+            buildingType: "lab orbit"
         },
         {  id:'S03', name:`Unlock: "Citadel"`,
             desc:`Build Citadel to complete the game.`,
